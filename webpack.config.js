@@ -19,8 +19,7 @@ const config = require('./config'),
       WebpackMd5Hash = require('webpack-md5-hash'),
       ESLintPlugin = require('eslint-webpack-plugin')
 
-const noOP = () => { /*This is intentional*/},
-      PRODUCTION = process.env.BUILD_ENV ? /production/.test(process.env.BUILD_ENV) : false
+const PRODUCTION = process.env.BUILD_ENV ? /production/.test(process.env.BUILD_ENV) : false
 
 process.env.BABEL_ENV = process.env.BABEL_ENV ? process.env.BABEL_ENV : 'client'
 
@@ -164,7 +163,7 @@ module.exports = {
   },
 
   optimization: {
-    minimize: true,
+    minimize: !PRODUCTION,
     minimizer: [new TerserPlugin({
       parallel: true,
     })],
