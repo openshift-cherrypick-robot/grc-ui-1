@@ -70,12 +70,12 @@ module.exports = {
 
   output: {
     path: __dirname + '/public',
-    filename: PRODUCTION ? 'dll.[name].[chunkhash].js' : 'dll.[name].js',
+    filename: PRODUCTION ? 'dll.[name].[hash].min.js' : 'dll.[name].js',
     library: '[name]'
   },
 
   optimization: {
-    minimize: PRODUCTION ? true : false,
+    minimize: PRODUCTION,
     minimizer: [new TerserPlugin({
       parallel: true,
     })],
@@ -93,9 +93,9 @@ module.exports = {
       context: __dirname
     }),
     new CompressionPlugin({
-      filename: '[path].gz[query]',
+      filename: '[path].gz',
       algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
+      test: /\.js$|\.css$/,
     }),
     new AssetsPlugin({
       path: path.join(__dirname, 'public'),
