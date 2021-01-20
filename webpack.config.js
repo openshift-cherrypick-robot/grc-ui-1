@@ -108,7 +108,6 @@ module.exports = {
         ],
         use: ['style-loader', 'css-loader'],
       },
-      // ignore styles @open-cluster-management/ui-components
       {
         test: /\.s?css$/,
         include: path.resolve(__dirname, './node_modules/@patternfly'),

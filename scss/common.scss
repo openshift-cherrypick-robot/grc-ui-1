@@ -44,16 +44,14 @@ menu, nav, output, ruby, section, summary, time, mark, audio, video {
 html {
   height: 100%;
 }
+
 body {
   min-height: 100%;
   height: 100%;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  .pf-c-page {
-    background-color: $acm-background-color;
-  }
+  background-color: $acm-background-color;
   
   .bx--data-table-v2{
     thead{
