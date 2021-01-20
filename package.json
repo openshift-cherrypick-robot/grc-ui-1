@@ -10,7 +10,7 @@
     "clean": "del-cli dll public/*",
     "build:watch": "cross-env BABEL_ENV=e2e webpack --progress --watch --mode=development",
     "build": "npm run clean && cross-env BABEL_ENV=e2e webpack --config webpack.dll.js --mode=development && cross-env BABEL_ENV=e2e webpack --mode=development",
-    "build:production": "npm run build:dll:production && cross-env BUILD_ENV=production webpack --mode=production",
+    "build:production": "npm run build:dll:production && cross-env BUILD_ENV=production webpack --progress --mode=production",
     "build:dll:production": "cross-env BUILD_ENV=production webpack --config webpack.dll.js --mode=production",
     "build:dll": "webpack --config webpack.dll.js --progress",
     "shrinkwrap:clean": "del-cli node_modules npm-shrinkwrap.json && npm install --no-optional && npm prune && npm shrinkwrap",
