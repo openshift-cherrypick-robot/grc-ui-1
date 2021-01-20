@@ -74,6 +74,14 @@ module.exports = {
     filename: PRODUCTION ? 'dll.[name].[chunkhash].js' : 'dll.[name].js',
     library: '[name]'
   },
+
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin({
+      parallel: true,
+    })],
+  },
+
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -85,9 +93,6 @@ module.exports = {
       name: '[name]',
       context: __dirname
     }),
-    PRODUCTION ? new TerserPlugin({
-      sourceMap: true
-    }) : noOP,
     new CompressionPlugin({
       filename: '[path].gz[query]',
       algorithm: 'gzip',

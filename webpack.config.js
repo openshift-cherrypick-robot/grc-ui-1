@@ -163,6 +163,13 @@ module.exports = {
     jsonpFunction: 'webpackJsonpFunctionGrc',
   },
 
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin({
+      parallel: true,
+    })],
+  },
+
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -180,9 +187,6 @@ module.exports = {
       filename: PRODUCTION ? 'css/[name].[contenthash].css' : 'css/[name].css',
       allChunks: true
     }),
-    PRODUCTION ? new TerserPlugin({
-      sourceMap: true
-    }) : noOP,
     new webpack.LoaderOptionsPlugin({
       options: {
         eslint: {
