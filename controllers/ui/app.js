@@ -20,20 +20,9 @@ const ReactDOMServer = require('react-dom/server'),
       config = require('../../config'),
       appUtil = require('../../lib/server/app-util'),
       Provider = require('react-redux').Provider,
-      router = express.Router({ mergeParams: true }),
-      lodash = require('lodash'),
-      request = require('../../lib/server/request'),
-      i18n = require('node-i18n-util')
+      router = express.Router({ mergeParams: true })
 
-const log4js = require('log4js'),
-      logger = log4js.getLogger('app')
-
-const targetAPIGroups = [
-  'policy.open-cluster-management.io',
-  'apps.open-cluster-management.io',
-]
-
-let App, Login, reducers, access  //laziy initialize to reduce startup time seen on k8s
+let App, Login, reducers  //laziy initialize to reduce startup time seen on k8s
 
 router.get('*', (req, res) => {
   reducers = reducers === undefined ? require('../../src-web/reducers') : reducers
@@ -51,68 +40,24 @@ router.get('*', (req, res) => {
   fetchHeader(req, res, store, fetchHeaderContext)
 })
 
-function fetchHeader(req, res, store, fetchHeaderContext) {
-  const optionsUrlPrefix = `${config.get('headerUrl')}${config.get('headerContextPath')}/api/v1/header`
-  const optionsUrlQuery = `serviceId=grc-ui&dev=${process.env.NODE_ENV === 'development'}&targetAPIGroups=${JSON.stringify(targetAPIGroups)}`
-  const options = {
-    method: 'GET',
-    url: `${optionsUrlPrefix}?${optionsUrlQuery}`,
-    json: true,
-    headers: {
-      Cookie: req.headers.cookie,
-      Authorization: req.headers.Authorization || req.headers.authorization || `Bearer ${req.cookies['acm-access-token-cookie']}`,
-      'Accept-Language': i18n.locale(req)
-    }
-  }
-  request(options, null, [200], (err, headerRes) => {
-    if (err) {
-      return res.status(500).send(err)
-    }
+function fetchHeader(req, res, store, ctx) {
 
-    const { headerHtml: header, props: propsH, state: stateH, files: filesH, userAccess } = headerRes.body
-    if (!header || !propsH || !stateH || !filesH) {
-      logger.err(headerRes.body)
-      return res.status(500).send(headerRes.body)
-    }
-
-    access = access === undefined ? require('../../src-web/actions/access') : access
-    if (userAccess) {
-      // logger.info(`userAccess is : ${JSON.stringify(userAccess)}`)
-      store.dispatch(access.userAccessSuccess(userAccess))
-    }
-
-    if(process.env.NODE_ENV === 'development') {
-      lodash.forOwn(filesH, value => {
-        value.path = `${config.get('contextPath')}/api/proxy${value.path}` //preprend with proxy route
-      })
-    }
-    try {
-      res.render('home', Object.assign({
-        manifest: appUtil.app().locals.manifest,
-        content: ReactDOMServer.renderToString(
-          <Provider store={store}>
-            <StaticRouter
-              location={req.originalUrl}
-              context={fetchHeaderContext}>
-              <App />
-            </StaticRouter>
-          </Provider>
-        ),
-        contextPath: config.get('contextPath'),
-        headerContextPath: config.get('headerContextPath'),
-        state: store.getState(),
-        props: fetchHeaderContext,
-        header: header,
-        propsH: propsH,
-        stateH: stateH,
-        filesH: filesH
-      }, fetchHeaderContext))
-    } catch(e) {
-      //eslint-disable-next-line no-console
-      console.error(e)
-    }
-    return undefined
-  })
+  res.render('home', Object.assign({
+    manifest: appUtil.app().locals.manifest,
+    content: ReactDOMServer.renderToString(
+      <Provider store={store}>
+        <StaticRouter
+          location={req.originalUrl}
+          context={ctx}>
+          <App />
+        </StaticRouter>
+      </Provider>
+    ),
+    contextPath: config.get('contextPath'),
+    headerContextPath: config.get('headerContextPath'),
+    state: store.getState(),
+    props: ctx,
+  }, ctx))
 }
 
 function getContext(req) {

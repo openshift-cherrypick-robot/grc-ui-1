@@ -25,6 +25,7 @@ import Modal from '../components/common/Modal'
 import GrcRouter from './GrcRouter'
 import loadable from '@loadable/component'
 import { LocaleContext } from '../components/common/LocaleContext'
+import { AcmHeaderPrototype } from '@open-cluster-management/ui-components'
 
 export const ResourceToolbar = loadable(() => import(/* webpackChunkName: "ResourceToolbar" */ '../components/common/ResourceToolbar'))
 
@@ -72,6 +73,8 @@ class App extends React.Component {
 // eslint-disable-next-line react/display-name
 export default props => (
   <div className='expand-vertically'>
-    <Route path={config.contextPath} serverProps={props} component={App} />
+    <AcmHeaderPrototype href="/" target="_self">
+      <Route path={config.contextPath} serverProps={props} component={App} />
+    </AcmHeaderPrototype>
   </div>
 )

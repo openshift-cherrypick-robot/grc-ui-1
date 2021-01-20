@@ -16,7 +16,8 @@ const config = require('./config'),
       MiniCssExtractPlugin = require('mini-css-extract-plugin'),
       MonacoWebpackPlugin = require('monaco-editor-webpack-plugin'),
       TerserPlugin = require('terser-webpack-plugin'),
-      WebpackMd5Hash = require('webpack-md5-hash')
+      WebpackMd5Hash = require('webpack-md5-hash'),
+      ESLintPlugin = require('eslint-webpack-plugin')
 
 const noOP = () => { /*This is intentional*/},
       PRODUCTION = process.env.BUILD_ENV ? /production/.test(process.env.BUILD_ENV) : false
@@ -51,26 +52,21 @@ module.exports = {
         use: ['source-map-loader'],
       },
       {
-        test: /\.js$/,
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        options: {
-          quiet: true
-        }
-      },
-      {
         // Transpile React JSX to ES5
         test: [/\.jsx$/, /\.js$/],
         exclude: /node_modules|\.scss/,
         loader: 'babel-loader?cacheDirectory',
-        query: {
+        options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
           plugins: ['@babel/plugin-proposal-class-properties']
         }
       },
       {
         test: [/\.s?css$/],
-        exclude: /node_modules\/(?!(@patternfly)\/).*/,
+        exclude: [
+          /node_modules\/(?!(@patternfly)\/).*/,
+          /node_modules\/@open-cluster-management\/ui-components\/node_modules\/(?!(@patternfly)\/).*/,
+        ],
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -111,6 +107,12 @@ module.exports = {
         test: /\.css$/,
         include: path.resolve(__dirname, './node_modules/monaco-editor'),
         use: ['style-loader', 'css-loader'],
+      },
+      // ignore styles @open-cluster-management/ui-components
+      {
+        test: /\.s?css$/,
+        include: /node_modules\/@open-cluster-management\/ui-components/,
+        loader: 'null-loader'
       },
       {
         test: /\.properties$/,
@@ -174,6 +176,7 @@ module.exports = {
       // eslint-disable-next-line import/no-unresolved
       manifest: require('./dll/vendorhcm-manifest.json'),
     }),
+    new ESLintPlugin(),
     new MiniCssExtractPlugin({
       filename: PRODUCTION ? 'css/[name].[contenthash].css' : 'css/[name].css',
       allChunks: true
