@@ -72,9 +72,7 @@ class App extends React.Component {
 
 // eslint-disable-next-line react/display-name
 export default props => (
-  <div className='expand-vertically'>
-    <AcmHeaderPrototype href="/" target="_self">
-      <Route path={config.contextPath} serverProps={props} component={App} />
-    </AcmHeaderPrototype>
-  </div>
+  <AcmHeaderPrototype href="/" target="_self">
+    <Route path={config.contextPath} serverProps={props} component={App} />
+  </AcmHeaderPrototype>
 )
