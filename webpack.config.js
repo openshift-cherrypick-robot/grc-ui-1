@@ -63,10 +63,7 @@ module.exports = {
       },
       {
         test: [/\.s?css$/],
-        exclude: [
-          /node_modules\/(?!(@patternfly)\/).*/,
-          /node_modules\/@open-cluster-management\/ui-components\/node_modules\/(?!(@patternfly)\/).*/,
-        ],
+        exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -105,13 +102,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, './node_modules/monaco-editor'),
+        include: [
+          path.resolve(__dirname, './node_modules/monaco-editor'),
+          path.resolve(__dirname, './node_modules/@open-cluster-management/ui-components')
+        ],
         use: ['style-loader', 'css-loader'],
       },
       // ignore styles @open-cluster-management/ui-components
       {
         test: /\.s?css$/,
-        include: /node_modules\/@open-cluster-management\/ui-components/,
+        include: path.resolve(__dirname, './node_modules/@patternfly'),
         loader: 'null-loader'
       },
       {
