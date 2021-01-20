@@ -163,7 +163,7 @@ module.exports = {
   },
 
   optimization: {
-    minimize: !PRODUCTION,
+    minimize: PRODUCTION,
     minimizer: [new TerserPlugin({
       parallel: true,
     })],
