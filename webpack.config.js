@@ -16,7 +16,6 @@ const config = require('./config'),
       MiniCssExtractPlugin = require('mini-css-extract-plugin'),
       MonacoWebpackPlugin = require('monaco-editor-webpack-plugin'),
       TerserPlugin = require('terser-webpack-plugin'),
-      WebpackMd5Hash = require('webpack-md5-hash'),
       ESLintPlugin = require('eslint-webpack-plugin')
 
 const PRODUCTION = process.env.BUILD_ENV ? /production/.test(process.env.BUILD_ENV) : false
