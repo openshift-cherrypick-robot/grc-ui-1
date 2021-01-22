@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: imagespec-cleanup-[TIME]
+  name: imagespec-cleanup-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -15,7 +15,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: imagespec-cleanup-[TIME]-image-vulnerability-sub
+        name: imagespec-cleanup-[ID]-image-vulnerability-sub
       spec:
         remediationAction: inform # will be overridden by remediationAction in parent policy
         severity: high
@@ -37,7 +37,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: imagespec-cleanup-[TIME]-image-vulnerabilities
+        name: imagespec-cleanup-[ID]-image-vulnerabilities
       spec:
         remediationAction: inform # will be overridden by remediationAction in parent policy
         severity: high
@@ -53,21 +53,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-imagespec-cleanup-[TIME]
+  name: binding-imagespec-cleanup-[ID]
   namespace: default
 placementRef:
-  name: placement-imagespec-cleanup-[TIME]
+  name: placement-imagespec-cleanup-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: imagespec-cleanup-[TIME]
+- name: imagespec-cleanup-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-imagespec-cleanup-[TIME]
+  name: placement-imagespec-cleanup-[ID]
   namespace: default
 spec:
   clusterConditions:

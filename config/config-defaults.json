@@ -1,5 +1,5 @@
 {
-    "ACM_VERSION": "2.1",
+    "ACM_VERSION": "2.2",
     "contextPath": "/multicloud/policies",
     "clusterContextPath": "/multicloud/clusters",
     "docUrl": "https://github.com/open-cluster-management/rhacm-docs",

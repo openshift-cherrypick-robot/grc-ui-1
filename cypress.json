@@ -1,7 +1,7 @@
 {
   "retries": {
-    "runMode": 1,
-    "openMode": 1
+    "runMode": 0,
+    "openMode": 0
   },
   "baseUrl": "https://localhost:3000",
   "chromeWebSecurity": false,

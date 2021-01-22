@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: limitspec-setup-[TIME]
+  name: limitspec-setup-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -15,7 +15,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: limitspec-setup-[TIME]-container-mem-limit-range
+        name: limitspec-setup-[ID]-container-mem-limit-range
       spec:
         remediationAction: inform # will be overridden by remediationAction in parent policy
         severity: medium
@@ -40,21 +40,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-limitspec-setup-[TIME]
+  name: binding-limitspec-setup-[ID]
   namespace: default
 placementRef:
-  name: placement-limitspec-setup-[TIME]
+  name: placement-limitspec-setup-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: limitspec-setup-[TIME]
+- name: limitspec-setup-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-limitspec-setup-[TIME]
+  name: placement-limitspec-setup-[ID]
   namespace: default
 spec:
   clusterConditions:

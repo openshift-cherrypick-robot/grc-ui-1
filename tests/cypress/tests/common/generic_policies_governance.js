@@ -39,7 +39,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
     })
 
     it(`Check disabled policy ${policyName}`, () => {
-      verifyPolicyInListing(policyName, confPolicies[policyName], 'disabled', 3)
+      verifyPolicyInListing(policyName, confPolicies[policyName], 'disabled')
     })
 
     it(`Enable policy ${policyName}`, () => {
@@ -51,7 +51,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
   for (const policyName in confPolicies) {
 
     // we need to do the substitution per policy - probably we could do this once for whole test
-    const confClusterViolations = getConfigObject(confFileViolationsInform, 'yaml', getDefaultSubstitutionRules(policyName))
+    const confClusterViolations = getConfigObject(confFileViolationsInform, 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
     const clusterViolations = getViolationsPerPolicy(policyName, confPolicies[policyName], confClusterViolations, clusterList)
     const violationsCounter = getViolationsCounter(clusterViolations)
 
@@ -60,7 +60,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
     })
 
     it(`Check enabled policy ${policyName}`, () => {
-      verifyPolicyInListing(policyName, confPolicies[policyName], 'enabled', 1, violationsCounter)
+      verifyPolicyInListing(policyName, confPolicies[policyName], 'enabled', violationsCounter)
     })
 
   }
@@ -68,14 +68,14 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
   for (const policyName in confPolicies) {
 
     // we need to do the substitution per policy
-    const confViolationPatterns = getConfigObject('violation-patterns.yaml', 'yaml', getDefaultSubstitutionRules(policyName))
-    const confClusterViolations = getConfigObject(confFileViolationsInform, 'yaml', getDefaultSubstitutionRules(policyName))
+    const confViolationPatterns = getConfigObject('violation-patterns.yaml', 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
+    const confClusterViolations = getConfigObject(confFileViolationsInform, 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
     const clusterViolations = getViolationsPerPolicy(policyName, confPolicies[policyName], confClusterViolations, clusterList)
     const violationsCounter = getViolationsCounter(clusterViolations)
 
     it(`Verify policy ${policyName} details at the detailed page`, () => {
       cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`)
-      verifyPolicyInPolicyDetails(policyName, confPolicies[policyName], 'enabled', 1, violationsCounter)
+      verifyPolicyInPolicyDetails(policyName, confPolicies[policyName], 'enabled', violationsCounter)
     })
 
     it(`Verify policy ${policyName} template details at the detailed page`, () => {
@@ -135,8 +135,8 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
     for (const policyName in confPolicies) {
 
       // we need to do the substitution per policy
-      const confViolationPatterns = getConfigObject('violation-patterns.yaml', 'yaml', getDefaultSubstitutionRules(policyName))
-      const confClusterViolations = getConfigObject(confFileViolationsEnforce, 'yaml', getDefaultSubstitutionRules(policyName))
+      const confViolationPatterns = getConfigObject('violation-patterns.yaml', 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
+      const confClusterViolations = getConfigObject(confFileViolationsEnforce, 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
       const clusterViolations = getViolationsPerPolicy(policyName, confPolicies[policyName], confClusterViolations, clusterList)
       const violationsCounter = getViolationsCounter(clusterViolations)
 
@@ -146,12 +146,12 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
       })
 
       it(`Check enabled policy ${policyName}`, () => {
-        verifyPolicyInListing(policyName, confPolicies[policyName], 'enabled', 1, violationsCounter)
+        verifyPolicyInListing(policyName, confPolicies[policyName], 'enabled', violationsCounter)
       })
 
       it(`Verify policy ${policyName} details at the detailed page`, () => {
         cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`)
-        verifyPolicyInPolicyDetails(policyName, confPolicies[policyName], 'enabled', 1, violationsCounter)
+        verifyPolicyInPolicyDetails(policyName, confPolicies[policyName], 'enabled', violationsCounter)
       })
 
       it(`Verify policy ${policyName} template details at the detailed page`, () => {
@@ -196,13 +196,13 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
   // this would be a bit more complicated as history is split per policy, cluster, template
   for (const policyName in confPolicies) {
     // read the configuration for each policy
-    const confViolationPatterns = getConfigObject('violation-patterns.yaml', 'yaml', getDefaultSubstitutionRules(policyName))
-    const confClusterViolationsInform = getConfigObject(confFileViolationsInform, 'yaml', getDefaultSubstitutionRules(policyName))
+    const confViolationPatterns = getConfigObject('violation-patterns.yaml', 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
+    const confClusterViolationsInform = getConfigObject(confFileViolationsInform, 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
     const clusterViolationsInform = getViolationsPerPolicy(policyName, confPolicies[policyName], confClusterViolationsInform, clusterList)
     let confClusterViolationsEnforce
     let clusterViolationsEnforce
     if (confFileViolationsEnforce) {
-      confClusterViolationsEnforce = getConfigObject(confFileViolationsEnforce, 'yaml', getDefaultSubstitutionRules(policyName))
+      confClusterViolationsEnforce = getConfigObject(confFileViolationsEnforce, 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
       clusterViolationsEnforce = getViolationsPerPolicy(policyName, confPolicies[policyName], confClusterViolationsEnforce, clusterList)
     }
     // now for each cluster get a merged list of cluster violations (from both Inform and Enforce violations)

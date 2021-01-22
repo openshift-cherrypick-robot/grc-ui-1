@@ -1,3 +1,3 @@
 "*": # this is the default mapping
- - "[UNAME]-operatoruser-rolebinding-0"
+ - "[POLICYNAME]-operatoruser-rolebinding-0"
 

@@ -6,8 +6,8 @@ const clearAllBtnQuery = 'svg[aria-label="Clear all selected items"]'
 const selectItemQuery = 'input[type="checkbox"]'
 
 export const pageLoader = {
-  shouldExist: () => cy.get('.content-spinner', { timeout: 20000 }).should('exist')  ,
-  shouldNotExist: () => cy.get('.content-spinner', { timeout: 20000 }).should('not.exist')
+  shouldExist: () => cy.get('.patternfly-spinner', { timeout: 20000 }).should('exist')  ,
+  shouldNotExist: () => cy.get('.patternfly-spinner', { timeout: 20000 }).should('not.exist')
 }
 
 export const uncheckAllItems = (listQuery, itemQuery=selectItemQuery, useClearAllBtn=true) => {

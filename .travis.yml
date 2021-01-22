@@ -67,6 +67,16 @@ jobs:
         - make push-test-image
         - COMPONENT_NEWTAG="latest-dev" make component/tag;
         - COMPONENT_VERSION="latest" COMPONENT_TAG_EXTENSION="-dev" make component/push;
+    - stage: build
+      name: "Build the test image"
+      if: type = push AND branch =~ /^release-[0-9]+\..*$/
+      script:
+        - set -e
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
+        - export COMPONENT_BUILD_COMMAND="docker build . -f Dockerfile.e2etest -t "
+        - export COMPONENT_NAME="grc-ui-tests"
+        - make build-test-image
+        - make push-test-image
     - stage: unit-test
       name: "Build and run unit tests"
       script:

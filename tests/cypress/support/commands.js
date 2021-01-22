@@ -22,6 +22,7 @@ Cypress.Commands.add('login', (OPTIONS_HUB_USER, OPTIONS_HUB_PASSWORD, OC_IDP) =
       cy.get('#header', { timeout: 30000 }).should('exist')
     }
   })
+  cy.CheckGrcMainPage()
 })
 
 Cypress.Commands.add('reloadUntil', (condition, options) => {

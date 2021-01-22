@@ -2,7 +2,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: [UNAME]
+  name: [POLICYNAME]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF, FISMA
@@ -16,7 +16,7 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: CertificatePolicy
         metadata:
-          name: [UNAME]-example
+          name: [POLICYNAME]-example
         spec:
           namespaceSelector:
             include:
@@ -30,21 +30,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-[UNAME]
+  name: binding-[POLICYNAME]
   namespace: default
 placementRef:
-  name: placement-[UNAME]
+  name: placement-[POLICYNAME]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: [UNAME]
+- name: [POLICYNAME]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-[UNAME]
+  name: placement-[POLICYNAME]
   namespace: default
 spec:
   clusterConditions:

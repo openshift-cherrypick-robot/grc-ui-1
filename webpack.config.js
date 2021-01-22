@@ -51,6 +51,15 @@ module.exports = {
         use: ['source-map-loader'],
       },
       {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        options: {
+          quiet: true
+        }
+      },
+      {
         // Transpile React JSX to ES5
         test: [/\.jsx$/, /\.js$/],
         exclude: /node_modules|\.scss/,
@@ -153,10 +162,17 @@ module.exports = {
     ]
   },
 
+  optimization: {
+    minimize: PRODUCTION,
+    minimizer: [new TerserPlugin({
+      parallel: true,
+    })],
+  },
+
   output: {
     //needs to be hash for production (vs chunckhash) in order to cache bust references to chunks
-    filename: PRODUCTION ? 'js/[name].[hash].min.js' : 'js/[name].js',
-    chunkFilename: PRODUCTION ? 'js/[name].[chunkhash].min.js' : 'js/[name].js',
+    filename: PRODUCTION ? 'js/[name].[contenthash].min.js' : 'js/[name].js',
+    // chunkFilename: PRODUCTION ? 'js/[name].[chunkhash].min.js' : 'js/[name].js',
     path: __dirname + '/public',
     publicPath: config.get('contextPath').replace(/\/?$/, '/'),
     jsonpFunction: 'webpackJsonpFunctionGrc',
@@ -214,8 +230,6 @@ module.exports = {
       prettyPrint: true,
       update: true
     }),
-    PRODUCTION ? new webpack.HashedModuleIdsPlugin() : new webpack.NamedModulesPlugin(),
-    new WebpackMd5Hash(),
     new CopyPlugin({
       patterns: [
         { from: 'node_modules/carbon-icons/dist/carbon-icons.svg', to: 'graphics' },

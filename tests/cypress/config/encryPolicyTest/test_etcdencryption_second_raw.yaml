@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-etcdencryption-second-[TIME]
+  name: policy-etcdencryption-second-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -15,7 +15,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: policy-etcdencryption-second-[TIME]-example
+        name: policy-etcdencryption-second-[ID]-example
       spec:
         remediationAction: inform # will be overridden by remediationAction in parent policy
         severity: med
@@ -36,21 +36,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-policy-etcdencryption-second-[TIME]
+  name: binding-policy-etcdencryption-second-[ID]
   namespace: default
 placementRef:
-  name: placement-policy-etcdencryption-second-[TIME]
+  name: placement-policy-etcdencryption-second-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: policy-etcdencryption-second-[TIME]
+- name: policy-etcdencryption-second-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-policy-etcdencryption-second-[TIME]
+  name: placement-policy-etcdencryption-second-[ID]
   namespace: default
 spec:
   clusterConditions:

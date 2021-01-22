@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: ns-spec-cleanup-[TIME]
+  name: ns-spec-cleanup-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -15,7 +15,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: ns-spec-cleanup-[TIME]-prod-ns
+        name: ns-spec-cleanup-[ID]-prod-ns
       spec:
         remediationAction: inform # will be overridden by remediationAction in parent policy
         severity: low
@@ -33,21 +33,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-ns-spec-cleanup-[TIME]
+  name: binding-ns-spec-cleanup-[ID]
   namespace: default
 placementRef:
-  name: placement-ns-spec-cleanup-[TIME]
+  name: placement-ns-spec-cleanup-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: ns-spec-cleanup-[TIME]
+- name: ns-spec-cleanup-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-ns-spec-cleanup-[TIME]
+  name: placement-ns-spec-cleanup-[ID]
   namespace: default
 spec:
   clusterConditions:

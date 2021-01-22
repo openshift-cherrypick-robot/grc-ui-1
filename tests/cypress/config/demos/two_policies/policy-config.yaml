@@ -1,0 +1,42 @@
+test-role-binding-policy-[ID]:
+  apiVersion: 'policy.open-cluster-management.io/v1'
+  namespace: 'default'
+#  cluster_binding:
+#    - 'name: "dhaks1020-2-dho-461"'
+#    - 'local-cluster: "true"'
+  binding_selector:
+    - 'matchExpressions =[]'
+#    - 'matchExpressions =[ { "key": "name", "operator": "In", "values": [ "dhaks1020-2-dho-461" ] } ]'
+#    - 'matchExpressions =[ { "key": "local-cluster", "operator": "In", "values": [ "true" ] } ]'
+  kind: 'ConfigurationPolicy'
+  specifications:
+    - 'RoleBinding - Role binding must exist'
+  standards:
+    - 'NIST-CSF'
+  categories:
+    - 'PR.AC Identity Management and Access Control'
+  controls:
+    - 'PR.AC-4 Access Control'
+  enforce: False
+  disable: False
+test-role-policy-[ID]:
+  apiVersion: 'policy.open-cluster-management.io/v1'
+  namespace: 'default'
+#  cluster_binding:
+#    - 'name: "dhaks1020-2-dho-461"'
+#    - 'local-cluster: "true"'
+  binding_selector:
+    - 'matchExpressions =[]'
+#    - 'matchExpressions =[ { "key": "name", "operator": "In", "values": [ "dhaks1020-2-dho-461" ] } ]'
+#    - 'matchExpressions =[ { "key": "local-cluster", "operator": "In", "values": [ "true" ] } ]'
+  kind: 'ConfigurationPolicy'
+  specifications:
+    - 'Role - Role must follow defined permissions'
+  standards:
+    - 'NIST-CSF'
+  categories:
+    - 'PR.AC Identity Management and Access Control'
+  controls:
+    - 'PR.AC-4 Access Control'
+  enforce: False
+  disable: False

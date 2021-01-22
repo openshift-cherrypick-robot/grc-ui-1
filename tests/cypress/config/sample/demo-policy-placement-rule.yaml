@@ -1,5 +1,5 @@
 # placement rule name
-name: placement-[UNAME]
+name: placement-[POLICYNAME]
 # placement rule namespace
 namespace: default
 # Cluster selector

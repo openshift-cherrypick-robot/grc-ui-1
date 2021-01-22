@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-create-certificate-[TIME]
+  name: policy-create-certificate-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/categories: PR.PT Protective Technology
@@ -15,7 +15,7 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: policy-create-certificate-[TIME]
+          name: policy-create-certificate-[ID]
         spec:
           remediationAction: enforce
           severity: low
@@ -28,7 +28,7 @@ spec:
                 apiVersion: cert-manager.io/v1alpha3
                 kind: Certificate
                 metadata:
-                  name: rsa-ca-sample-cert-[TIME]
+                  name: rsa-ca-sample-cert-[ID]
                   namespace: default
                   labels:
                     e2e: "true"
@@ -39,7 +39,7 @@ spec:
                   duration: 20h
                   isCA: true
                   issuerRef:
-                    name: ss-sample-issuer-[TIME]
+                    name: ss-sample-issuer-[ID]
                     kind: Issuer
                   renewBefore: 10h
                   secretName: rsa-ca-sample-secret
@@ -47,21 +47,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-policy-create-certificate-[TIME]
+  name: binding-policy-create-certificate-[ID]
   namespace: default
 placementRef:
-  name: placement-policy-create-certificate-[TIME]
+  name: placement-policy-create-certificate-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: policy-create-certificate-[TIME]
+- name: policy-create-certificate-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-policy-create-certificate-[TIME]
+  name: placement-policy-create-certificate-[ID]
   namespace: default
 spec:
   clusterConditions:

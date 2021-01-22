@@ -11,7 +11,6 @@ const path = require('path'),
       webpack = require('webpack'),
       TerserPlugin = require('terser-webpack-plugin'),
       AssetsPlugin = require('assets-webpack-plugin'),
-      WebpackMd5Hash = require('webpack-md5-hash'),
       CompressionPlugin = require('compression-webpack-plugin')
 
 const PRODUCTION = process.env.BUILD_ENV ? /production/.test(process.env.BUILD_ENV) : false
@@ -70,7 +69,7 @@ module.exports = {
 
   output: {
     path: __dirname + '/public',
-    filename: PRODUCTION ? 'dll.[name].[hash].min.js' : 'dll.[name].js',
+    filename: PRODUCTION ? 'dll.[name].[contenthash].min.js' : 'dll.[name].js',
     library: '[name]'
   },
 
@@ -103,8 +102,6 @@ module.exports = {
       prettyPrint: true,
       update: true
     }),
-    PRODUCTION ? new webpack.HashedModuleIdsPlugin() : new webpack.NamedModulesPlugin(),
-    new WebpackMd5Hash()
   ],
   resolve: {
     modules: [path.join(__dirname, 'node_modules')]

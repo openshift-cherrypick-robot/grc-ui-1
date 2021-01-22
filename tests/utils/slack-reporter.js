@@ -42,6 +42,14 @@ async function reportFailure() {
         const filename = path.join(cypressVideosDir, testName + '.mp4')
         console.log('Uploading video ' + filename)
         postScreenshot(filename, filename, buildComment(testName), userId)
+        // upload screenshot for the test as well
+        const screenshots = recFindByExt(path.join(cypressScreenshotsDir, testName), 'png')
+        screenshots.forEach(screenshot => {
+          console.log('Uploading screenshot ' + screenshot)
+          const pathArray = screenshot.split('/')
+          const filename = pathArray[pathArray.length-2]+'/'+pathArray[pathArray.length-1]
+          postScreenshot(screenshot, screenshot, buildComment(filename), userId)
+        })
       })
     } else {
       console.log('No cypress failure screenshots/videos exist.')

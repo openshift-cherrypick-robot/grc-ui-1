@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-clusterrolebinding-test-[TIME]
+  name: policy-clusterrolebinding-test-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -15,7 +15,7 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: policy-clusterrolebinding-test-[TIME]
+          name: policy-clusterrolebinding-test-[ID]
         spec:
           remediationAction: enforce
           severity: low
@@ -28,7 +28,7 @@ spec:
                 apiVersion: rbac.authorization.k8s.io/v1
                 kind: ClusterRoleBinding
                 metadata:
-                  name: e2e-test-crb-[TIME]
+                  name: e2e-test-crb-[ID]
                   labels:
                     e2e: "true"
                 roleRef:
@@ -100,21 +100,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-policy-clusterrolebinding-test-[TIME]
+  name: binding-policy-clusterrolebinding-test-[ID]
   namespace: default
 placementRef:
-  name: placement-policy-clusterrolebinding-test-[TIME]
+  name: placement-policy-clusterrolebinding-test-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: policy-clusterrolebinding-test-[TIME]
+- name: policy-clusterrolebinding-test-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-policy-clusterrolebinding-test-[TIME]
+  name: placement-policy-clusterrolebinding-test-[ID]
   namespace: default
 spec:
   clusterConditions:

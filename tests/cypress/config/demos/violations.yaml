@@ -1,12 +1,12 @@
 "local-cluster":
- - [UNAME]-example-0
- - [UNAME]-sample-restricted-psp-1
- - [UNAME]-sample-role-1
+ - [POLICYNAME]-example-0
+ - [POLICYNAME]-sample-restricted-psp-1
+ - [POLICYNAME]-sample-role-1
 "dhaks1020-2-dho-461":
- - [UNAME]-example-0
- - [UNAME]-sample-restricted-psp-1
- - [UNAME]-sample-role-0
+ - [POLICYNAME]-example-0
+ - [POLICYNAME]-sample-restricted-psp-1
+ - [POLICYNAME]-sample-role-0
 "dhgkeon1120-dho461":
- - [UNAME]-example-1
- - [UNAME]-sample-restricted-psp-1
- - [UNAME]-sample-role-1
+ - [POLICYNAME]-example-1
+ - [POLICYNAME]-sample-restricted-psp-1
+ - [POLICYNAME]-sample-role-1

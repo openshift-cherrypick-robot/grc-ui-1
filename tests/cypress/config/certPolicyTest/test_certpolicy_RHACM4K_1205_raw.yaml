@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-certificatepolicy-rhacm4k-1205-[TIME]
+  name: policy-certificatepolicy-rhacm4k-1205-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -15,7 +15,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: CertificatePolicy # cert management expiration
       metadata:
-        name: policy-certificatepolicy-rhacm4k-1205-[TIME]
+        name: policy-certificatepolicy-rhacm4k-1205-[ID]
       spec:
         minimumDuration: 25h
         minimumCADuration: 25h
@@ -32,21 +32,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-policy-certificatepolicy-rhacm4k-1205-[TIME]
+  name: binding-policy-certificatepolicy-rhacm4k-1205-[ID]
   namespace: default
 placementRef:
-  name: placement-policy-certificatepolicy-rhacm4k-1205-[TIME]
+  name: placement-policy-certificatepolicy-rhacm4k-1205-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: policy-certificatepolicy-rhacm4k-1205-[TIME]
+- name: policy-certificatepolicy-rhacm4k-1205-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-policy-certificatepolicy-rhacm4k-1205-[TIME]
+  name: placement-policy-certificatepolicy-rhacm4k-1205-[ID]
   namespace: default
 spec:
   clusterConditions:

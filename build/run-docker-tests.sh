@@ -48,6 +48,7 @@ done
 export PAUSE=${PAUSE:-60}
 echo sleep $PAUSE seconds cypress ...
 sleep $PAUSE
+export CYPRESS_coverage=false
 if [ $FAIL_FAST == "true" ]; then
   echo "Running in fail fast mode"
   npm run test:cypress-headless

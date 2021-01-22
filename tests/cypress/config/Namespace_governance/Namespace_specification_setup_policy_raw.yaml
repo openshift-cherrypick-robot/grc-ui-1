@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: ns-spec-setup-[TIME]
+  name: ns-spec-setup-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -15,7 +15,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: ns-spec-setup-[TIME]-prod-ns
+        name: ns-spec-setup-[ID]-prod-ns
       spec:
         remediationAction: inform # will be overridden by remediationAction in parent policy
         severity: low
@@ -33,21 +33,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-ns-spec-setup-[TIME]
+  name: binding-ns-spec-setup-[ID]
   namespace: default
 placementRef:
-  name: placement-ns-spec-setup-[TIME]
+  name: placement-ns-spec-setup-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: ns-spec-setup-[TIME]
+- name: ns-spec-setup-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-ns-spec-setup-[TIME]
+  name: placement-ns-spec-setup-[ID]
   namespace: default
 spec:
   clusterConditions:

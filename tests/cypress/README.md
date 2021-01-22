@@ -41,6 +41,8 @@ npm run start
 
 4. In another terminal build and start the local API server. Make sure you export the same variables from step 1.
 ```
+git clone git@github.com:open-cluster-management/grc-ui-api.git
+cd grc-ui-api
 npm install
 npm run build
 npm run start
@@ -101,7 +103,7 @@ For example:
 Having a configuration file `cluster-policy-templates.yaml` with the following content
 ```
 local-cluster:
- - [UNAME]-example-0
+ - [POLICYNAME]-example-0
 ```
 we can use the following code
 ```
@@ -143,7 +145,7 @@ This configuration file contain policy details that can be used both for policy 
  * State: used in tests
  * Path: [tests/cypress/config/violation-patterns.yaml](https://github.com/open-cluster-management/grc-ui/blob/master/tests/cypress/config/violation-patterns.yaml)
 
-This is a generic purpose file (used by multiple tests) containing violation message patterns (regexps) used for matching the actual vilation message in the policy status page. There is a separate section for each policy template and within a section there are multiple patterns listed, each having a numeric ID. From the policy pattern name (e.g. `comp-operator-ns`) and ID (e.g. `1`) a unique identifier for the message pattern is constructed (e.g. `comp-operator-ns-1`). Such identifiers are used for the expected cluster violation mapping described below. ID `0` is being used for the compliant message (i.e. there is no violation).
+This is a generic purpose file (used by multiple tests) containing violation message patterns (regexps) used for matching the actual vilation message in the policy status page. There is a separate section for each policy template and within a section there are multiple patterns listed, each having a numeric ID. From the policy pattern name (e.g. `comp-operator-ns`) and ID (e.g. `1`) a unique identifier for the message pattern is constructed (e.g. `comp-operator-ns-1`). Such identifiers are used for the expected cluster violation mapping described below. ID `0` is being used for the compliant message (i.e. there is no violation). ID '?' is being used for templates where the compliance status is unknown and therefore the cluster could be either compliant or non-compliant.
 Substitutions should be used for this configuration file in order to adjust template names according to the actual environment.
 
 ### cluster violation mapping
@@ -174,3 +176,10 @@ In order to be able to do a violation check for a policy and server we need to c
  3. From a list of all expected violations per server we filter out only violations relevant for particular policy - using `getViolationsPerPolicy()`. This is handy so we do not have to maintain cluster violations per policy.
  4. Once we know cluster&policy specific violations we can say what is the expected policy status (using `getClusterPolicyStatus()`) and number of non-compliant clusters (using `getViolationsCounter()`)
  ** Using respective regexp patterns we can verify respective violation texts
+
+## Videos / Demos
+
+ * [Introducing policy violations handling in tests](https://drive.google.com/file/d/11A9g1-GP1tLlhbudw7xVzalQwleyCWLI/view)
+ * [Using Polarion TC IDs in tests and the Xunit conversion script](https://drive.google.com/file/d/1yr5KOT9K7qDCvjKToNhAyNB08rYbdSCc/view)
+ * [Introducing multi-policy and multi-specification test configuration](https://drive.google.com/file/d/1S1j4hAUOz8VI_tA4qAYihu8-WOuIpRZH/view)
+
