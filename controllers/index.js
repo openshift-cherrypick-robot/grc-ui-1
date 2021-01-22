@@ -10,13 +10,17 @@
 'use strict'
 const express = require('express'),
       router = express.Router(),
-      config = require('../config')
+      config = require('../config'),
+      security = require('security-middleware'),
+      access = require('./useraccess')
 
 //controllers
 const status = require('./status'),
       ui = require('./ui')
 
 router.all(['/', '/status', '/livenessProbe', '/readinessProbe'], status)
+router.get('/logout', security.logout)
+router.get('/multicloud/access', access.getUserAccessInfo)
 router.use(config.get('contextPath'), ui)
 
 module.exports = router
