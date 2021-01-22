@@ -120,12 +120,11 @@ Cypress.Commands.add('waitUsingSLA', () => {
 
 // set the YAML editor visibility to a desired state
 // requires an element with 'switch-label' class being available in the page
-Cypress.Commands.add('toggleYAMLeditor', (state = undefined) => {
-  const err = 'Invalid parameter: Parameter "state" can be either "On" or "Off" or undefined'
-  if (state != undefined && state != 'On' && state != 'Off') { throw err }
+Cypress.Commands.add('toggleYAMLeditor', (state = null) => {
+  const err = 'Invalid parameter: Parameter "state" can be either "On" or "Off" or undefined/null'
+  if (state && state != 'On' && state != 'Off') { throw err }
   cy.get('.switch-label').spread( (e) => {
-    if ((state === undefined) ||
-        (e.textContent.includes('Off') && state === 'On') ||
+    if ( state || (e.textContent.includes('Off') && state === 'On') ||
         (e.textContent.includes('On') && state === 'Off'))
     {
       cy.get('#edit-yaml').next('label').click()
@@ -134,7 +133,7 @@ Cypress.Commands.add('toggleYAMLeditor', (state = undefined) => {
   })
 })
 
-Cypress.Commands.add('YAMLeditor', (uri = undefined) => {
+Cypress.Commands.add('YAMLeditor', (uri = null) => {
   cy.get('textarea.inputarea') // make sure the element is there first
     .then(() => {
       if (uri) {

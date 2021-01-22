@@ -7,7 +7,7 @@ const timestampRegexp = /^(an?|[0-9]+) (days?|hours?|minutes?|few seconds) ago$/
 export const getDefaultSubstitutionRules = (uName) => {
   let label = '[]'
   let timestamp = ''
-  if (process.env.MANAGED_CLUSTER_NAME !== undefined) {
+  if (process.env.MANAGED_CLUSTER_NAME) {
     label = `- {key: name, operator: In, values: ["${process.env.MANAGED_CLUSTER_NAME}"]}`
   }
   if (Cypress.env('RESOURCE_ID')) {
@@ -113,9 +113,9 @@ export const verifyPolicyInListing = (
         cy.wrap(namespace).contains(policyConfig['namespace'].trim(), { matchCase: false })
       }
       // check enforce/inform
-      if (policyConfig['enforce'] == true) {
+      if (policyConfig['enforce'] === true) {
         cy.wrap(remediation).contains('enforce', { matchCase: false })
-      } else if (policyConfig['enforce'] == false) {
+      } else if (policyConfig['enforce'] === false) {
         cy.wrap(remediation).contains('inform', { matchCase: false })
       }
       // check the violation status
@@ -242,7 +242,7 @@ return cy.url().then((pageURL) => {
     cy.get('.violationCell').spread((violations) => {
       // check the violation status
       cy.wrap(violations).find('path').then((elems) => {
-        if (elems.length == 1) {
+        if (elems.length === 1) {
           const d = elems[0].getAttribute('d')
           // M569 seem to be unique to an icon telling that policy status is not available for some cluster
           statusAvailable = !d.startsWith('M569')
@@ -271,13 +271,13 @@ export const verifyPolicyInPolicyDetails = (
         cy.wrap(namespace).contains(policyConfig['namespace'])
       }
       // check enforce/inform
-      if (policyConfig['enforce'] == true) {
+      if (policyConfig['enforce'] === true) {
         cy.wrap(enforcement).contains('enforce', { matchCase: false })
-      } else if (policyConfig['enforce'] == false) {
+      } else if (policyConfig['enforce'] === false) {
         cy.wrap(enforcement).contains('inform', { matchCase: false })
       }
       // check state
-      if (enabled == 'enabled') {
+      if (enabled === 'enabled') {
         cy.wrap(disabled).contains('false')
       } else {
         cy.wrap(disabled).contains('true')
@@ -485,10 +485,10 @@ export const getPolicyTemplatesNameAndKind = (policyName, policyConfig) => {
 }
 
 // from the set of known violations per cluster read just violations relevant for the particular policy
-export const getViolationsPerPolicy = (policyName, policyConfig, clusterViolations, clusters = undefined) => {
+export const getViolationsPerPolicy = (policyName, policyConfig, clusterViolations, clusters = null) => {
   const violations = {}
   const templates = getPolicyTemplatesNameAndKind(policyName, policyConfig)
-  if (clusters == undefined) {  // clusters were not defined, get a list of all cluster names from the clusterViolations dictionary
+  if (clusters) {  // clusters were not defined, get a list of all cluster names from the clusterViolations dictionary
     clusters = Object.keys(clusterViolations).filter((value) => { return value != '*' }) // get all keys except the default/wildcard '*' when present
   }
   for (const cluster of clusters) {
@@ -516,7 +516,7 @@ export const getViolationsPerPolicy = (policyName, policyConfig, clusterViolatio
 
 export const getClusterPolicyStatus = (clusterViolations) => {
   // in theory there could be multiple violations found by one policy
-  if (clusterViolations.length == 1 && clusterViolations[0].endsWith('-0')) {
+  if (clusterViolations.length === 1 && clusterViolations[0].endsWith('-0')) {
     return 'Compliant'
   } else {
     return 'Not Compliant'
@@ -530,7 +530,7 @@ export const getViolationsCounter = (clusterViolations) => {
   for (const cluster in clusterViolations) {
     // in theory there could be multiple violations found by one policy
     // in case the only violation template here is not for success (suffix -0), increase violations counter
-    if (!(clusterViolations[cluster].length == 1 && clusterViolations[cluster][0].endsWith('-0'))) {
+    if (!(clusterViolations[cluster].length === 1 && clusterViolations[cluster][0].endsWith('-0'))) {
       violations = violations + 1
     }
   }
@@ -595,9 +595,14 @@ export const clearTableSearch = (parentElement = null) => {
 }
 
 
+<<<<<<< Updated upstream
 
 export const verifyViolationsInPolicyStatusClusters = (clusterViolations, violationPatterns, clusters = undefined) => {
   if (clusters == undefined) {
+=======
+export const verifyViolationsInPolicyStatusClusters = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = null) => {
+  if (clusters) {
+>>>>>>> Stashed changes
     clusters = Object.keys(clusterViolations)
   }
   for (const cluster of clusters) {
@@ -620,7 +625,7 @@ export const verifyViolationsInPolicyStatusClusters = (clusterViolations, violat
           cy.wrap(template).contains(templateName)
           // check message
           // FIXME: here we should have a function that split the content per ';' and tests each part agains Compliant/NonCompliant and expected messages
-          if (id == 0) {
+          if (id === 0) {
             cy.wrap(message).contains(new RegExp('Compliant; '+violationPatterns[templateName][id]))
           } else {
             cy.wrap(message).contains(new RegExp('NonCompliant; '+violationPatterns[templateName][id]))
@@ -638,8 +643,13 @@ export const verifyViolationsInPolicyStatusClusters = (clusterViolations, violat
   clearTableSearch()
 }
 
+<<<<<<< Updated upstream
 export const verifyViolationsInPolicyStatusTemplates = (clusterViolations, violationPatterns, clusters = undefined) => {
   if (clusters == undefined) {
+=======
+export const verifyViolationsInPolicyStatusTemplates = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = null) => {
+  if (clusters) {
+>>>>>>> Stashed changes
     clusters = Object.keys(clusterViolations)
   }
   for (const cluster of clusters) {
@@ -663,7 +673,7 @@ export const verifyViolationsInPolicyStatusTemplates = (clusterViolations, viola
             cy.wrap(clusterStatus).find('svg').should('have.attr', 'fill', fillColor)
             // check message
             // FIXME: here we should have a function that split the content per ';' and tests each part agains Compliant/NonCompliant and expected messages
-            if (id == 0) {
+            if (id === 0) {
               cy.wrap(message).contains(new RegExp('Compliant; '+violationPatterns[templateName][id]))
             } else {
               cy.wrap(message).contains(new RegExp('NonCompliant; '+violationPatterns[templateName][id]))
@@ -681,12 +691,61 @@ export const verifyViolationsInPolicyStatusTemplates = (clusterViolations, viola
   }
 }
 
+<<<<<<< Updated upstream
 export const verifyPolicyDetailsInCluster =  (policyName, policyConfig) => {
   cy.goToPolicyClusterPage(policyName, policyConfig)
   cy.get('section[aria-label="Policy details"]').within(() => {
     cy.get('.bx--structured-list-td').spread((nameLabel, name, clusterLabel, cluster, messageLabel, message, statusLabel, status, enforcementLabel, enforcement ) => {
         if (policyConfig['namespace']) {
           cy.wrap(name).contains(policyConfig['namespace']+'.'+policyName)
+=======
+export const verifyPolicyDetailsInCluster =  (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+  const clusterStatus = getClusterPolicyStatus(clusterViolations[clusterName]).toLowerCase() === 'compliant' ? 'Compliant' : 'NonCompliant'
+  cy.get('section[aria-label="Policy details"]').within(() => {
+    cy.get('.bx--structured-list-td').spread((nameLabel, name, clusterLabel, cluster, messageLabel, message, statusLabel, status, enforcementLabel, enforcement ) => {
+      // verify namespace
+      if (policyConfig['namespace']) {
+        cy.wrap(name).contains(policyConfig['namespace']+'.'+policyName)
+      }
+      // verify cluster name
+      cy.wrap(cluster).contains(clusterName)
+      // verify cluster status
+      cy.wrap(status).contains(clusterStatus)
+      // verify policy enforcement settings
+      policyConfig['enforce'] === true ? cy.wrap(enforcement).contains('enforce') : cy.wrap(enforcement).contains('inform')
+      // verify the message
+      // first check that the right ammount of messages is listed
+      const number_of_messages = (message.textContent.match(/Compliant[,;]/g) || []).length
+      const violations = clusterViolations[clusterName]
+      expect(number_of_messages).to.equal(violations.length)
+      // verify that each violation/compliance message is present
+      for (const violation of violations) {
+        const templateName = violation.replace(/-[^-]*$/, '')
+        const id = violation.replace(/^.*-/, '')
+        const pattern = violationPatterns[templateName][id]
+        if (clusterStatus === 'NonCompliant') {
+          cy.wrap(message).contains(new RegExp(templateName+': '+clusterStatus+'; '+pattern))
+        } else {
+          cy.wrap(message).contains(new RegExp(templateName+': '+clusterStatus))
+        }
+      }
+    })
+  })
+}
+
+export const verifyPolicyTemplatesInCluster = (policyName, policyConfig, clusterName, clusterViolations) => {
+  const violations = clusterViolations[clusterName]
+  const clusterStatus = getClusterPolicyStatus(violations).toLowerCase()
+  for (const violation of violations) {
+    const templateName = violation.replace(/-[^-]*$/, '')
+    doTableSearch(templateName, '#policyTemplates-search')
+    cy.get('#policyPolicyTemplates-module-id').within(() => {
+
+      cy.get('tbody').children('tr[data-row-name="'+templateName+'"]').find('td').spread((name, api, kind, compliant) => {
+        cy.wrap(name).contains(policyName)
+        if(policyConfig['apiVersion']) {
+          cy.wrap(api).contains(policyConfig['apiVersion'])
+>>>>>>> Stashed changes
         }
         if (policyConfig['cluster_binding']) {
           const clustBind = policyConfig['cluster_binding'].toString().split(':')
@@ -700,6 +759,7 @@ export const verifyPolicyDetailsInCluster =  (policyName, policyConfig) => {
     })
 }
 
+<<<<<<< Updated upstream
 export const verifyPolicyTemplatesInCluster = (policyName, policyConfig) => {
   cy.get('#policyTemplates-table-container').within(() => {
     cy.get('tbody').children('tr[data-row-name="'+policyName+'-example"]').spread((nameLabel, name, apiLabel, api, kindLabel, kind, compliantLabel, compliant) => {
@@ -713,4 +773,43 @@ export const verifyPolicyTemplatesInCluster = (policyName, policyConfig) => {
       cy.wrap(compliant).contains('Compliant')
       })
     })
+=======
+export const verifyPolicyViolationDetailsInCluster = (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+  const violations = clusterViolations[clusterName]
+  const clusterStatus = getClusterPolicyStatus(violations).toLowerCase()
+  for (const violation of violations) {
+    const templateName = violation.replace(/-[^-]*$/, '')
+    const id = violation.replace(/^.*-/, '')
+    const pattern = violationPatterns[templateName][id]
+    const clusterStatus2 = clusterStatus === 'compliant' ? 'Compliant' : 'NonCompliant'
+    doTableSearch(templateName, '#violations-search')
+    cy.get('#policyViolations-module-id').within(() => {
+      cy.get('tbody').children('tr[data-row-name="'+templateName+'"]').find('td').spread((name, cluster, message, last_update) => {
+        // check policy name
+        cy.wrap(name).contains(policyName)
+        // check cluster name
+        cy.wrap(cluster).contains(clusterName)
+        // check violation message
+        cy.wrap(message).contains(new RegExp(clusterStatus2+'[,;] '+pattern))
+        // check last results date
+        cy.wrap(last_update).contains(timestampRegexp)
+      })
+    })
+    clearTableSearch('#violations-search')
+  }
+}
+
+export const verifyPolicyViolationDetailsInHistory = (templateName, violations, violationPatterns) => {
+  cy.get('table[aria-label="Sortable Table"]').within(() => {
+    for (const violation of violations) {
+      const id = violation.replace(/^.*-/, '')
+      const pattern = violationPatterns[templateName][id]
+      const policyStatus = id === '0' ? 'Compliant' : 'Not compliant'
+      cy.get('td').contains(new RegExp(pattern)).siblings('td').spread((state, timestamp) => {
+        cy.wrap(state).contains(policyStatus)
+        cy.wrap(timestamp).contains(/^(an?|[0-9]+) (days?|hours?|minutes?|few seconds) ago$/)
+      })
+    }
+  })
+>>>>>>> Stashed changes
 }
