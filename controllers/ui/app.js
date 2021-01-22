@@ -23,7 +23,7 @@ const ReactDOMServer = require('react-dom/server'),
       router = express.Router({ mergeParams: true }),
       // accessCtrl = require('../useraccess'),
       request = require('../../lib/server/request'),
-      async = require('async'),
+      // async = require('async'),
       log4js = require('log4js'),
       logger = log4js.getLogger('namespace-client')
 
@@ -78,7 +78,40 @@ function nsFormatter(multiNS) {
 }
 
 // get user access info on single namespace
-const getUserAccess = (req, cb) => {
+// async function getUserAccess(req, cb){
+//   console.log('user access')
+//   const k8sAPI = '/apis/authorization.k8s.io/v1'
+//   const options = {
+//     method: 'POST',
+//     url: `${config.get('API_SERVER_URL')}${k8sAPI}/selfsubjectrulesreviews`,
+//     json: true,
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Accept': 'application/json',
+//       Authorization: req.authorizationToken
+//     },
+//     body: {
+//       apiVersion: 'authorization.k8s.io/v1',
+//       kind: 'SelfSubjectRulesReview',
+//       spec: {
+//         namespace: req.singleNS
+//       },
+//     }
+//   }
+
+//   request(options, null, [200,201], (err, res) => {
+//     if (err) {
+//       return cb(err, null)
+//     }
+//     console.log('user access cb')
+//     const userAccess = userAccessFormatter(req, res)
+//     console.log('got userAccess, putting into cb')
+//     console.log(userAccess)
+//     return cb(null, userAccess)
+//   }, logger)
+// }
+
+async function getUserAccess(authorizationToken, singleNS, apiGroups, rawDataFlag, resolve, reject){
   console.log('user access')
   const k8sAPI = '/apis/authorization.k8s.io/v1'
   const options = {
@@ -88,61 +121,91 @@ const getUserAccess = (req, cb) => {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      Authorization: req.authorizationToken
+      Authorization: authorizationToken
     },
     body: {
       apiVersion: 'authorization.k8s.io/v1',
       kind: 'SelfSubjectRulesReview',
       spec: {
-        namespace: req.singleNS
+        namespace: singleNS
       },
     }
   }
 
   request(options, null, [200,201], (err, res) => {
     if (err) {
-      return cb(err, null)
+      return reject(err)
     }
     console.log('user access cb')
-    cb(null, userAccessFormatter(req, res))
+    const userAccess = userAccessFormatter(res, apiGroups, singleNS, rawDataFlag)
+    console.log('got userAccess, putting into cb')
+    console.log(userAccess)
+    return resolve(userAccess)
   }, logger)
 }
 
 // parallelly calling to get user access info on each NS
 // by using user namespaces passed from getHeader/getHeaderData
- const getUserAccessInfo = (authorizationToken, targetAPIGroups, rawDataFlag, namespaces, cb) => {
+// const getUserAccessInfo = (authorizationToken, targetAPIGroups, rawDataFlag, namespaces, cb) => {
+//   console.log('GET UA INFO')
+//   const userAllNS = nsFormatter(namespaces)
+//   // logger.info(`user all NS got from getHeader/getHeaderData are : ${JSON.stringify(userAllNS)}`)
+//   const userAccessReq = []
+//   userAllNS.map((singleNS) => {// each element binds with one NS then parallelly call whole array
+//     userAccessReq.push(
+//       getUserAccess.bind({
+//         authorizationToken,
+//         singleNS,
+//         targetAPIGroups,
+//         rawDataFlag
+//       }))
+//   })
+//   async.parallel(userAccessReq, (err, userAccessResult) => {
+//     console.log('--- getUserAccessInfo callback -----')
+//     if (err) {
+//       return cb(err, null)
+//     }
+//     // logger.info(`user access data got from step 2 is : ${JSON.stringify(userAccessResult)}`)
+//     return cb(null, { userAccess: userAccessResult })
+//   })
+// }
+
+const getUserAccessInfo = (authorizationToken, targetAPIGroups, rawDataFlag, namespaces, cb) => {
   console.log('GET UA INFO')
   const userAllNS = nsFormatter(namespaces)
   // logger.info(`user all NS got from getHeader/getHeaderData are : ${JSON.stringify(userAllNS)}`)
   const userAccessReq = []
   userAllNS.map((singleNS) => {// each element binds with one NS then parallelly call whole array
     userAccessReq.push(
-      getUserAccess({
-        authorizationToken,
-        singleNS,
-        targetAPIGroups,
-        rawDataFlag
-      }))
+      new Promise((resolve, reject) => {
+        getUserAccess(authorizationToken, singleNS, targetAPIGroups, rawDataFlag, resolve, reject)
+      })
+    )
   })
-  async.parallel(userAccessReq, (err, userAccessResult) => {
-    if (err) {
+  Promise.all(userAccessReq).then(
+    (userAccessResult) => {
+      console.log('success!')
+      console.log(userAccessResult)
+      return cb(null, userAccessResult)
+    }
+  ).catch(
+    (err) => {
+      console.log('error!')
+      console.log(err)
       return cb(err, null)
     }
-    // logger.info(`user access data got from step 2 is : ${JSON.stringify(userAccessResult)}`)
-    return cb(null, { userAccess: userAccessResult })
-  })
+  )
 }
 
-// format/combine/simplify/deal with * for user access raw data on single NS
-function userAccessFormatter(req, accessInfo) {
+function userAccessFormatter(accessInfo, apiGroups, singleNS, rawDataFlag) {
   console.log('userAccessFormatter')
-  const targetAPIGroups = new Set(req.targetAPIGroups)
+  const targetAPIGroups = new Set(apiGroups)
   const singleNSAccess ={
-    namespace: req.singleNS,
+    namespace: singleNS,
     rules: {},
   }
   // if user query raw = true, also return original raw access data on each namespace
-  if (req.rawDataFlag) {
+  if (rawDataFlag) {
     singleNSAccess.rawData = accessInfo
   }
   const resourceRules = _.get(accessInfo,'body.status.resourceRules','')
@@ -170,8 +233,50 @@ function userAccessFormatter(req, accessInfo) {
       }
     })
   }
+  console.log('breaking out of userAccessFormatter')
   return singleNSAccess
 }
+
+// format/combine/simplify/deal with * for user access raw data on single NS
+// function userAccessFormatter(req, accessInfo) {
+//   console.log('userAccessFormatter')
+//   const targetAPIGroups = new Set(req.targetAPIGroups)
+//   const singleNSAccess ={
+//     namespace: req.singleNS,
+//     rules: {},
+//   }
+//   // if user query raw = true, also return original raw access data on each namespace
+//   if (req.rawDataFlag) {
+//     singleNSAccess.rawData = accessInfo
+//   }
+//   const resourceRules = _.get(accessInfo,'body.status.resourceRules','')
+//   if (Array.isArray(resourceRules) && resourceRules.length > 0) {
+//     resourceRules.forEach((resourceRule) => {
+//       if (Array.isArray(resourceRule.apiGroups)) {
+//         const apiGroups = _.compact(resourceRule.apiGroups)
+//         resourceRule.apiGroups.length > 0 && apiGroups.forEach((api) => {
+//           // no matter if user want *, always return these special cases
+//           if (Array.isArray(resourceRule.resources) && (targetAPIGroups.has(api) || api === '*')) {
+//             const resources = _.compact(resourceRule.resources)
+//             const verbs = _.compact(resourceRule.verbs)
+//             resourceRule.resources.length > 0 && resources.forEach((resource) => {
+//               // use the combined api + resource as the unique key
+//               const mapKey = `${api}/${resource}`
+//               if (Object.prototype.hasOwnProperty.call(singleNSAccess.rules, mapKey)) {
+//                 singleNSAccess.rules[mapKey] = _.union(singleNSAccess.rules[mapKey], verbs)
+//               }
+//               else {
+//                 singleNSAccess.rules[mapKey] = verbs
+//               }
+//             })
+//           }
+//         })
+//       }
+//     })
+//   }
+//   console.log('breaking out of userAccessFormatter')
+//   return singleNSAccess
+// }
 
 router.get('*', (req, res) => {
   reducers = reducers === undefined ? require('../../src-web/reducers') : reducers
@@ -199,6 +304,8 @@ router.get('*', (req, res) => {
     }
     getUserAccessInfo(auth, targetAPIGroups, null, userNS, (err, ua) => {
       if (err) {
+        console.log('---- get error ------')
+        console.log(err)
         return res.status(err.statusCode || 500).send(err.details)
       }
       console.log('---- post uA request')
