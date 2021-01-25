@@ -177,13 +177,6 @@ module.exports = {
     jsonpFunction: 'webpackJsonpFunctionGrc',
   },
 
-  optimization: {
-    minimize: PRODUCTION,
-    minimizer: [new TerserPlugin({
-      parallel: true,
-    })],
-  },
-
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
