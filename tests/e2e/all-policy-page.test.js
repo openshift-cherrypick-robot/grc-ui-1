@@ -92,11 +92,17 @@ module.exports = {
   },
 
   'GRC UI: [P1][Sev1][policy-grc] All policy page: Verify stability of YAML': (browser) => {
+    // Verify gatekeeper policy
     const time = browser.globals.time
     const gkPolicy = fs.readFileSync(path.join(__dirname, 'yaml/create_policy/Gatekeeper-template.yaml'))
-    var yaml = gkPolicy.toString()
-    common.createPolicy(browser, 'policy-gatekeeper-' + time, yaml, time, 'Gatekeeper-template-verify.yaml')
+    var gkYaml = gkPolicy.toString()
+    common.createPolicy(browser, 'policy-gatekeeper-' + time, gkYaml, time, 'Gatekeeper-template-verify.yaml')
     common.deletePolicy('policy-gatekeeper-' + time)
+    // Verify limitrange policy that has remediationAction AFTER the template
+    const lrPolicy = fs.readFileSync(path.join(__dirname, 'yaml/create_policy/LimitRange_template-apply.yaml'))
+    var lrYaml = lrPolicy.toString()
+    common.createPolicy(browser, 'policy-limitrange-' + time, lrYaml, time, 'LimitRange_template-verify.yaml')
+    common.deletePolicy('policy-limitrange-' + time)
   },
 
   'GRC UI: [P1][Sev1][policy-grc] All policy page: Verify summary table': (browser) => {

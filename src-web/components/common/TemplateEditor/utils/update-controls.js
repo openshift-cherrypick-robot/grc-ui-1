@@ -257,7 +257,7 @@ export const getTemplateSource = (reverse, parsed) => {
         if (i+1 < synced.length) {
           ret = [...ret, ...lines.slice(syncItem.$r, synced[i+1].$r).join('\n')]
         } else {
-          ret = [...ret, ...lines.slice(syncItem.$r, syncItem.$r+syncItem.$l+1).join('\n')]
+          ret = [...ret, ...lines.slice(syncItem.$r, syncItem.$r+syncItem.$l).join('\n')]
         }
       }
     }
