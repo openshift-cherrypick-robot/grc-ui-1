@@ -11,16 +11,14 @@
 const express = require('express'),
       router = express.Router(),
       config = require('../config'),
-      security = require('security-middleware'),
-      access = require('./useraccess')
+      security = require('security-middleware')
 
 //controllers
 const status = require('./status'),
       ui = require('./ui')
 
 router.all(['/', '/status', '/livenessProbe', '/readinessProbe'], status)
-router.get('/logout', security.logout)
-router.get('/multicloud/access', access.getUserAccessInfo)
+router.get('/multicloud/logout', security.logout)
 router.use(config.get('contextPath'), ui)
 
 module.exports = router
