@@ -1,5 +1,6 @@
 {
     "ACM_VERSION": "2.2",
+    "API_SERVER_URL": "https://kubernetes.default.svc",
     "contextPath": "/multicloud/policies",
     "clusterContextPath": "/multicloud/clusters",
     "docUrl": "https://github.com/open-cluster-management/rhacm-docs",
