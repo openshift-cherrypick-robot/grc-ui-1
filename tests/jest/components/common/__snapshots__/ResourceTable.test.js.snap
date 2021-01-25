@@ -329,40 +329,8 @@ Array [
       </thead>
       <tbody>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="1569249226915-policy-test"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             1569249226915-policy-test
           </td>
@@ -384,40 +352,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-auditpolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-auditpolicy
           </td>
@@ -439,40 +375,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-certificatepolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-certificatepolicy
           </td>
@@ -494,40 +398,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-iampolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-iampolicy
           </td>
@@ -549,40 +421,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-image"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-image
           </td>
@@ -604,40 +444,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-limitrange"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-limitrange
           </td>
@@ -659,40 +467,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-namespace"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-namespace
           </td>
@@ -714,40 +490,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod
           </td>
@@ -769,40 +513,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod-2"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod-2
           </td>
@@ -824,40 +536,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod-edge"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod-edge
           </td>
@@ -1430,40 +1110,8 @@ Array [
       </thead>
       <tbody>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="1569249226915-policy-test"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             1569249226915-policy-test
           </td>
@@ -1485,40 +1133,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-auditpolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-auditpolicy
           </td>
@@ -1540,40 +1156,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-certificatepolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-certificatepolicy
           </td>
@@ -1595,40 +1179,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-iampolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-iampolicy
           </td>
@@ -1650,40 +1202,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-image"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-image
           </td>
@@ -1705,40 +1225,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-limitrange"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-limitrange
           </td>
@@ -1760,40 +1248,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-namespace"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-namespace
           </td>
@@ -1815,40 +1271,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod
           </td>
@@ -1870,40 +1294,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod-2"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod-2
           </td>
@@ -1925,40 +1317,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod-edge"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod-edge
           </td>
@@ -2452,39 +1812,7 @@ Array [
         </tr>
       </thead>
       <tbody>
-        <tr
-          className="bx--parent-row-v2"
-          data-parent-row={true}
-          disabled={false}
-        >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
+        <tr>
           <td>
             calamari
           </td>
@@ -3007,39 +2335,7 @@ Array [
         </tr>
       </thead>
       <tbody>
-        <tr
-          className="bx--parent-row-v2"
-          data-parent-row={true}
-          disabled={false}
-        >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
+        <tr>
           <td>
             calamari
           </td>
@@ -4325,40 +3621,8 @@ Array [
       </thead>
       <tbody>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="1569249226915-policy-test"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             1569249226915-policy-test
           </td>
@@ -4380,40 +3644,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-auditpolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-auditpolicy
           </td>
@@ -4435,40 +3667,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-certificatepolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-certificatepolicy
           </td>
@@ -4490,40 +3690,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-iampolicy"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-iampolicy
           </td>
@@ -4545,40 +3713,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-image"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-image
           </td>
@@ -4600,40 +3736,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-limitrange"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-limitrange
           </td>
@@ -4655,40 +3759,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-namespace"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-namespace
           </td>
@@ -4710,40 +3782,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod
           </td>
@@ -4765,40 +3805,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod-2"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod-2
           </td>
@@ -4820,40 +3828,8 @@ Array [
           <td />
         </tr>
         <tr
-          aria-hidden={false}
-          className="bx--parent-row-v2"
-          data-parent-row={true}
           data-row-name="policy-pod-edge"
-          disabled={false}
         >
-          <td
-            className="bx--table-expand-v2"
-            headers="expand"
-          >
-            <button
-              aria-label="TableExpandRow"
-              className="bx--table-expand-v2__button"
-              onClick={[Function]}
-            >
-              <svg
-                alt="Provide a description that will be used as the title"
-                aria-label="Provide a description that will be used as the title"
-                className="bx--table-expand-v2__svg"
-                fillRule="evenodd"
-                height="12"
-                role="img"
-                viewBox="0 0 7 12"
-                width="7"
-              >
-                <title>
-                  Provide a description that will be used as the title
-                </title>
-                <path
-                  d="M5.569 5.994L0 .726.687 0l6.336 5.994-6.335 6.002L0 11.27z"
-                />
-              </svg>
-            </button>
-          </td>
           <td>
             policy-pod-edge
           </td>

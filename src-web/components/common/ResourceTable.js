@@ -25,8 +25,6 @@ import { connect } from 'react-redux'
 import { getLink, getPrimaryKey, getSecondaryKey } from '../../tableDefinitions/index'
 import { Link, withRouter } from 'react-router-dom'
 import _ from 'lodash'
-import ResourceTableRowExpandableContent from './ResourceTableRowExpandableContent'
-import ResourceTableRowExpandableList from './ResourceTableRowExpandableList'
 import filterUserAction from './FilterUserAction'
 import { LocaleContext } from './LocaleContext'
 import formatUserAccess from './FormatUserAccess'
@@ -47,14 +45,12 @@ const {
   TableRow,
   TableExpandHeader,
   TableBody,
-  TableExpandRow,
-  TableCell,
-  TableExpandedRow } = DataTable
+  TableCell
+} = DataTable
 
 export class ResourceTable extends React.Component {
   static contextType = LocaleContext
   render() {
-    const { locale } = this.context
     const {
       staticResourceData,
       page,
@@ -72,11 +68,7 @@ export class ResourceTable extends React.Component {
       itemIds,
       expandableTable,
       selectableTable,
-      tableExpandRowAriaLabel,
-      onSelect,
       onSelectAll,
-      onSelectSubItem,
-      listSubItems,
       placeHolderText,
       highLightRowName,
     } = this.props
@@ -118,7 +110,7 @@ export class ResourceTable extends React.Component {
         rows={this.getRows()}
         headers={this.getHeaders()}
         translateWithId={translateWithId.bind(null, this.context.locale)}
-        render={({ rows, headers, getRowProps }) => (
+        render={({ rows, headers }) => (
           <TableContainer id={`${id}table-container`}>
             {showSearch ?
               (<TableToolbar aria-label={`${id}search`} role='region'>
@@ -206,103 +198,20 @@ export class ResourceTable extends React.Component {
               <TableBody>
                 {(() => {
                   return rows.map(row => {
-                    if (expandableTable && row && row.id) {//check undefined row.id to avoid whole page crush
+                    if(row && row.id){
                       return (
-                        <React.Fragment key={row.id}>
-                          <TableExpandRow
-                            {...getRowProps(
-                              { row,
-                                'data-row-name': _.get(items[row.id], _.get(staticResourceData, firstResKeyStr)),
-                                'aria-hidden': expandableTable && (
-                                  items[row.id] && !items[row.id].subItems || items[row.id] && items[row.id].subItems.length === 0
-                                ),
-                                className:
-                                  (_.get(items[row.id], _.get(staticResourceData, firstResKeyStr)) === highLightRowName)
-                                    ? 'high-light'
-                                    : expandableTable && (items[row.id] && !items[row.id].subItems || items[row.id] && items[row.id].subItems.length === 0)
-                                      ? 'row-not-expanded'
-                                      : ''
-                              })} ariaLabel={tableExpandRowAriaLabel ? tableExpandRowAriaLabel : 'TableExpandRow'
-                            }>
-                            {selectableTable &&
-                              <TableCell key={`select-checkbox-${row.id}`}>
-                                <Checkbox
-                                  checked={items[row.id] && !!items[row.id].selected}
-                                  indeterminate={
-                                    items[row.id] && items[row.id].subItems && items[row.id].subItems.length > 1
-                                    && items[row.id].subItems.filter(subItem => subItem.selected).length < items[row.id].subItems.length
-                                    && items[row.id].subItems.filter(subItem => subItem.selected).length !== 0}
-                                  id={row.id}
-                                  name={`select-checkbox-row-${row.id}`}
-                                  onChange={onSelect}
-                                  labelText={''}
-                                  aria-label={msgs.get(
-                                    items[row.id] &&
-                                    items[row.id].selected
-                                      ? 'unselect'
-                                      : 'select', this.context.locale
-                                  )}
-                                />
-                              </TableCell>
-                            }
-                            {row.cells.map(cell => {
-                              if (cell.id.split(':')[1] === 'metadata.name' && row.disabled) {
-                                return <TableCell key={cell.id} className='policy-table-name-ctr'>
-                                  <div className='policy-table-name-link'>{cell.value}</div>
-                                  <div className='disabled-label'>{msgs.get('policy.disabled.label', locale)}</div>
-                                </TableCell>
-                              }
-                              else {
-                                return <TableCell key={cell.id}>{cell.value}</TableCell>
-                              }
-                            })}
-                          </TableExpandRow>
-                          {row.isExpanded && listSubItems && (
-                            <TableExpandedRow>
-                              <TableCell colSpan={1} />
-                              <TableCell colSpan={8}>
-                                <ResourceTableRowExpandableList
-                                  items={items[row.id].subItems}
-                                  type='name' />
-                              </TableCell>
-                            </TableExpandedRow>
-                          )}
-                          {row.isExpanded && !listSubItems && (
-                            <TableExpandedRow>
-                              <TableCell colSpan={selectableTable ? 2 : 1} />
-                              <TableCell colSpan={1}>
-                                <ResourceTableRowExpandableContent
-                                  items={items[row.id].subItems}
-                                  type='name'
-                                  selectableTable={selectableTable}
-                                  onSelectSubItem={onSelectSubItem} />
-                              </TableCell>
-                              <TableCell colSpan={2}>
-                                <ResourceTableRowExpandableContent
-                                  type='type'
-                                  selectableTable={selectableTable}
-                                  items={items[row.id].subItems} />
-                              </TableCell>
-                            </TableExpandedRow>
-                          )}
-                        </React.Fragment>
+                        <TableRow
+                          key={row.id}
+                          data-row-name={_.get(items[row.id], _.get(staticResourceData, firstResKeyStr))}
+                          className={
+                            _.get(items[row.id], _.get(staticResourceData, firstResKeyStr)) === highLightRowName
+                              ? 'high-light'
+                              : ''
+                          }
+                        >
+                          {row.cells.map(cell => <TableCell key={cell.id}>{cell.value}</TableCell>)}
+                        </TableRow>
                       )
-                    } else {
-                      if(row && row.id){
-                        return (
-                          <TableRow
-                            key={row.id}
-                            data-row-name={_.get(items[row.id], _.get(staticResourceData, firstResKeyStr))}
-                            className={
-                              _.get(items[row.id], _.get(staticResourceData, firstResKeyStr)) === highLightRowName
-                                ? 'high-light'
-                                : ''
-                            }
-                          >
-                            {row.cells.map(cell => <TableCell key={cell.id}>{cell.value}</TableCell>)}
-                          </TableRow>
-                        )
-                      }
                     }
                     return undefined
                   })
@@ -461,57 +370,29 @@ export class ResourceTable extends React.Component {
 
 ResourceTable.propTypes = {
   actions: PropTypes.array,
-  addResource: PropTypes.func,
-  autoAction: PropTypes.string,
   changeTablePage: PropTypes.func,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   darkSearchBox: PropTypes.bool,
-  deleteResource: PropTypes.func,
-  err: PropTypes.object,
   expandableTable: PropTypes.bool,
-  fetchResources: PropTypes.func,
   getResourceAction: PropTypes.func,
-  handleCreatePolicy: PropTypes.func,
   handleSearch: PropTypes.func,
   handleSort: PropTypes.func,
   highLightRowName: PropTypes.string,
   history: PropTypes.object.isRequired,
-  information: PropTypes.string,
   itemIds: PropTypes.array,
   items: PropTypes.object,
-  links: PropTypes.array,
-  listData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  listSubItems: PropTypes.bool,
   match: PropTypes.object,
-  modifyResource: PropTypes.func,
-  mutateErrorMsg: PropTypes.string,
-  mutateStatus: PropTypes.string,
-  onSelect: PropTypes.func,
   onSelectAll: PropTypes.func,
-  onSelectSubItem: PropTypes.func,
-  onSelectedFilterChange: PropTypes.func,
   page: PropTypes.number,
   pageSize: PropTypes.number,
   placeHolderText: PropTypes.string,
-  resourceFilters: PropTypes.object,
   resourceType: PropTypes.object,
-  searchTable: PropTypes.func,
   searchValue: PropTypes.string,
   selectableTable: PropTypes.bool,
-  selectedFilters: PropTypes.object,
   sortColumn: PropTypes.string,
   sortDirection: PropTypes.string,
-  sortTable: PropTypes.func,
   staticResourceData: PropTypes.object,
-  status: PropTypes.string,
   tableActions: PropTypes.array,
-  tableExpandRowAriaLabel: PropTypes.string,
-  tabs: PropTypes.array,
-  title: PropTypes.string,
-  topButton: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   totalFilteredItems: PropTypes.number,
-  updateBrowserURL: PropTypes.func,
-  updateSecondaryHeader: PropTypes.func,
   userAccess: PropTypes.array,
 }
 
