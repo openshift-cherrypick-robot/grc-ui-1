@@ -94,7 +94,7 @@ module.exports = {
     new CompressionPlugin({
       filename: '[path].gz',
       algorithm: 'gzip',
-      test: /\.js$|\.css$/,
+      test: /\.js$|\.css$|\.html$/
     }),
     new AssetsPlugin({
       path: path.join(__dirname, 'public'),

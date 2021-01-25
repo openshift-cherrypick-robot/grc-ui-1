@@ -15,8 +15,7 @@ const config = require('./config'),
       CopyPlugin = require('copy-webpack-plugin'),
       MiniCssExtractPlugin = require('mini-css-extract-plugin'),
       MonacoWebpackPlugin = require('monaco-editor-webpack-plugin'),
-      TerserPlugin = require('terser-webpack-plugin'),
-      ESLintPlugin = require('eslint-webpack-plugin')
+      TerserPlugin = require('terser-webpack-plugin')
 
 const PRODUCTION = process.env.BUILD_ENV ? /production/.test(process.env.BUILD_ENV) : false
 
@@ -189,7 +188,6 @@ module.exports = {
       // eslint-disable-next-line import/no-unresolved
       manifest: require('./dll/vendorhcm-manifest.json'),
     }),
-    new ESLintPlugin(),
     new MiniCssExtractPlugin({
       filename: PRODUCTION ? 'css/[name].[contenthash].css' : 'css/[name].css',
       allChunks: true
