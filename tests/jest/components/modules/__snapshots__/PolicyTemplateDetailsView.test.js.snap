@@ -3500,7 +3500,7 @@ exports[`PolicyTemplateDetailsView component renders as expected with SelfLinnk 
                 onMouseEnter={[Function]}
               >
                 <a
-                  href="/resources?cluster=calamari&kind=events&apiversion=/v1&namespace=undefined&name=openshift-multus.162c73ad488032d5"
+                  href="/multicloud/details/calamari/api/v1/namespaces/gatekeeper-system/events/openshift-multus.162c73ad488032d5"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -3591,7 +3591,7 @@ exports[`PolicyTemplateDetailsView component renders as expected with SelfLinnk 
                 onMouseEnter={[Function]}
               >
                 <a
-                  href="/resources?cluster=calamari&kind=events&apiversion=/v1&namespace=undefined&name=openshift-multus.162c749621995399"
+                  href="/multicloud/details/calamari/api/v1/namespaces/gatekeeper-system/events/openshift-multus.162c749621995399"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -3682,7 +3682,7 @@ exports[`PolicyTemplateDetailsView component renders as expected with SelfLinnk 
                 onMouseEnter={[Function]}
               >
                 <a
-                  href="/resources?cluster=calamari&kind=events&apiversion=/v1&namespace=undefined&name=openshift-multus.162c757efd7ebb62"
+                  href="/multicloud/details/calamari/api/v1/namespaces/gatekeeper-system/events/openshift-multus.162c757efd7ebb62"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -3773,7 +3773,7 @@ exports[`PolicyTemplateDetailsView component renders as expected with SelfLinnk 
                 onMouseEnter={[Function]}
               >
                 <a
-                  href="/resources?cluster=calamari&kind=events&apiversion=/v1&namespace=undefined&name=openshift-multus.162c757efd7ebb62"
+                  href="/multicloud/details/calamari/api/v1/namespaces/gatekeeper-system/events/openshift-multus.162c757efd7ebb62"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
