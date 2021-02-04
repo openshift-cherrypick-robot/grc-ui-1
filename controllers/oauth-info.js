@@ -1,3 +1,5 @@
+/* Copyright (c) 2021 Red Hat, Inc. */
+
 const oauthInfoClient = require('../lib/server/oauth-info-client')
 
 module.exports.oauthInfo = (req, res) => {

@@ -1,3 +1,5 @@
+/* Copyright (c) 2021 Red Hat, Inc. */
+
 const userInfoClient = require('../lib/server/userInfo')
 
 module.exports.userInfo = (req, res) => {
