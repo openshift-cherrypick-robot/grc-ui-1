@@ -252,7 +252,7 @@ exports[`CreationView module renders as expected with discovered data 1`] = `
               <div
                 className="creation-view-controls-multiselect-title"
               >
-                Cluster binding
+                Cluster selector
                 <div
                   content="Fill the required parameter field to select the cluster where your policy is applied. The placement policy and placement binding are required, and added into the YAML file."
                   data-testid="mockTooltip"
@@ -1164,7 +1164,7 @@ exports[`CreationView module renders as expected with empty discovered data 1`] 
               <div
                 className="creation-view-controls-multiselect-title"
               >
-                Cluster binding
+                Cluster selector
                 <div
                   content="Fill the required parameter field to select the cluster where your policy is applied. The placement policy and placement binding are required, and added into the YAML file."
                   data-testid="mockTooltip"
@@ -2076,7 +2076,7 @@ exports[`CreationView module renders as expected without discovered data 1`] = `
               <div
                 className="creation-view-controls-multiselect-title"
               >
-                creation.view.policy.binding
+                creation.view.policy.selector
                 <div
                   content="policy.create.selectors.tooltip"
                   data-testid="mockTooltip"

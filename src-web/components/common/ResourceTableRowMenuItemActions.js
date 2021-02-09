@@ -25,7 +25,10 @@ export const resourceActions = (action, dispatch, resourceType, data) => {
         data: { kind: resourceType.name, ...data }}))
   }
   case 'table.actions.launch.cluster':{
-    window.open(`${_.get(data, 'clusterConsoleURL.local-cluster', 'consoleURL')}`, '_blank')
+    const consoleURL = _.get(data, 'consoleURL')
+    if (consoleURL) {
+      window.open(`${consoleURL}`, '_blank')
+    }
     return
   }
   case 'table.actions.compliance.remove':

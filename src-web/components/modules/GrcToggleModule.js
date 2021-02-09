@@ -115,23 +115,33 @@ class GrcToggleModule extends React.Component {
 
   tableActionResolver = (rowData) => {
     const { getResourceAction, userAccess, grcTabToggleIndex} = this.props
-    let resourceType = RESOURCE_TYPES.POLICIES_BY_POLICY
-    let tableActions = grcPoliciesViewDef.tableActions
-    if (grcTabToggleIndex === 1) {
-      resourceType = RESOURCE_TYPES.POLICIES_BY_CLUSTER
-      tableActions = grcClustersViewDef.tableActions
-    }
     const { locale } = this.context
     const userAccessHash = formatUserAccess(userAccess)
     const actionsList = []
     const rowName = typeof _.get(rowData, ['0', 'title', 'props', 'children']) === 'string'
       ? _.get(rowData, ['0', 'title', 'props', 'children'])
       : _.get(rowData, ['0', 'title', 'props', 'children', '0', 'props', 'children'])
-    const rowArray = _.get(rowData, ['0', 'title', '_owner', 'stateNode', 'props', 'grcItems'])
+    let rowArray = _.get(rowData, ['0', 'title', '_owner', 'stateNode', 'props', 'grcItems'])
       ? _.get(rowData, ['0', 'title', '_owner', 'stateNode', 'props', 'grcItems'])
       : _.get(rowData, ['0', 'title', 'props', 'children[0]', '_owner', 'stateNode', 'props', 'grcItems'])
+      let resourceType, tableActions
+      // Set table definitions and actions based on toggle position
+      if (grcTabToggleIndex === 1) {
+        resourceType = RESOURCE_TYPES.POLICIES_BY_CLUSTER
+        tableActions = grcClustersViewDef.tableActions
+        rowArray = formatPoliciesToClustersTableData(rowArray)
+      } else {
+        resourceType = RESOURCE_TYPES.POLICIES_BY_POLICY
+        tableActions = grcPoliciesViewDef.tableActions
+      }
     if (rowName && Array.isArray(rowArray) && rowArray.length > 0) {
-      const row = rowArray.find(arrElement => _.get(arrElement, 'metadata.name') === rowName)
+      const row = rowArray.find(arrElement => {
+        if (grcTabToggleIndex === 0) {
+          return _.get(arrElement, 'metadata.name') === rowName
+        } else {
+          return _.get(arrElement, 'cluster') === rowName
+        }
+      })
       const filteredActions = (Array.isArray(tableActions) && tableActions.length > 0)
         ? filterUserAction(row, tableActions, userAccessHash, resourceType)
         : []

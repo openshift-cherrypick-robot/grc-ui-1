@@ -2,6 +2,7 @@
 FROM node:erbium
 
 ENV NODE_ENV=development
+ENV TERM=xterm-256color
 
 USER root
 

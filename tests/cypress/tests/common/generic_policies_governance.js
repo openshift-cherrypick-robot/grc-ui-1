@@ -11,10 +11,10 @@ import {
 import { getConfigObject } from '../../config'
 
 
-export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsInform, confFileViolationsEnforce=null, confFileClusters='clusters.yaml') => {
+export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsInform, confFileViolationsEnforce=null, confFileClusters='clusters.yaml', filteredClusterList=null) => {
 
   const confClusters = getConfigObject(confFileClusters)
-  const clusterList = Object.keys(confClusters)  // these are clusters we would be working with
+  const clusterList = filteredClusterList ? filteredClusterList : Object.keys(confClusters)
   const substitutionRules = [ [/\[ID\]/g, Cypress.env('RESOURCE_ID')] ]
   // policy-config is used for policy creation and validation
   const confPolicies = getConfigObject(confFilePolicy, 'yaml', substitutionRules)
@@ -74,7 +74,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
     const violationsCounter = getViolationsCounter(clusterViolations)
 
     it(`Verify policy ${policyName} details at the detailed page`, () => {
-      cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`)
+      cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`).waitForPageContentLoad()
       verifyPolicyInPolicyDetails(policyName, confPolicies[policyName], 'enabled', violationsCounter)
     })
 
@@ -87,11 +87,12 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
     })
 
     it(`Verify policy ${policyName} placement rule at the detailed page`, () => {
+      cy.waitForClusterPolicyStatus(clusterViolations)  // since it could happen that some clusters do not have the status yet
       verifyPlacementRuleInPolicyDetails(policyName, confPolicies[policyName], clusterViolations)
     })
 
     it(`Verify policy ${policyName} violations at the Status - Clusters page`, () => {
-      cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}/status`)
+      cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}/status`).waitForPageContentLoad()
       // verify all violations per cluster
       verifyViolationsInPolicyStatusClusters(policyName, confPolicies[policyName], clusterViolations, confViolationPatterns)
     })
@@ -105,7 +106,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
 
     for (const clusterName of clusterList) {
       it(`Verify policy details & templates on cluster ${clusterName} detailed page`, () => {
-        cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`)
+        cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`).waitForPageContentLoad()
         cy.goToPolicyClusterPage(policyName, confPolicies[policyName], clusterName)
         verifyPolicyDetailsInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations, confViolationPatterns)
         verifyPolicyTemplatesInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations)
@@ -121,7 +122,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
     for (const policyName in confPolicies) {
 
       it(`Enforce policy ${policyName}`, () => {
-        cy.visit('/multicloud/policies/all')
+        cy.visit('/multicloud/policies/all').waitForPageContentLoad()
         actionPolicyActionInListing(policyName, 'Enforce')
       })
 
@@ -141,7 +142,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
       const violationsCounter = getViolationsCounter(clusterViolations)
 
       it(`Wait for policy ${policyName} status to become available`, () => {
-        cy.visit('/multicloud/policies/all')
+        cy.visit('/multicloud/policies/all').waitForPageContentLoad()
         cy.waitForPolicyStatus(policyName, violationsCounter)
       })
 
@@ -150,7 +151,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
       })
 
       it(`Verify policy ${policyName} details at the detailed page`, () => {
-        cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`)
+        cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`).waitForPageContentLoad()
         verifyPolicyInPolicyDetails(policyName, confPolicies[policyName], 'enabled', violationsCounter)
       })
 
@@ -163,11 +164,12 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
       })
 
       it(`Verify policy ${policyName} placement rule at the detailed page`, () => {
+        cy.waitForClusterPolicyStatus(clusterViolations)  // since it could happen that some clusters do not have the status yet
         verifyPlacementRuleInPolicyDetails(policyName, confPolicies[policyName], clusterViolations)
       })
 
       it(`Verify policy ${policyName} violations at the Status - Clusters page`, () => {
-        cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}/status`)
+        cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}/status`).waitForPageContentLoad()
         // verify all violations per cluster
         verifyViolationsInPolicyStatusClusters(policyName, confPolicies[policyName], clusterViolations, confViolationPatterns)
       })
@@ -181,7 +183,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
 
       for (const clusterName of clusterList) {
         it(`Verify policy details & templates on cluster ${clusterName} detailed page`, () => {
-          cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`)
+          cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`).waitForPageContentLoad()
           cy.goToPolicyClusterPage(policyName, confPolicies[policyName], clusterName)
           verifyPolicyDetailsInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations, confViolationPatterns)
           verifyPolicyTemplatesInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations)
@@ -222,7 +224,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
         const url = `/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}/status/${clusterName}/templates/${templateName}/history`
 
         it(`Verify the History page for policy ${policyName} cluster ${clusterName} template ${templateName}`, () => {
-          cy.visit(url)
+          cy.visit(url).waitForPageContentLoad()
           verifyPolicyViolationDetailsInHistory(templateName, violations, confViolationPatterns)
         })
 
@@ -234,7 +236,7 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
   for (const policyName in confPolicies) {
     it(`Policy ${policyName} can be deleted in the policy listing`, () => {
       // we could use a different way how to return to this page
-      cy.visit('/multicloud/policies/all')
+      cy.visit('/multicloud/policies/all').waitForPageContentLoad()
       actionPolicyActionInListing(policyName, 'Remove')
     })
 

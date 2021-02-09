@@ -64,7 +64,7 @@ const controlData = [
     mustExist: true,
   },
   {
-    name: 'creation.view.policy.binding',
+    name: 'creation.view.policy.selector',
     description: 'policy.create.selectors.tooltip',
     placeholder: 'creation.view.policy.select.selectors',
     id: 'clusters',

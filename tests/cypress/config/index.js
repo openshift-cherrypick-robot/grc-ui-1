@@ -56,3 +56,10 @@ exports.getConfigObject = (relativePath, configFormat='', substitutions=[]) => {
     throw new Error(e)
   }
 }
+
+exports.getClusterListByVendor = (vendor, confFile='clusters.yaml') => {
+  const confClusters = exports.getConfigObject(confFile)
+  const clusterList = Object.keys(confClusters)
+  const newList = clusterList.filter((v) => {return confClusters[v]['vendor'] == vendor})
+  return newList
+}

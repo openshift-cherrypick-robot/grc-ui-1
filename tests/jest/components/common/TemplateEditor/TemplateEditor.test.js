@@ -105,7 +105,7 @@ const controlData = [
     ]
   },
   {
-    'name': 'Cluster binding',
+    'name': 'Cluster selector',
     'description': 'Fill the required parameter field to select the cluster where your policy is applied. The placement policy and placement binding are required, and added into the YAML file.',
     'placeholder': 'Begin typing to search for label to select',
     'id': 'clusters',

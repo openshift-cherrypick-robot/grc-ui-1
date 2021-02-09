@@ -3,11 +3,11 @@
 test-imagemanifest-policy-[ID]:
   apiVersion: 'policy.open-cluster-management.io/v1'
   namespace: 'default'
-#  cluster_binding:
-#    - 'name: "dhaks1020-2-dho-461"'
+  cluster_binding:
+    - 'vendor: "OpenShift"'
 #    - 'local-cluster: "true"'
   binding_selector:
-    - 'matchExpressions =[]'
+    - 'matchExpressions =[ { "key": "vendor", "operator": "In", "values": [ "OpenShift" ] } ]'
 #    - 'matchExpressions =[ { "key": "name", "operator": "In", "values": [ "dhaks1020-2-dho-461" ] } ]'
 #    - 'matchExpressions =[ { "key": "local-cluster", "operator": "In", "values": [ "true" ] } ]'
   kind: 'ConfigurationPolicy'

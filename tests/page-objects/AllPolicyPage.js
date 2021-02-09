@@ -179,9 +179,13 @@ function verifyTable(browser, cluster) {
 }
 // Test content toggle
 function verifyToggle() {
+  // CLUSTER TOGGLE
   this.click('@toggleButtonCluster')
   this.waitForElementVisible('@allTableHeading')
   this.expect.element('@allTableHeading').text.to.equal('Cluster name')
+  // Check to make sure the cluster link redirects to its RHACM cluster page
+  this.expect.element('tbody tr > *:first-child > a').to.have.attribute('href').that.matches(/.*\/multicloud\/clusters\/[a-z0-9-]+\/overview$/)
+  // POLICY TOGGLE
   this.click('@toggleButtonPolicies')
   this.waitForElementVisible('@allTableHeading')
   this.expect.element('@allTableHeading').text.to.equal('Policy name')

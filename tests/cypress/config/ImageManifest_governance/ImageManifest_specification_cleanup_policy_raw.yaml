@@ -17,7 +17,7 @@ spec:
       metadata:
         name: imagespec-cleanup-[ID]-image-vulnerability-sub
       spec:
-        remediationAction: inform # will be overridden by remediationAction in parent policy
+        remediationAction: inform
         severity: high
         object-templates:
           - complianceType: mustnothave
@@ -27,28 +27,20 @@ spec:
               metadata:
                 name: container-security-operator
                 namespace: openshift-operators
-              spec:
-                channel: quay-v3.3
-                installPlanApproval: Automatic
-                name: container-security-operator
-                source: redhat-operators
-                sourceNamespace: openshift-marketplace
-  - objectDefinition:
-      apiVersion: policy.open-cluster-management.io/v1
-      kind: ConfigurationPolicy
-      metadata:
-        name: imagespec-cleanup-[ID]-image-vulnerabilities
-      spec:
-        remediationAction: inform # will be overridden by remediationAction in parent policy
-        severity: high
-        namespaceSelector:
-          exclude: ["kube-*"]
-          include: ["*"]
-        object-templates:
-          - complianceType: mustnothave # mustnothave any ImageManifestVuln object
+          - complianceType: mustnothave
             objectDefinition:
-              apiVersion: secscan.quay.redhat.com/v1alpha1
-              kind: ImageManifestVuln # checking for a kind
+              apiVersion: operators.coreos.com/v1alpha1
+              kind: ClusterServiceVersion
+              metadata:
+                name: container-security-operator.v3.3.4
+                namespace: openshift-operators
+          - complianceType: mustnothave
+            objectDefinition:
+              apiVersion: apiextensions.k8s.io/v1
+              kind: CustomResourceDefinition
+              metadata:
+                name: imagemanifestvulns.secscan.quay.redhat.com
+          
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding

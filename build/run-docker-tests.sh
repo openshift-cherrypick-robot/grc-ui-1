@@ -49,6 +49,7 @@ export PAUSE=${PAUSE:-60}
 echo sleep $PAUSE seconds cypress ...
 sleep $PAUSE
 export CYPRESS_coverage=false
+export CI=true # force cypress to output color
 if [ $FAIL_FAST == "true" ]; then
   echo "Running in fail fast mode"
   npm run test:cypress-headless
@@ -58,4 +59,5 @@ fi
 
 echo sleep $PAUSE seconds selenium ...
 sleep $PAUSE
+unset CI # unset for nightwatch
 npm run test:e2e-headless

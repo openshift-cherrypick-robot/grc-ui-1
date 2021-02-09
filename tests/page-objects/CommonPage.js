@@ -204,6 +204,7 @@ function checkStatus(name, violationExpected, violationText) {
   this.waitForElementPresent('#status-tab')
   this.click('#status-tab')
   this.waitForElementPresent('.policy-status-view')
+  this.expect.element('tbody tr > *:first-child > a').to.have.attribute('href').that.matches(/.*\/multicloud\/clusters\/[a-z0-9-]+\/overview$/)
   this.testPolicyStatusTabSearching()
   this.log('Checking policy status by templates')
   this.waitForElementPresent('#policy-status-templates').click('#policy-status-templates')
@@ -292,7 +293,7 @@ function clearPatternFlySearchValue(){
 }
 
 function testPolicyStatusTabSearching(){
-  this.log('Testing PsatternFly tab searching bar on policy status tab message field')
+  this.log('Testing PatternFly tab searching bar on policy status tab message field')
   this.api.getText('.policy-details-message', (result) => {
     if (result && result.value ) {
       // get policy status tab message field text

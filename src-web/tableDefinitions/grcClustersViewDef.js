@@ -3,7 +3,7 @@
 'use strict'
 
 import {
-  createClusterLink,
+  buildClusterLink,
   getClusterCompliantStatus,
   getClusterViolationLabels,
 } from './utils'
@@ -23,7 +23,7 @@ export default {
       resourceKey: 'cluster',
       transforms: [wrappable, sortable],
       cellTransforms: [breakWord],
-      transformFunction: createClusterLink,
+      transformFunction: buildClusterLink,
     },
     {
       msgKey: 'table.header.cluster.namespace',

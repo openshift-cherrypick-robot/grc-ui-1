@@ -20,7 +20,7 @@
   "creation.view.policy.enforce": "Enforce if supported",
   "creation.view.policy.disabled": "Disable policy",
   "creation.view.policy.specs": "Specifications",
-  "creation.view.policy.binding": "Cluster binding",
+  "creation.view.policy.selector": "Cluster selector",
   "creation.view.policy.standards": "Standards",
   "creation.view.policy.categories": "Categories",
   "creation.view.policy.controls": "Controls",

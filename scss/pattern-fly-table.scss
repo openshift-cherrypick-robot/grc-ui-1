@@ -4,7 +4,8 @@
   .pf-c-search-input {
     background-color: white;
     margin: 8px 0 8px 0;
-    width: 248px;
+    min-width: 248px;
+    width: 32%;
 
     .pf-c-button {
       padding: 0;

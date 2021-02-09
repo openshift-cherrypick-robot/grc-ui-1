@@ -279,7 +279,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
               <div
                 className="creation-view-controls-multiselect-title"
               >
-                Cluster binding
+                Cluster selector
                 <div
                   content="Fill the required parameter field to select the cluster where your policy is applied. The placement policy and placement binding are required, and added into the YAML file."
                   data-testid="mockTooltip"

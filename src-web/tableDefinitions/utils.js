@@ -79,16 +79,13 @@ export const buildTimestamp = (item) => {
 
 export function buildClusterLink(item) {
   const cluster = _.get(item, 'cluster')
-  const clusterNamespace = _.get(item, 'clusterNamespace')
-  if (cluster && clusterNamespace) {
-    const clusterURL = `${config.clusterContextPath}/${clusterNamespace}/${cluster}`
+  if (cluster) {
+    const clusterURL = `${config.clusterContextPath}/${cluster}/overview`
     return <a
       rel='noopener noreferrer'
       href={clusterURL}>
       {cluster}
     </a>
-  } else if (cluster) {
-    return cluster
   }
   return '-'
 }
@@ -188,16 +185,6 @@ export function getPolicyCompliantStatus(item, locale) {
       {`${violationCount}/${totalCount}`}
     </div>
   )
-}
-
-export function createClusterLink(item){
-  if (item && item.cluster && item.namespace) {
-    return <a href={`${config.clusterContextPath}/${item.namespace}/${item.cluster}`}>{item.cluster}</a>
-  }
-  else if (item && item.cluster) {
-    return item.cluster
-  }
-  return '-'
 }
 
 export function getClusterCompliantStatus(item, locale) {
