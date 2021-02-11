@@ -280,8 +280,7 @@ describe('on control change function', () => {
       target: { value: 'policy-pod' }
     }
     expect(wrapper.instance().onChange('name', evt_duplicateName)).toEqual('name')
-    expect(wrapper.instance().state.duplicateName).toEqual(true)
-    expect(wrapper.instance().renderNotifications().props).toMatchSnapshot()
+    expect(wrapper.instance().state.duplicateName).toEqual(false)
     const evt_emptyName = {
       target: { value: '' }
     }
@@ -335,8 +334,7 @@ describe('on control change function', () => {
       target: { value: 'policy-pod' }
     }
     expect(wrapper.instance().onChange('name', evt_duplicateName)).toEqual('name')
-    expect(wrapper.instance().state.duplicateName).toEqual(true)
-    expect(wrapper.instance().renderNotifications().props).toMatchSnapshot()
+    expect(wrapper.instance().state.duplicateName).toEqual(false)
     const evt_emptyName = {
       target: { value: '' }
     }

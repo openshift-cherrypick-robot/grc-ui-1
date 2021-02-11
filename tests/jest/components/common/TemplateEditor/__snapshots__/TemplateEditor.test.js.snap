@@ -1048,27 +1048,6 @@ exports[`TemplateEditor component renders as expected 1`] = `
 `;
 
 exports[`on control change function renders as expected 1`] = `
-Object {
-  "aria-label": "Name already exists: pressing 'Create' will prompt to update the existing policy",
-  "children": <div>
-    <Notification
-      className="persistent notification"
-      hideCloseButton={false}
-      iconDescription=""
-      kind="warning"
-      onCloseButtonClick={[Function]}
-      subtitle="Name already exists: pressing 'Create' will prompt to update the existing policy"
-      title="Alert:"
-    />
-  </div>,
-  "onClick": [Function],
-  "onKeyDown": [Function],
-  "role": "button",
-  "tabIndex": "0",
-}
-`;
-
-exports[`on control change function renders as expected 2`] = `
 <div
   aria-label="Invalid name: should only have lowercase alphanumeric characters, '-', or '.' and not begin or end with punctuation"
   onClick={[Function]}
@@ -1105,28 +1084,7 @@ exports[`on control change function renders as expected 2`] = `
 </div>
 `;
 
-exports[`on control change function renders as expected 3`] = `
-Object {
-  "aria-label": "Name already exists: pressing 'Create' will prompt to update the existing policy",
-  "children": <div>
-    <Notification
-      className="persistent notification"
-      hideCloseButton={false}
-      iconDescription=""
-      kind="warning"
-      onCloseButtonClick={[Function]}
-      subtitle="Name already exists: pressing 'Create' will prompt to update the existing policy"
-      title="Alert:"
-    />
-  </div>,
-  "onClick": [Function],
-  "onKeyDown": [Function],
-  "role": "button",
-  "tabIndex": "0",
-}
-`;
-
-exports[`on control change function renders as expected 4`] = `
+exports[`on control change function renders as expected 2`] = `
 <div
   aria-label="Invalid name: should only have lowercase alphanumeric characters, '-', or '.' and not begin or end with punctuation"
   onClick={[Function]}

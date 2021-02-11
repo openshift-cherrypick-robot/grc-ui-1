@@ -85,21 +85,13 @@ export const checkItems = (labels, listQuery, itemQuery=selectItemQuery, labelQu
               .contains(label)
               .click()
           })
-          // verify that the item is checked but first need to query the element again as it has been probably recreated
-          .then( () => {
-            if (!Cypress.$(listQuery).find(itemQuery).length) { // drow-down is collapsed, need to open it again
-              cy.get(listQuery)
-                .click()
-            }
-          })
-          .get(listQuery).within(() => {
-            cy.get(itemQuery)
-          })
-          .get(listQuery).within(() => {
-            cy.get(closeMenuQuery)
-              .click()
-          })
         }
+      })
+      // clear the input field
+      .then(() => {
+        cy.get(listQuery).within(() => {
+          cy.get('input.bx--text-input').first().clear()
+        })
       })
       .then(() => {
         resolve('checkItems')
@@ -107,12 +99,52 @@ export const checkItems = (labels, listQuery, itemQuery=selectItemQuery, labelQu
   })
 }
 
+export const verifyItemsChecked = (labels, listQuery, itemQuery=selectItemQuery, labelQuery='label') => {
+  // we should use a promise to complete this task first prior moving on
+  return new Cypress.Promise((resolve) => {
+    // now check all the required values
+    cy.get(listQuery)
+      .then(() => {
+        // first need to query the element again as it has been probably recreated
+        cy.then( () => {
+          if (!Cypress.$(listQuery).find(itemQuery).length) { // drow-down is collapsed, need to open it again
+            cy.get(listQuery)
+              .click()
+          }
+        })
+        // verify that the item is checked
+        .then(() => {
+          for (const label of labels) {
+            cy.get(listQuery).within(() => {
+              cy.get(labelQuery).contains(label).parents('label').siblings(itemQuery).should('be.checked')
+            })
+          }
+        })
+        // collapse the dropdown menu
+        .get(listQuery).within(() => {
+          cy.get(closeMenuQuery)
+            .click()
+        })
+      })
+      .then(() => {
+        resolve('verifyItemsChecked')
+      })
+  })
+}
 
-export const selectItems = async (labels, listQuery, itemQuery='input[type="checkbox"]', labelQuery='.bx--checkbox-label') => {
+
+export const selectItems = async (labels, listQuery, itemQuery='input[type="checkbox"]', labelQuery='.bx--checkbox-label', verifyChecked=true) => {
   uncheckAllItems(listQuery, itemQuery)
   .then( () => {
     if (labels.length) {
-      checkItems(labels, listQuery, itemQuery, labelQuery)
+      cy.then(() => {
+        checkItems(labels, listQuery, itemQuery, labelQuery)
+      })
+      .then(() => {
+        if (verifyChecked) {
+          verifyItemsChecked(labels, listQuery, itemQuery, labelQuery)
+        }
+      })
     }
   })
   //.then(() => { uncheckAllItems(listQuery, itemQuery) })  // this is here just if needed to test that uncheck works

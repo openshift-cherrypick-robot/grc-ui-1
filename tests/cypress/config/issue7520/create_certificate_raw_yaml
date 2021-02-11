@@ -1,0 +1,83 @@
+# the following variables must be substituted
+# [POLICYNAME]
+# [CERTNAME]
+# [CERTNAMESPACE]
+# [CN]
+# [DNSNAMES]
+# [SECRETNAME]
+# [DURATION]
+# [ISSUER]
+# [RENEWBEFORE]
+# [CLUSTERSELECTOR]
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: [POLICYNAME]
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/categories: PR.PT Protective Technology
+    policy.open-cluster-management.io/controls: PR.PT-3 Least Functionality
+    policy.open-cluster-management.io/standards: NIST-CSF
+spec:
+  disabled: false
+  remediationAction: enforce
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: [POLICYNAME]
+        spec:
+          remediationAction: enforce
+          severity: low
+          namespaceSelector:
+            exclude: ["default", "kube-*"]
+            include: ["[CERTNAMESPACE]"]
+#            exclude: ["kube-*"]
+#            include: ["default"]
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: cert-manager.io/v1alpha3
+                kind: Certificate
+                metadata:
+                  name: [CERTNAME]
+                  namespace: [CERTNAMESPACE]
+                spec:
+                  commonName: [CN]
+                  dnsNames:
+                    - [DNSNAMES]
+                  duration: [DURATION]
+                  isCA: true
+                  issuerRef:
+                    name: [ISSUER]
+                    kind: Issuer
+                  renewBefore: [RENEWBEFORE]
+                  secretName: [SECRETNAME]
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-[POLICYNAME]
+  namespace: default
+placementRef:
+  name: placement-[POLICYNAME]
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: [POLICYNAME]
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-[POLICYNAME]
+  namespace: default
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      [CLUSTERSELECTOR]
