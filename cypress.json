@@ -17,7 +17,7 @@
   "videoCompression": false,
   "watchForFileChanges": true,
   "nodeVersion": "system",
-  "experimentalRunEvents": "true",
+  "experimentalRunEvents": true,
   "env": {
     "OC_IDP": "kube:admin",
     "OC_CLUSTER_USER": "kubeadmin"
