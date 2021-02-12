@@ -30,6 +30,9 @@ $DIR/setup-dev.sh
 echo "Create RBAC users"
 source $DIR/rbac-setup.sh
 
+echo "setup cluster for test"
+$DIR/cluster-setup.sh
+
 echo "Export envs to run e2e"
 export SERVICEACCT_TOKEN=`${BUILD_HARNESS_PATH}/vendor/oc whoami --show-token`
 export headerUrl=https://`oc get route multicloud-console -n open-cluster-management -o=jsonpath='{.spec.host}'`

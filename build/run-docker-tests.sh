@@ -11,6 +11,9 @@ else
   source ./build/rbac-setup.sh
 fi
 
+# setup cluster for test
+./build/cluster-setup.sh
+
 #Get env from Docker arguments
 export SELENIUM_CLUSTER=https://`oc get route multicloud-console -n open-cluster-management -o=jsonpath='{.spec.host}'`
 export SELENIUM_USER=${SELENIUM_USER:-${OC_CLUSTER_USER}}
