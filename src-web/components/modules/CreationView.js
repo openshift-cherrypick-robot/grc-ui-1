@@ -215,9 +215,10 @@ const getControlData = (discovered, locale) => {
     // add discovered choices from server
     //  add available annotations to categories, etc controls
     //  add existing policy names to name control
-    const {policyNames, namespaces, annotations, clusterLabels} = discovered
+    const {policyNames, namespaces, annotations, clusterLabels, policiesByNamespace } = discovered
     const {name, namespace, clusters, standards, categories, controls } = _.keyBy(mergedData, 'id')
     name.existing = policyNames
+    name.existingByNamespace = policiesByNamespace
     namespace.available = namespaces
     clusters.available = clusterLabels
     if ((typeof annotations.standards === 'object' && Object.keys(annotations.standards).length > 0)

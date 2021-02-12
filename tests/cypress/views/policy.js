@@ -27,7 +27,7 @@ export const getDefaultSubstitutionRules = (rules = {}) => {
   return substitutions
 }
 
-export const createPolicyFromYAML = (policyYAML, create=false) => {
+export const createPolicyFromYAML = (policyYAML, create=true) => {
   console.log(policyYAML)
   cy.toggleYAMLeditor('On')
     .YAMLeditor()
@@ -36,14 +36,13 @@ export const createPolicyFromYAML = (policyYAML, create=false) => {
     .then(() => {
       if (create) {
         cy.get('#create-button-portal-id-btn').click()
+        cy.CheckGrcMainPage()
       }
     })
-    // after creation, always return to grc main page
-    cy.CheckGrcMainPage()
 }
 
 // this function is mainly used to testing selection on the create policy page
-export const createPolicyFromSelection = (uPolicyName, create=false, policyConfig) => {
+export const createPolicyFromSelection = (uPolicyName, create=true, policyConfig) => {
   // fill the form uName
   cy.get('input[aria-label="name"]')
     .clear()
@@ -93,11 +92,10 @@ export const createPolicyFromSelection = (uPolicyName, create=false, policyConfi
     .then(() => {
       if (create) {
         cy.get('#create-button-portal-id-btn').click()
+        // after creation, always return to grc main page
+        cy.CheckGrcMainPage()
       }
     })
-
-    // after creation, always return to grc main page
-    cy.CheckGrcMainPage()
 }
 
 // enabled='enabled', checking if policy is enabled; enabled='disabled', checking if policy is disabled
@@ -599,9 +597,10 @@ export const getClusterPolicyStatus = (clusterViolations, format='long') => {
   // if the policy status would be unknown return '?'
   let result = 'Compliant'
   for (const violation of clusterViolations) {
-    if (violation.endsWith('-?')) {  // if the status is unknown
+    const id = violation.replace(/^.*-/, '')
+    if (id == '?') {  // if the status is unknown
       result = '(Compliant|Not Compliant)'
-    } else if (!violation.endsWith('-0')) {  // if there is an actual violation (non-zero ID)
+    } else if (id[0] != '0') {  // if there is an actual violation (non-zero ID)
       result = 'Not Compliant'
       break
     }
@@ -628,10 +627,11 @@ export const getViolationsCounter = (clusterViolations) => {
     // in theory there could be multiple violations found by one policy
     // also, if the policy has multiple specifications there could be even multiple compliances
     for (const violation of clusterViolations[cluster]) {
-      if (violation.endsWith('?')) { // unspecific violation
+      const id = violation.replace(/^.*-/, '')
+      if (id == '?') { // unspecific violation
         return '[0-9]+/'+clusters
       }
-      if (!violation.endsWith('-0')) {  // if there is an actual violation (non-zero ID)
+      if (id[0] != '0') {  // if there is an actual violation (non-zero ID)
         violations = violations + 1
         break  // stop checking this server
       }
@@ -741,7 +741,7 @@ export const verifyViolationsInPolicyStatusClusters = (policyName, policyConfig,
           // FIXME: here we should have a function that split the content per ';' and tests each part agains Compliant/NonCompliant and expected messages
           if (id == '?') {
             cy.wrap(message).contains(new RegExp('(NonCompliant|Compliant); '+violationPatterns[templateName][id]))
-          } else if (id == '0') {
+          } else if (id[0] == '0') {
             cy.wrap(message).contains(new RegExp('Compliant; '+violationPatterns[templateName][id]))
           } else {
             cy.wrap(message).contains(new RegExp('NonCompliant; '+violationPatterns[templateName][id]))
@@ -763,7 +763,7 @@ export const verifyViolationsInPolicyStatusClusters = (policyName, policyConfig,
 
 export const getPolicyStatusForViolationId = (id, format='long') => {
   if (format == 'long') {
-    switch(id) {
+    switch(id[0]) {  // take just the first digit
       case '?':
         return '(Not compliant|Compliant)'
       case '0':
@@ -773,7 +773,7 @@ export const getPolicyStatusForViolationId = (id, format='long') => {
     }
   }
   if (format == 'short') {
-    switch(id) {
+    switch(id[0]) {
       case '?':
         return '(NonCompliant|Compliant)'
       case '0':
@@ -813,7 +813,7 @@ export const verifyViolationsInPolicyStatusTemplates = (policyName, policyConfig
             // FIXME: here we should have a function that split the content per ';' and tests each part agains Compliant/NonCompliant and expected messages
             if (id == '?') {
               cy.wrap(message).contains(new RegExp('(NonCompliant|Compliant); '+violationPatterns[templateName][id]))
-            } else if (id == '0') {
+            } else if (id[0] == '0') {
               cy.wrap(message).contains(new RegExp('Compliant; '+violationPatterns[templateName][id]))
             } else {
               cy.wrap(message).contains(new RegExp('NonCompliant; '+violationPatterns[templateName][id]))
@@ -934,6 +934,42 @@ export const verifyPolicyViolationDetailsInHistory = (templateName, violations, 
         cy.wrap(state).contains(new RegExp(policyStatus))
         cy.wrap(timestamp).contains(/^(an?|[0-9]+) (days?|hours?|minutes?|few seconds) ago$/)
       })
+    }
+  })
+}
+
+export const checkNotificationMessage = (kind, title, notification) => {
+  cy.get('div[kind="'+kind+'"]').within( () => {
+    cy.get('.bx--inline-notification__title').should('contain', title)
+    cy.get('svg[fill-rule="evenodd"]').should('exist')
+    cy.get('.bx--inline-notification__subtitle').should('contain', notification)
+  })
+}
+
+export const verifyPolicyTemplateViolationDetailsForCluster = (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+  const violations = clusterViolations[clusterName]
+  const clusterStatus = getClusterPolicyStatus(violations, 'short')
+  cy.get('div.overview').find('div.pf-c-description-list__text').spread((name, cluster, kind, api, compliant, details) => {
+    // check name
+    cy.wrap(name).contains(policyName)
+    // check cluster name
+    cy.wrap(cluster).contains(clusterName)
+    // check policy kind
+    if (policyConfig['kind']) {
+      cy.wrap(kind).contains(policyConfig['kind'])
+    }
+    // check apiVersion
+    if (policyConfig['apiVersion']) {
+      cy.wrap(api).contains(policyConfig['apiVersion'])
+    }
+    // check status
+    cy.wrap(compliant).contains(clusterStatus)
+    // check details
+    for (const violation of violations) {
+      const templateName = violation.replace(/-[^-]*$/, '')
+      const id = violation.replace(/^.*-/, '')
+      const pattern = violationPatterns[templateName][id]
+      cy.wrap(details).contains(pattern)
     }
   })
 }

@@ -105,6 +105,24 @@ module.exports = {
     common.deletePolicy('policy-limitrange-' + time)
   },
 
+  'GRC UI: [P1][Sev1][policy-grc] All policy page: Verify duplicate policy creation in different NS': (browser) => {
+    // Verify duplicate policy creation in different NS
+    const time = browser.globals.time
+    const nsPolicy = fs.readFileSync(path.join(__dirname, 'yaml/create_policy/create_ns_template.yaml'))
+    var nsYaml = nsPolicy.toString()
+    common.createPolicy(browser, 'policy-create-ns-for-dup-' + time, nsYaml, time)
+    //create 2 policies with the same name in different namespaces
+    const originalPolicy = fs.readFileSync(path.join(__dirname, 'yaml/create_policy/pod_template_original.yaml'))
+    var originalYaml = originalPolicy.toString()
+    common.createPolicy(browser, 'policy-pod-dup-test-' + time, originalYaml, time)
+    const dupPolicy = fs.readFileSync(path.join(__dirname, 'yaml/create_policy/pod_template_duplicate.yaml'))
+    var dupYaml = dupPolicy.toString()
+    common.createPolicy(browser, 'policy-pod-dup-test-' + time, dupYaml, time)
+    common.deletePolicy('policy-create-ns-for-dup-' + time)
+    common.deletePolicy('policy-pod-dup-test-' + time)
+    common.deletePolicy('policy-pod-dup-test-' + time)
+  },
+
   'GRC UI: [P1][Sev1][policy-grc] All policy page: Verify summary table': (browser) => {
     common.clearPatternFlySearchValue()
     page.verifySummary(`${browser.launch_url}${config.get('contextPath')}/all`)

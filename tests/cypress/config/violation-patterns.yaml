@@ -2,6 +2,7 @@
 [POLICYNAME]-cert-expiration:
  ?: "(notification|violation)"
  0: "TBD"
+ "01": "No namespaces matched the namespace selector"
  1: "TBD"
 # ComplianceOperator specification
 comp-operator-ns:
@@ -79,6 +80,7 @@ gatekeeper-operator-subscription:
  ?: "(notification|violation)"
  0: "notification - pods \\[nginx-pod\\] in namespace [NAMESPACE] (was missing, and was created successfully|found as specified, therefore this Object template is compliant)"
  1: "violation - pods not found: \\[nginx-pod\\] in namespace [NAMESPACE] missing"
+ 2: "violation - namespaced object has no namespace specified"
 # PodSecurityPolicy specification
 [POLICYNAME]-restricted-psp:
  ?: "(notification|violation)"

@@ -5,13 +5,17 @@ import {
 } from '../../views/policy'
 import { getConfigObject } from '../../config'
 
-export const cleanup_usingPolicyYAML = (confFilePolicy) => {
+export const cleanup_usingPolicyYAML = (confFilePolicy, substitutionRules=null) => {
 
-  const rawPolicyYAML = getConfigObject(confFilePolicy, 'raw', getDefaultSubstitutionRules())
+  if (substitutionRules === null) {
+    substitutionRules = getDefaultSubstitutionRules()
+  }
+  const rawPolicyYAML = getConfigObject(confFilePolicy, 'raw', substitutionRules)
   const policyName = rawPolicyYAML.replace(/\r?\n|\r/g, ' ').replace(/^.*?name:\s*/m, '').replace(/\s.*/m,'')
 
   it('Create the clean up policy using the YAML', () => {
     cy.visit('/multicloud/policies/create')
+    cy.log(rawPolicyYAML)
     createPolicyFromYAML(rawPolicyYAML, true)
   })
 

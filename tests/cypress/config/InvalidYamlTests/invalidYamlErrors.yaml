@@ -1,0 +1,6 @@
+invalidName:
+  msg: "Invalid name due to Kubernetes naming restriction.The name must meet the following requirements:• contain no more than 253 characters• contain only lowercase alphanumeric characters, '-' or '.'• start with an alphanumeric character• end with an alphanumeric character"
+missingNamespace:
+  msg: "Missing: metadata.namespace"
+badIndentation:
+  msg: "Bad indentation of a mapping entry"

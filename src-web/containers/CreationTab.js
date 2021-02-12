@@ -96,6 +96,7 @@ export class CreationTab extends React.Component {
             prs.push(resourceJSON[i])
           }
         }
+        const targetNS = plc.metadata.namespace
         handleFetchResource(RESOURCE_TYPES.POLICY, {
           clusterName: plc.metadata.namespace,
           name: plc.metadata.name
@@ -112,13 +113,13 @@ export class CreationTab extends React.Component {
             pbs: pbs.map((pb => pb.metadata.name)),
           })
         }).then((res) => {
-          this.addPBs(res, pbs, update, create)
+          this.addPBs(res, pbs, update, create, targetNS)
         }).then(() => {
           return handleFetchResource(RESOURCE_TYPES.PLACEMENT_RULE, {
             prs: prs.map((pr => pr.metadata.name)),
           })
         }).then((res) => {
-          this.addPRs(res, prs, update, create)
+          this.addPRs(res, prs, update, create, targetNS)
         }).then(() => {
           return resolve({ create, update })
         })
@@ -127,7 +128,7 @@ export class CreationTab extends React.Component {
     return Promise.resolve()
   }
 
-  addPBs = (res, pbs, update, create) => {
+  addPBs = (res, pbs, update, create, namespace) => {
     if (res.items.placementBindings) {
       const resPBs = {}
       res.items.placementBindings.forEach((b) => {
@@ -135,7 +136,7 @@ export class CreationTab extends React.Component {
       })
       pbs.forEach((pb) => {
         const resPB = resPBs[pb.metadata.name]
-        if (resPB) {
+        if (resPB && resPB.metadata.namespace === namespace) {
           pb.metadata.selfLink = resPB.metadata.selfLink
           pb.metadata.resourceVersion = resPB.metadata.resourceVersion
           update.push(pb)
@@ -148,7 +149,7 @@ export class CreationTab extends React.Component {
     }
   }
 
-  addPRs = (res, prs, update, create) => {
+  addPRs = (res, prs, update, create, namespace) => {
     if (res.items.placementRules) {
       const resPRs = {}
       res.items.placementRules.forEach((r) => {
@@ -156,7 +157,7 @@ export class CreationTab extends React.Component {
       })
       prs.forEach((pr) => {
         const resPR = resPRs[pr.metadata.name]
-        if (resPR) {
+        if (resPR && resPR.metadata.namespace === namespace) {
           pr.metadata.selfLink = resPR.metadata.selfLink
           pr.metadata.resourceVersion = resPR.metadata.resourceVersion
           update.push(pr)

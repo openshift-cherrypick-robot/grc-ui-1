@@ -260,16 +260,3 @@ export const highlightChanges = (editor, oldYAML, newYAML) => {
   // Return list so that other decorations can be added
   return decorationList
 }
-
-export const getUniqueName = (name, nameSet) => {
-  if (nameSet.has(name)) {
-    let count=1
-    const baseName = name.replace(/-*\d+$/, '')
-    do {
-      name = `${baseName}-${count}`
-      count++
-    } while (nameSet.has(name))
-  }
-  return name
-}
-

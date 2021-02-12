@@ -173,6 +173,7 @@ In order to be able to do a violation check for a policy and server we need to c
  ** Each cluster violation has unique identifier in a configuration consisting of a template name and a number
  ** Each violation identifier maps to a regexp pattern matching the actual violation text
  ** Number 0 is reserved for a text expressing compliance with a specification
+ ** Later on it turned out we may have multiple compliant messages. To address that need use id which is a string starting with '0', e.g. '01', '02' etc.
  3. From a list of all expected violations per server we filter out only violations relevant for particular policy - using `getViolationsPerPolicy()`. This is handy so we do not have to maintain cluster violations per policy.
  4. Once we know cluster&policy specific violations we can say what is the expected policy status (using `getClusterPolicyStatus()`) and number of non-compliant clusters (using `getViolationsCounter()`)
  ** Using respective regexp patterns we can verify respective violation texts

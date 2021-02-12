@@ -313,7 +313,8 @@ function testPolicyStatusTabSearching(){
 function setPatternFlySearchValue(value){
   this.log(`Searching for PatternFly table: ${value}`)
   this.waitForElementVisible('@searchPatternFlyInput')
-  this.click('@searchPatternFlyInput').clearValue('@searchPatternFlyInput').setValue('@searchPatternFlyInput', value)
+  this.click('@searchPatternFlyInput').clearValue('@searchPatternFlyInput')
+  this.click('@searchPatternFlyInput').setValue('@searchPatternFlyInput', value)
   this.waitForElementVisible('@searchPatternFlyInput')
 }
 

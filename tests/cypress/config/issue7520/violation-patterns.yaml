@@ -1,0 +1,5 @@
+# CertificatePolicy specification
+[POLICYNAME]-cert-expiration:
+ "0ns1": "Found 0 non compliant certificates in the namespace issue3677-[ID]-ns1"
+ "0ns2": "Found 0 non compliant certificates in the namespace issue3677-[ID]-ns2"
+ "1ns2": "Found 1 non compliant certificates in the namespace issue3677-[ID]-ns2"

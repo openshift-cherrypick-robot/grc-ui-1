@@ -1,0 +1,3 @@
+apiVersion: 'policy.open-cluster-management.io/v1'
+namespace: 'default'
+kind: 'CertificatePolicy'

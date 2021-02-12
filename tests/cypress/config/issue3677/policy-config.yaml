@@ -1,0 +1,16 @@
+test-issue3677-cert-policy-[ID]:
+  apiVersion: 'policy.open-cluster-management.io/v1'
+  namespace: 'default'
+  cluster_binding:
+    - 'name: "[ONECLUSTERNAME]"'
+  kind: 'CertificatePolicy'
+  specifications:
+    - 'CertificatePolicy'
+  standards:
+    - 'NIST-CSF'
+  categories:
+    - 'PR.DS Data Security'
+  controls:
+    - 'PR.DS-2 Data-in-transit'
+  enforce: False
+  disable: False
