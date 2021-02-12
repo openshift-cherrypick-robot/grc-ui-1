@@ -111,6 +111,7 @@ module.exports = {
     const nsPolicy = fs.readFileSync(path.join(__dirname, 'yaml/create_policy/create_ns_template.yaml'))
     var nsYaml = nsPolicy.toString()
     common.createPolicy(browser, 'policy-create-ns-for-dup-' + time, nsYaml, time)
+    common.checkStatus('policy-create-ns-for-dup-' + time, false)
     //create 2 policies with the same name in different namespaces
     const originalPolicy = fs.readFileSync(path.join(__dirname, 'yaml/create_policy/pod_template_original.yaml'))
     var originalYaml = originalPolicy.toString()

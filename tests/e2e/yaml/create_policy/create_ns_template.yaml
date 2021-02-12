@@ -55,4 +55,5 @@ spec:
     type: ManagedClusterConditionAvailable
   clusterSelector:
     matchExpressions:
-      []  # selects all clusters if not specified
+      - {key: name, operator: In, values: ["local-cluster"]}
+
