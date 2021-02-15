@@ -2,8 +2,8 @@
 /// <reference types="cypress" />
 import { createPolicyFromYAML, actionPolicyActionInListing, getDefaultSubstitutionRules,
          verifyPolicyTemplateViolationDetailsForCluster
-       } from '../views/policy'
-import { cleanup_usingPolicyYAML } from './common/generic_policy_cleanup'
+       } from '../common/views'
+import { test_applyPolicyYAML } from '../common/tests'
 import { getConfigObject } from '../config'
 
 // simple function that would help us to generate unique resource names
@@ -31,7 +31,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[NAMESPACENAME\]/g, uName('ns1')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/create_namespace_raw.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/create_namespace_raw.yaml', substitutionRules)
 
   // create certificate issuer in ns1
   substitutionRules = [
@@ -40,7 +40,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[ISSUERNAMESPACE\]/g, uName('ns1')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/create_test_issuer.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/create_test_issuer.yaml', substitutionRules)
 
   // create certificate in ns1
   substitutionRules = [
@@ -55,7 +55,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[ISSUER\]/g, uName('cert-issuer-ns1')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/create_certificate_raw.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/create_certificate_raw.yaml', substitutionRules)
 
   // create cert policy
   it(`create certPolicy ${certPolicyName}, expecting a compliance`, () => {
@@ -88,7 +88,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[NAMESPACENAME\]/g, uName('ns2')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/create_namespace_raw.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/create_namespace_raw.yaml', substitutionRules)
 
   it('Verify detailed template/cluster status', () => {
     const policyConf = getConfigObject('issue7520/cert_policy.yaml')
@@ -106,7 +106,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[ISSUERNAMESPACE\]/g, uName('ns2')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/create_test_issuer.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/create_test_issuer.yaml', substitutionRules)
 
   // create certificate in ns2
   substitutionRules = [
@@ -121,7 +121,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[ISSUER\]/g, uName('cert-issuer-ns2')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/create_certificate_raw.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/create_certificate_raw.yaml', substitutionRules)
 
   // wait for the updated policy status - should show violation now
   it('Wait for the cert policy status to show violation', () => {
@@ -143,7 +143,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[NAMESPACENAME\]/g, uName('ns2')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/delete_namespace_raw.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/delete_namespace_raw.yaml', substitutionRules)
 
   // wait for the updated policy status - should show compliance again
   it('Wait for the cert policy status to show compliance again', () => {
@@ -171,7 +171,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     [/\[NAMESPACENAME\]/g, uName('ns1')],
     [/\[CLUSTERSELECTOR\]/g, `- {key: name, operator: In, values: ["${clusterList[0]}"]}`],
   ]
-  cleanup_usingPolicyYAML('issue7520/delete_namespace_raw.yaml', substitutionRules)
+  test_applyPolicyYAML('issue7520/delete_namespace_raw.yaml', substitutionRules)
 
 })
 

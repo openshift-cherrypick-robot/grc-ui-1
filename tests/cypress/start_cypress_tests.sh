@@ -38,6 +38,13 @@ else
 fi
 
 export CYPRESS_RESOURCE_ID=$(date +"%s")
+if [ -z "$MANAGED_CLUSTER_NAME" ]; then
+  echo "MANAGED_CLUSTER_NAME not set."
+else
+  export CYPRESS_MANAGED_CLUSTER_NAME=$MANAGED_CLUSTER_NAME
+  echo "MANAGED_CLUSTER_NAME is set, set CYPRESS_MANAGED_CLUSTER_NAME to $MANAGED_CLUSTER_NAME"
+fi
+
 
 if [ ! -z "$SELENIUM_CLUSTER" ]; then
   echo "SELENIUM_CLUSTER env parameter is found, run system e2e testing and use OC_HUB_CLUSTER_URL"
@@ -47,11 +54,21 @@ else
   export CYPRESS_BASE_URL=${CYPRESS_BASE_URL:-"https://localhost:3000"}
 fi
 
+if [ "$CYPRESS_BASE_URL" = "https://localhost:3000" ]; then
+  export CYPRESS_coverage=true
+else
+  export CYPRESS_coverage=false
+fi
+
+export CYPRESS_FAIL_FAST_PLUGIN=${CYPRESS_FAIL_FAST_PLUGIN:-"true"}
 echo -e "Running cypess tests with the following environment:\n"
 echo -e "\tCYPRESS_RESOURCE_ID (used as policy time stamp) : $CYPRESS_RESOURCE_ID"
 echo -e "\tCYPRESS_BASE_URL (used as cypress entry point URL)  : $CYPRESS_BASE_URL"
 echo -e "\tCYPRESS_OPTIONS_HUB_CLUSTER_URL   : $CYPRESS_OPTIONS_HUB_CLUSTER_URL"
 echo -e "\tCYPRESS_OPTIONS_HUB_USER       : $CYPRESS_OPTIONS_HUB_USER"
+echo -e "\tCYPRESS_MANAGED_CLUSTER_NAME       : $CYPRESS_MANAGED_CLUSTER_NAME"
+echo -e "\tCYPRESS_FAIL_FAST_PLUGIN       : $CYPRESS_FAIL_FAST_PLUGIN"
+echo -e "\tCYPRESS_coverage       : $CYPRESS_coverage"
 
 echo -e "\nLogging into Kube API server\n"
 oc login --server=${CYPRESS_OPTIONS_HUB_CLUSTER_URL} -u $CYPRESS_OPTIONS_HUB_USER -p $CYPRESS_OPTIONS_HUB_PASSWORD --insecure-skip-tls-verify

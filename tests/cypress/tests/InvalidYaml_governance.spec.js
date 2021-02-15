@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /// <reference types="cypress" />
 import { getConfigObject } from '../config'
-import { createPolicyFromYAML, getDefaultSubstitutionRules, checkNotificationMessage } from '../views/policy'
+import { createPolicyFromYAML, getDefaultSubstitutionRules, checkNotificationMessage } from '../common/views'
 const invalidYamlErrorMessages = getConfigObject('InvalidYamlTests/invalidYamlErrors.yaml', 'yaml')
 
 

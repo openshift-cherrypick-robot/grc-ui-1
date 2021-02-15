@@ -71,7 +71,6 @@ const controlData = [
     type: 'multiselect',
     available: [],
     reverse: 'PlacementRule[0].spec.clusterSelector', // automatically does matchLabels && matchExpressions
-    mustExist: false,
   },
   {
     name: 'creation.view.policy.standards',

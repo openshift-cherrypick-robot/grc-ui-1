@@ -2,7 +2,7 @@
 /// <reference types="cypress" />
 import { createPolicyFromYAML, actionPolicyActionInListing, getDefaultSubstitutionRules,
          verifyPolicyNotInListing, verifyViolationsInPolicyStatusClusters
-       } from '../views/policy'
+       } from '../common/views'
 import { getConfigObject } from '../config'
 
 const confClusters = getConfigObject('clusters.yaml')

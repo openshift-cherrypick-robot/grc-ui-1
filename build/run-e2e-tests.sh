@@ -9,15 +9,6 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-echo "Login managed"
-# Get env from Travis config
-export OC_CLUSTER_URL=${OC_MANAGED_CLUSTER_URL:-${OC_HUB_CLUSTER_URL}}
-export OC_CLUSTER_PASS=${OC_MANAGED_CLUSTER_PASS:-${OC_HUB_CLUSTER_PASS}}
-make oc/login
-
-$DIR/install-cert-manager.sh
-$DIR/cluster-clean-up.sh managed
-
 echo "Login hub"
 export OC_CLUSTER_URL=$OC_HUB_CLUSTER_URL
 export OC_CLUSTER_PASS=$OC_HUB_CLUSTER_PASS
@@ -32,6 +23,14 @@ source $DIR/rbac-setup.sh
 
 echo "setup cluster for test"
 $DIR/cluster-setup.sh
+
+echo "Login managed"
+export OC_CLUSTER_URL=${OC_MANAGED_CLUSTER_URL:-${OC_HUB_CLUSTER_URL}}
+export OC_CLUSTER_PASS=${OC_MANAGED_CLUSTER_PASS:-${OC_HUB_CLUSTER_PASS}}
+make oc/login
+
+$DIR/install-cert-manager.sh
+$DIR/cluster-clean-up.sh managed
 
 echo "Export envs to run e2e"
 export SERVICEACCT_TOKEN=`${BUILD_HARNESS_PATH}/vendor/oc whoami --show-token`

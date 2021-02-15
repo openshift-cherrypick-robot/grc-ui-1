@@ -3,7 +3,7 @@
 import { createPolicyFromSelection, verifyPolicyInListing, actionPolicyActionInListing,
          verifyPolicyNotInListing, getDefaultSubstitutionRules, verifyViolationsInPolicyStatusClusters,
          getViolationsPerPolicy, getViolationsCounter
-       } from '../views/policy'
+       } from '../common/views'
 import { getConfigObject } from '../config'
 
 describe('RHACM4K-1648 - GRC UI: [P2][Sev2][policy-grc] CertPolicy with wrong namespace selector', () => {

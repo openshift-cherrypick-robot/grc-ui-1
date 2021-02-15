@@ -29,6 +29,7 @@ RUN npm install \
     cypress-multi-reporters \
     cypress-terminal-report \
     cypress-wait-until \
+    cypress-fail-fast \
     @cypress/code-coverage \
     mocha \
     mocha-junit-reporter \

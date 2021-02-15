@@ -52,18 +52,23 @@ module.exports = {
     page.testCreateCustomSelections(templates.slice(0,3))
   },
 
-  'GRC UI: [P1][Sev1][policy-grc] Create policy page: Check policy name RegEx': () => {
-    const errMsg = 'Invalid name due to Kubernetes naming restriction.\nThe name must meet the following requirements:\n• contain no more than 253 characters\n• contain only lowercase alphanumeric characters, \'-\' or \'.\'\n• start with an alphanumeric character\n• end with an alphanumeric character'
+  'GRC UI: [P1][Sev1][policy-grc] Create policy page: Check policy field validations': (browser) => {
+    const time = browser.globals.time
+    common.log('Checking RegEx validation of policy name')
+    const regexErrMsg = 'Invalid name due to Kubernetes naming restriction.\nThe name must meet the following requirements:\n• contain no more than 253 characters\n• contain only lowercase alphanumeric characters, \'-\' or \'.\'\n• start with an alphanumeric character\n• end with an alphanumeric character'
     page.createTestPolicy(false, {policyName: 'this-is-n,ot-a-valid-name'})
-    page.checkCreateNotification(errMsg)
+    page.checkCreateNotification(regexErrMsg)
     page.createTestPolicy(false, {policyName: '-this-is-not-a-valid-name'})
-    page.checkCreateNotification(errMsg)
+    page.checkCreateNotification(regexErrMsg)
     page.createTestPolicy(false, {policyName: 'this-is-not-a-valid-name-'})
-    page.checkCreateNotification(errMsg)
+    page.checkCreateNotification(regexErrMsg)
     page.createTestPolicy(false, {policyName: 'this-is-a-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-long-name-that-is-too-long-and-should-not-work-when-its-put-into-the-name-field'})
-    page.checkCreateNotification(errMsg)
+    page.checkCreateNotification(regexErrMsg)
     page.createTestPolicy(false, {policyName: 'this-is-a---really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-really-long-valid-name-that-should-work-when-its-put-into-the-name-field'})
-    page.checkCreateNotification(errMsg, false)
+    page.checkCreateNotification(regexErrMsg, false)
+    common.log('Checking duplicate name and missing field notifications')
+    page.verifyCreateNotifications(`duplicate-policy-${time}`)
+    common.deletePolicy(`duplicate-policy-${time}`)
   },
 
   'GRC UI: [P1][Sev1][policy-grc] Create policy page: Updating YAML in editor': () => {

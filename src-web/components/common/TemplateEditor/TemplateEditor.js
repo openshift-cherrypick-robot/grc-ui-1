@@ -736,7 +736,7 @@ export default class TemplateEditor extends React.Component {
     }
 
     // if no exceptions, update controlData based on custom editing
-    if (Object.keys(newParsed).length>0) {
+    if (Object.keys(newParsed).some(item => newParsed[item].length>0)) {
       controlData = _.cloneDeep(controlData)
       if (updateControls(controlData, templateObject, newParsed, locale)) {
         isCustomName = true

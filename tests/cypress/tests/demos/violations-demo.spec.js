@@ -2,7 +2,7 @@
 /// <reference types="cypress" />
 import {
   getDefaultSubstitutionRules, verifyViolationsInPolicyStatusClusters, verifyViolationsInPolicyStatusTemplates
-} from '../../views/policy'
+} from '../../common/views'
 //import { getUniqueResourceName } from '../../scripts/utils'
 import { getConfigObject } from '../../config'
 
@@ -16,12 +16,12 @@ describe('Testing policy deviations as specified in the violations.yaml config f
     //const uPolicyName = getUniqueResourceName(policyName)
     const uPolicyName = policyName
     // optionally read details about configured clusters
-    //const confClusters = getConfigObject('demos/clusters.yaml')
+    //const confClusters = getConfigObject('demos/violations-demo/clusters.yaml')
     // read all violation message patterns
     const confViolationPatterns = getConfigObject('violation-patterns.yaml', 'yaml', getDefaultSubstitutionRules({policyname:uPolicyName}))
 
     // read expected cluster violations
-    const confClusterViolations = getConfigObject('demos/violations.yaml', 'yaml', getDefaultSubstitutionRules({policyname:uPolicyName}))
+    const confClusterViolations = getConfigObject('demos/violations-demo/violations.yaml', 'yaml', getDefaultSubstitutionRules({policyname:uPolicyName}))
 
     it ('All expected violations are listed', () => {
       cy.visit(`/multicloud/policies/all/default/${uPolicyName}/status`)

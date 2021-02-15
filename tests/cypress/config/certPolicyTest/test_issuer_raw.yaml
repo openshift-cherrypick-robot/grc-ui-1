@@ -5,21 +5,21 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-create-certificate-[ID]
+  name: policy-create-issuer-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/categories: PR.PT Protective Technology
     policy.open-cluster-management.io/controls: PR.PT-3 Least Functionality
     policy.open-cluster-management.io/standards: NIST-CSF
 spec:
-  disabled: false
   remediationAction: enforce
+  disabled: false
   policy-templates:
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: policy-create-certificate-[ID]
+          name: policy-create-issuer-[ID]
         spec:
           remediationAction: enforce
           severity: low
@@ -30,42 +30,33 @@ spec:
             - complianceType: [COMPLIANCETYPE]
               objectDefinition:
                 apiVersion: cert-manager.io/v1alpha3
-                kind: Certificate
+                kind: Issuer
                 metadata:
-                  name: rsa-ca-sample-cert-[ID]
+                  name: ss-sample-issuer-[ID]
                   namespace: default
                   labels:
                     e2e: "true"
                 spec:
-                  commonName: wap-master.fyre.test.com
-                  dnsNames:
-                    - wap-master.fyre.test.com
-                  duration: 20h
-                  isCA: true
-                  issuerRef:
-                    name: ss-sample-issuer-[ID]
-                    kind: Issuer
-                  renewBefore: 10h
-                  secretName: rsa-ca-sample-secret
+                  selfSigned: {}
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-policy-create-certificate-[ID]
+  name: binding-policy-create-issuer-[ID]
   namespace: default
 placementRef:
-  name: placement-policy-create-certificate-[ID]
+  name: placement-policy-create-issuer-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: policy-create-certificate-[ID]
+- name: policy-create-issuer-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-policy-create-certificate-[ID]
+  name: placement-policy-create-issuer-[ID]
   namespace: default
 spec:
   clusterConditions:

@@ -138,6 +138,7 @@
     "chromedriver": "^87.0.5",
     "cross-fetch": "^3.0.6",
     "cypress": "^6.2.1",
+    "cypress-fail-fast": "^2.0.0",
     "cypress-multi-reporters": "^1.4.0",
     "cypress-terminal-report": "^2.4.0",
     "cypress-wait-until": "^1.7.1",

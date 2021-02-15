@@ -16,6 +16,7 @@ module.exports = {
     spinner: '.patternfly-spinner',
     table: '.pf-c-table',
     createPolicyButton: '#create-policy',
+    cancelCreatePolicyButton: '#cancel-button-portal-id-btn',
     submitCreatePolicyButton: '#create-button-portal-id',
     resetEditor: 'div.creation-view-yaml-header div.editor-bar-button[title="Reset"]',
     yamlMonacoEditor: '.monaco-editor',
@@ -94,6 +95,7 @@ module.exports = {
     verifySummary,
     verifyTable,
     verifyToggle,
+    verifyCreateNotifications,
   }],
   compareTemplate: compareTemplate
 }
@@ -468,7 +470,48 @@ function checkCreateNotification(expectedNotification='', errExpected=true) {
     this.expect.element('@createErrorDecoration').to.not.be.present
   }
 }
-
+// Check a set of messages that should appear with invalid/missing input
+function verifyCreateNotifications(policyName) {
+  const nameErrMsg = 'Name already exists: pressing \'Create\' will prompt to update the existing policy'
+  const missingNsErrMsg = 'Missing: metadata.namespace'
+  const missingSpecErrMsg = 'Missing: spec.policy-templates'
+  const successMsg = 'No errors found'
+  // Create a policy with the given name
+  this.createTestPolicy(true, {policyName})
+  // Head back to the creation page
+  this.click('@createPolicyButton')
+  this.waitForElementNotPresent('@spinner')
+  // Input the same name as the previous policy
+  this.click('@policyNameInput').clearValue('@policyNameInput')
+  this.setValue('@policyNameInput', policyName)
+  // Expect duplicate name notification to not appear since there's no namespace selected
+  this.expect.element('@createNotification').to.not.be.present
+  // Click "Create" -- expect missing Namespace error
+  this.checkCreateNotification(missingNsErrMsg)
+  // Select namespace "Default"
+  this.click('@namespaceDropdown')
+  this.waitForElementVisible('@namespaceDropdownBox')
+  this.click('xpath', '//div[contains(@class,"bx--list-box__menu-item") and text()="default"]')
+  this.waitForElementNotPresent('@namespaceDropdownBox')
+  // Expect error notification to change that there are Specification templates missing
+  this.checkCreateNotification(missingSpecErrMsg)
+  // Select a template Specification
+  this.click('@templateDropdown')
+  this.waitForElementVisible('@templateDropdownBox')
+  this.click('@templateDropdownBox:nth-child(1)')
+  this.waitForElementNotPresent('@templateDropdownBox')
+  // Expect duplicate name notification to appear
+  this.expect.element('@createNotification').text.to.equal(nameErrMsg)
+  // Change the namespace to "e2e-rbac-test-1"
+  this.click('@namespaceDropdown')
+  this.waitForElementVisible('@namespaceDropdownBox')
+  this.click('xpath', '//div[contains(@class,"bx--list-box__menu-item") and text()="e2e-rbac-test-1"]')
+  this.waitForElementNotPresent('@namespaceDropdownBox')
+  // Expect notification that there are no errors
+  this.expect.element('@createNotification').text.to.equal(successMsg)
+  // Click "Cancel" to return to the overview page
+  this.click('@cancelCreatePolicyButton')
+}
 function verifyPolicyTable(name, templateFile) {
   // Parse template file into object
   const file = applyTemplate(name, templateFile)
