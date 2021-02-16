@@ -38,6 +38,8 @@ module.exports = {
       'redux-thunk',
       'redux',
       'reselect',
+      'svg.js',
+      'svg-loader'
     ]
   },
 
@@ -50,7 +52,7 @@ module.exports = {
           'css-loader',],
       },
       {
-        test: /\.(woff2?|ttf|eot|otf)(\?.*$|$)/,
+        test: /\.(png|jpg|jpeg|gif|svg|woff2?|ttf|eot|otf)(\?.*$|$)/,
         exclude: overpassTest,
         loader: 'file-loader',
         options: {

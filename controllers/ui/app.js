@@ -200,7 +200,9 @@ function fetchHeader(req, res, store, ctx) {
         <StaticRouter
           location={req.originalUrl}
           context={ctx}>
-          <App />
+          <App
+            url={req.originalUrl}
+          ></App>
         </StaticRouter>
       </Provider>
     ),
@@ -216,7 +218,7 @@ function getContext(req) {
   return {
     title: msgs.get('common.app.name', reqContext.locale),
     context: reqContext,
-    xsrfToken: req.csrfToken()
+    xsrfToken: req.csrfToken(),
   }
 }
 

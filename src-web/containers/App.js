@@ -34,6 +34,7 @@ class App extends React.Component {
   static propTypes = {
     match: PropTypes.object,
     staticContext: PropTypes.object,
+    url: PropTypes.string,
   }
 
   constructor(props) {
@@ -72,7 +73,8 @@ class App extends React.Component {
 
 // eslint-disable-next-line react/display-name
 export default props => (
-  <AcmHeaderPrototype href="/" target="_self">
+  // eslint-disable-next-line react/prop-types
+  <AcmHeaderPrototype urlpath={client ? window.location.pathname : props.url} href="/" target="_self">
     <Route path={config.contextPath} serverProps={props} component={App} />
   </AcmHeaderPrototype>
 )
