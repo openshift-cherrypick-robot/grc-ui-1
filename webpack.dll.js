@@ -37,9 +37,7 @@ module.exports = {
       'redux-logger',
       'redux-thunk',
       'redux',
-      'reselect',
-      'svg.js',
-      'svg-loader'
+      'reselect'
     ]
   },
 
