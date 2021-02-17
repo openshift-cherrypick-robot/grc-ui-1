@@ -74,7 +74,7 @@ class App extends React.Component {
 // eslint-disable-next-line react/display-name
 export default props => (
   // eslint-disable-next-line react/prop-types
-  <AcmHeaderPrototype urlPath={client ? window.location.pathname : props.url} href="/" target="_self">
+  <AcmHeaderPrototype urlpath={client ? window.location.pathname : props.url} href="/" target="_self">
     <Route path={config.contextPath} serverProps={props} component={App} />
   </AcmHeaderPrototype>
 )
