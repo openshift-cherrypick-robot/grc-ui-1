@@ -1,8 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /// <reference types="cypress" />
-import {
-  getDefaultSubstitutionRules, verifyViolationsInPolicyStatusClusters, verifyViolationsInPolicyStatusTemplates
-} from '../../common/views'
+import { getDefaultSubstitutionRules } from '../../common/views'
 //import { getUniqueResourceName } from '../../scripts/utils'
 import { getConfigObject } from '../../config'
 
@@ -26,11 +24,11 @@ describe('Testing policy deviations as specified in the violations.yaml config f
     it ('All expected violations are listed', () => {
       cy.visit(`/multicloud/policies/all/default/${uPolicyName}/status`)
       // verify all violations per cluster
-      verifyViolationsInPolicyStatusClusters(uPolicyName, {'namespace': 'default'}, confClusterViolations, confViolationPatterns)
+        .verifyViolationsInPolicyStatusClusters(uPolicyName, {'namespace': 'default'}, confClusterViolations, confViolationPatterns)
       // open the Templates tab - we should have a command for this
       cy.get('#policy-status-templates').click()
       // verify violations per template
-      verifyViolationsInPolicyStatusTemplates(uPolicyName, {'namespace': 'default'}, confClusterViolations, confViolationPatterns)
+        .verifyViolationsInPolicyStatusTemplates(uPolicyName, {'namespace': 'default'}, confClusterViolations, confViolationPatterns)
     })
 
 })

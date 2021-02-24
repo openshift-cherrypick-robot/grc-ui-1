@@ -175,7 +175,7 @@ export const getDefaultSubstitutionRules = (rules = {}) => {
   return substitutions
 }
 
-export const createPolicyFromYAML = (policyYAML, create=true) => {
+export const action_createPolicyFromYAML = (policyYAML, create=true) => {
   console.log(policyYAML)
   cy.toggleYAMLeditor('On')
     .YAMLeditor()
@@ -190,7 +190,7 @@ export const createPolicyFromYAML = (policyYAML, create=true) => {
 }
 
 // this function is mainly used to testing selection on the create policy page
-export const createPolicyFromSelection = (uPolicyName, create=true, policyConfig) => {
+export const action_createPolicyFromSelection = (uPolicyName, create=true, policyConfig) => {
   // fill the form uName
   cy.get('input[aria-label="name"]')
     .clear()
@@ -249,7 +249,7 @@ export const createPolicyFromSelection = (uPolicyName, create=true, policyConfig
 // enabled='enabled', checking if policy is enabled; enabled='disabled', checking if policy is disabled
 // targetStatus = 0, don't check policy status; targetStatus = 1, check policy status is non-violation
 // targetStatus = 2, check policy status is violation; targetStatus = 3, check policy status is pending
-export const verifyPolicyInListing = (
+export const action_verifyPolicyInListing = (
   uName, policyConfig, enabled='enabled',
   violationsCounter='', targetStatus = null
   ) => {
@@ -328,7 +328,7 @@ export const verifyPolicyInListing = (
   clearTableSearch()
 }
 
-export const verifyPolicyNotInListing = (uName) => {
+export const action_verifyPolicyNotInListing = (uName) => {
   // either there are no policies at all or there are some policies listed
   if (!Cypress.$('#page').find('div.no-resource'.length)) {
     cy.get('.grc-view-by-policies-table').within(() => {
@@ -339,7 +339,7 @@ export const verifyPolicyNotInListing = (uName) => {
   }
 }
 
-export const actionPolicyActionInListing = (uName, action, cancel=false) => {
+export const action_actionPolicyActionInListing = (uName, action, cancel=false) => {
   cy.CheckGrcMainPage()
   doTableSearch(uName)
   cy.get('.grc-view-by-policies-table').within(() => {
@@ -464,7 +464,54 @@ return cy.url().then((pageURL) => {
 })
 }
 
-export const verifyPolicyInPolicyDetails = (
+// needs to be run only on /multicloud/policies/all/default/${policyName}/status
+// where it checks whether all listed (e.g. filtered) templates have status
+export const isClusterTemplateStatusAvailable = (clusterViolations = {}) => {
+  let statusAvailable = true
+  // search for the template status in a table
+  return cy.then(() => {
+    cy.get('tbody').within(() => {
+      cy.get('tr').each((row) => {
+        cy.wrap(row).find('td').spread((cluster, status, template) => {
+          const clusterName = cluster.textContent.trim()
+          const templateName = template.textContent.trim()
+          if (clusterViolations[clusterName]) {  // do the check only if we have violation details for the cluster
+            // get respective violation ID
+            let violationID
+            for (const patternId of clusterViolations[clusterName]) {
+              const name = patternId.replace(/-[^-]*$/, '')
+              const id = patternId.replace(/^.*-/, '')
+              if (templateName == name) {
+                violationID = id
+                break
+              }
+            }
+            const clusterStatus = getPolicyStatusForViolationId(violationID)
+            // check the cluster status
+            if (! status.textContent.match(new RegExp(clusterStatus))) {
+              statusAvailable = false
+            }
+          } else {  // we do not know the expected status, only check the icon
+            cy.wrap(status).find('path').then((elems) => {
+              if (elems.length === 1) {
+                const d = elems[0].getAttribute('d')
+                // M569 seem to be unique to an icon telling that policy status is not available for some cluster
+                if (d.startsWith('M569')) {
+                  statusAvailable = false
+                }
+              } else {
+                statusAvailable = false
+              }
+            })
+          }
+        })
+      })
+    })
+    .then(() => statusAvailable )
+  })
+}
+
+export const action_verifyPolicyInPolicyDetails = (
   uName, policyConfig, enabled='enabled',
   violationsCounter='', targetStatus = null
   ) => {
@@ -554,7 +601,7 @@ const getStatusIconFillColor = (targetStatus) => {
 }
 
 
-export const verifyPlacementRuleInPolicyDetails = (policyName, policyConfig, clusterViolations, checkLength=true) => {
+export const action_verifyPlacementRuleInPolicyDetails = (policyName, policyConfig, clusterViolations, checkLength=true) => {
   cy.get('section[aria-label="Placement rule"]').within(() => {
     cy.get('.bx--structured-list-td').spread((
       label1, name, label2, namespace, label3,
@@ -787,7 +834,7 @@ export const getViolationsCounter = (clusterViolations) => {
   return violations+'/'+clusters
 }
 
-export const verifyPolicyInPolicyDetailsTemplates = (uName, policyConfig) => {
+export const action_verifyPolicyInPolicyDetailsTemplates = (uName, policyConfig) => {
   cy.get('#policy-templates-table-container').within(() => {
     const templates = getPolicyTemplatesNameAndKind(uName, policyConfig)
     for (const template of templates) {
@@ -804,7 +851,7 @@ export const verifyPolicyInPolicyDetailsTemplates = (uName, policyConfig) => {
   })
 }
 
-export const verifyPlacementBindingInPolicyDetails = (uName, policyConfig) => {
+export const action_verifyPlacementBindingInPolicyDetails = (uName, policyConfig) => {
   cy.get('section[aria-label="Placement binding"]').within(() => {
     cy.get('.bx--structured-list-td').spread((
       label1, name, label2, namespace, label3,
@@ -851,7 +898,7 @@ export const clearTableSearch = (inputSelector = null, parentSelector = null) =>
 }
 
 
-export const verifyViolationsInPolicyStatusClusters = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
+export const action_verifyViolationsInPolicyStatusClusters = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
   if (clusters == undefined) {
     clusters = Object.keys(clusterViolations)
   }
@@ -931,7 +978,7 @@ export const getPolicyStatusForViolationId = (id, format='long') => {
   }
 }
 
-export const verifyViolationsInPolicyStatusTemplates = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
+export const action_verifyViolationsInPolicyStatusTemplates = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
   if (clusters == undefined) {
     clusters = Object.keys(clusterViolations)
   }
@@ -980,7 +1027,7 @@ export const verifyViolationsInPolicyStatusTemplates = (policyName, policyConfig
   }
 }
 
-export const verifyPolicyDetailsInCluster =  (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+export const action_verifyPolicyDetailsInCluster =  (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
   const clusterStatus = getClusterPolicyStatus(clusterViolations[clusterName], 'short')
   cy.get('section[aria-label="Policy details"]').within(() => {
     cy.get('.bx--structured-list-td').spread((nameLabel, name, clusterLabel, cluster, messageLabel, message, statusLabel, status, enforcementLabel, enforcement ) => {
@@ -1015,7 +1062,7 @@ export const verifyPolicyDetailsInCluster =  (policyName, policyConfig, clusterN
   })
 }
 
-export const verifyPolicyTemplatesInCluster = (policyName, policyConfig, clusterName, clusterViolations) => {
+export const action_verifyPolicyTemplatesInCluster = (policyName, policyConfig, clusterName, clusterViolations) => {
   const violations = clusterViolations[clusterName]
   for (const violation of violations) {
     const templateName = violation.replace(/-[^-]*$/, '')
@@ -1045,7 +1092,7 @@ export const verifyPolicyTemplatesInCluster = (policyName, policyConfig, cluster
   }
 }
 
-export const verifyPolicyViolationDetailsInCluster = (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+export const action_verifyPolicyViolationDetailsInCluster = (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
   const violations = clusterViolations[clusterName]
   for (const violation of violations) {
     const templateName = violation.replace(/-[^-]*$/, '')
@@ -1069,7 +1116,7 @@ export const verifyPolicyViolationDetailsInCluster = (policyName, policyConfig, 
   }
 }
 
-export const verifyPolicyViolationDetailsInHistory = (templateName, violations, violationPatterns) => {
+export const action_verifyPolicyViolationDetailsInHistory = (templateName, violations, violationPatterns) => {
   cy.get('table[aria-label="Sortable Table"]').within(() => {
     for (const violation of violations) {
       const id = violation.replace(/^.*-/, '')

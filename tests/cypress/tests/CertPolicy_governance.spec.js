@@ -1,10 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /// <reference types="cypress" />
-import {
-  createPolicyFromYAML, verifyPolicyInListing, verifyPolicyNotInListing,
-  actionPolicyActionInListing, verifyPolicyInPolicyDetails, getDefaultSubstitutionRules,
-  verifyPolicyInPolicyStatus, verifyPolicyByYAML
-} from '../common/views'
+import { getDefaultSubstitutionRules, verifyPolicyInPolicyStatus, verifyPolicyByYAML } from '../common/views'
 import { test_applyPolicyYAML } from  '../common/tests'
 import { getUniqueResourceName } from '../scripts/utils'
 import { getConfigObject } from '../config'
@@ -45,7 +41,7 @@ describe('RHACM4K-2294 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy gove
 
   it (`Create certificate policy ${uCertificatePolicyName}`, () => {
     cy.FromGRCToCreatePolicyPage()
-    createPolicyFromYAML(certificatePolicyYAML, true)
+      .createPolicyFromYAML(certificatePolicyYAML, true)
   })
 
   it(`Wait for certificate policy ${uCertificatePolicyName} status to become available`, () => {
@@ -54,15 +50,13 @@ describe('RHACM4K-2294 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy gove
   })
 
   it (`Verify all information about the created certificate policy ${uCertificatePolicyName} on the "Govern and risk" page`, () => {
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
+    cy.verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Validate violations/status of created policy ${uCertificatePolicyName} on the detailed policy page`, () => {
     // we need to find another way how to access this page
     cy.visit(`/multicloud/policies/all/default/${uCertificatePolicyName}`)
-      .then(() => {
-        verifyPolicyInPolicyDetails(uCertificatePolicyName, certificatePolicyConfig, 'enabled', '', 2)
-      })
+      .verifyPolicyInPolicyDetails(uCertificatePolicyName, certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Validate violations/status of created policy ${uCertificatePolicyName} on the policy status/history page`, () => {
@@ -82,43 +76,43 @@ describe('RHACM4K-2294 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy gove
   it(`Validate disable of the policy ${uCertificatePolicyName}`, () => {
     // we could use a different way how to return to this page
     cy.visit('/multicloud/policies/all')
-    actionPolicyActionInListing(uCertificatePolicyName, 'Disable')
+      .actionPolicyActionInListing(uCertificatePolicyName, 'Disable')
   })
 
   it('Check disabled policy', () => {
     cy.CheckGrcMainPage()
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'disabled')
+      .verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'disabled')
   })
 
   it(`Validate enable of the policy ${uCertificatePolicyName}` , () => {
-    actionPolicyActionInListing(uCertificatePolicyName, 'Enable')
-    cy.CheckGrcMainPage()
+    cy.actionPolicyActionInListing(uCertificatePolicyName, 'Enable')
+      .CheckGrcMainPage()
   })
 
   it(`Check enabled policy ${uCertificatePolicyName}`, () => {
     cy.waitForPolicyStatus(uCertificatePolicyName)
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
+      .verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Edit policy ${uCertificatePolicyName} and change "remediateAction" to "enforce"`, () => {
-    actionPolicyActionInListing(uCertificatePolicyName, 'Enforce')
-    cy.CheckGrcMainPage()
-    cy.waitForPolicyStatus(uCertificatePolicyName)
+    cy.actionPolicyActionInListing(uCertificatePolicyName, 'Enforce')
+      .CheckGrcMainPage()
+      .waitForPolicyStatus(uCertificatePolicyName)
   })
 
   it('Check violations stay reported but not remediated', () => {
     certificatePolicyConfig.enforce = true
     certificatePolicyConfig.inform = false
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
+    cy.verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Remove created policy ${uCertificatePolicyName}`, () => {
-    actionPolicyActionInListing(uCertificatePolicyName, 'Remove')
-    cy.CheckGrcMainPage()
+    cy.actionPolicyActionInListing(uCertificatePolicyName, 'Remove')
+      .CheckGrcMainPage()
   })
 
   it(`Check created policy ${uCertificatePolicyName} is not present`, () => {
-    verifyPolicyNotInListing(uCertificatePolicyName)
+    cy.verifyPolicyNotInListing(uCertificatePolicyName)
   })
 })
 
@@ -132,7 +126,7 @@ describe('RHACM4K_1205 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy gove
 
   it (`Create policy ${uCertificatePolicyName}`, () => {
     cy.FromGRCToCreatePolicyPage()
-    createPolicyFromYAML(certificatePolicyYAML, true)
+      .createPolicyFromYAML(certificatePolicyYAML, true)
   })
 
   it(`Certificate policy ${uCertificatePolicyName} status becomes available`, () => {
@@ -141,15 +135,13 @@ describe('RHACM4K_1205 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy gove
   })
 
   it (`Verify all information about the created certificate policy ${uCertificatePolicyName} on the "Govern and risk" page`, () => {
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
+    cy.verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Validate violations/status of created policy ${uCertificatePolicyName} on the detailed policy page`, () => {
     // we need to find another way how to access this page
     cy.visit(`/multicloud/policies/all/default/${uCertificatePolicyName}`)
-      .then(() => {
-        verifyPolicyInPolicyDetails(uCertificatePolicyName, certificatePolicyConfig, 'enabled', '', 2)
-      })
+      .verifyPolicyInPolicyDetails(uCertificatePolicyName, certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Validate violations/status of created policy ${uCertificatePolicyName} on the policy status/history page`, () => {
@@ -169,43 +161,43 @@ describe('RHACM4K_1205 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy gove
   it(`Validate disable of the policy ${uCertificatePolicyName}`, () => {
     // we could use a different way how to return to this page
     cy.visit('/multicloud/policies/all')
-    actionPolicyActionInListing(uCertificatePolicyName, 'Disable')
+      .actionPolicyActionInListing(uCertificatePolicyName, 'Disable')
   })
 
   it('Check disabled policy', () => {
     cy.CheckGrcMainPage()
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'disabled')
+      .verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'disabled')
   })
 
   it(`Validate enable of the policy ${uCertificatePolicyName}` , () => {
-    actionPolicyActionInListing(uCertificatePolicyName, 'Enable')
-    cy.CheckGrcMainPage()
+    cy.actionPolicyActionInListing(uCertificatePolicyName, 'Enable')
+      .CheckGrcMainPage()
   })
 
   it(`Check enabled policy ${uCertificatePolicyName}`, () => {
     cy.waitForPolicyStatus(uCertificatePolicyName)
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
+      .verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Edit policy ${uCertificatePolicyName} and change "remediateAction" to "enforce"`, () => {
-    actionPolicyActionInListing(uCertificatePolicyName, 'Enforce')
-    cy.CheckGrcMainPage()
-    cy.waitForPolicyStatus(uCertificatePolicyName)
+    cy.actionPolicyActionInListing(uCertificatePolicyName, 'Enforce')
+      .CheckGrcMainPage()
+      .waitForPolicyStatus(uCertificatePolicyName)
   })
 
   it('Check violations stay reported but not remediated', () => {
     certificatePolicyConfig.enforce = true
     certificatePolicyConfig.inform = false
-    verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
+    cy.verifyPolicyInListing(uCertificatePolicyName,  certificatePolicyConfig, 'enabled', '', 2)
   })
 
   it(`Remove created policy ${uCertificatePolicyName}`, () => {
-    actionPolicyActionInListing(uCertificatePolicyName, 'Remove')
-    cy.CheckGrcMainPage()
+    cy.actionPolicyActionInListing(uCertificatePolicyName, 'Remove')
+      .CheckGrcMainPage()
   })
 
   it(`Check created policy ${uCertificatePolicyName} is not present`, () => {
-    verifyPolicyNotInListing(uCertificatePolicyName)
+    cy.verifyPolicyNotInListing(uCertificatePolicyName)
   })
 })
 

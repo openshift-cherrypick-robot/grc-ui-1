@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /// <reference types="cypress" />
-import { createPolicyFromYAML, actionPolicyActionInListing, getDefaultSubstitutionRules,
+import { getDefaultSubstitutionRules,
          verifyPolicyTemplateViolationDetailsForCluster
        } from '../common/views'
 import { test_applyPolicyYAML } from '../common/tests'
@@ -68,7 +68,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
     const rawYAML = getConfigObject('issue7520/cert_policy_raw.yaml', 'raw', substitutionRules)
 
     cy.FromGRCToCreatePolicyPage()
-      .then(() => createPolicyFromYAML(rawYAML, true) )
+      .createPolicyFromYAML(rawYAML, true)
       .CheckGrcMainPage()
       .waitForPolicyStatus(certPolicyName, '0/1')
   })
@@ -162,7 +162,7 @@ describe('RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy contr
   // delete cert policy
   it(`Remove cert policy ${certPolicyName}`, () => {
     cy.visit('/multicloud/policies/all')
-    actionPolicyActionInListing(certPolicyName, 'Remove')
+      .actionPolicyActionInListing(certPolicyName, 'Remove')
   })
 
   // delete namespace ns1

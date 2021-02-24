@@ -1,7 +1,15 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 import { getOpt } from '../scripts/utils'
 import 'cypress-wait-until'
-import { pageLoader, isPolicyStatusAvailable, isClusterPolicyStatusAvailable, doTableSearch, clearTableSearch } from '../common/views'
+import { pageLoader, isPolicyStatusAvailable, isClusterPolicyStatusAvailable, isClusterTemplateStatusAvailable,
+         doTableSearch, clearTableSearch, action_createPolicyFromSelection, action_verifyPolicyInListing,
+         action_verifyPolicyNotInListing, action_actionPolicyActionInListing, action_createPolicyFromYAML,
+         action_verifyPolicyInPolicyDetails, action_verifyPolicyInPolicyDetailsTemplates,
+         action_verifyPlacementRuleInPolicyDetails, action_verifyPlacementBindingInPolicyDetails,
+         action_verifyViolationsInPolicyStatusClusters, action_verifyViolationsInPolicyStatusTemplates,
+         action_verifyPolicyDetailsInCluster, action_verifyPolicyTemplatesInCluster,
+         action_verifyPolicyViolationDetailsInCluster, action_verifyPolicyViolationDetailsInHistory
+} from '../common/views'
 
 Cypress.Commands.add('login', (OPTIONS_HUB_USER, OPTIONS_HUB_PASSWORD, OC_IDP) => {
   var user = process.env.SELENIUM_USER || OPTIONS_HUB_USER || Cypress.env('OPTIONS_HUB_USER')
@@ -160,8 +168,14 @@ Cypress.Commands.add('waitForClusterPolicyStatus', (clusterViolations, clusterLi
   cy.waitUntil(() => { return isClusterPolicyStatusAvailable(clusterViolations, clusterList) }, {'interval': 2000, 'timeout':60000})
 })
 
+// needs to be run on /multicloud/policies/all/{namespace}/{policy}/status page
+// see isClusterTemplateStatusAvailable()
+Cypress.Commands.add('waitForClusterTemplateStatus', (clusterViolations = {}) => {
+  cy.waitUntil(() => { return isClusterTemplateStatusAvailable(clusterViolations) }, {'interval': 2000, 'timeout':60000})
+})
+
 Cypress.Commands.add('waitForPageContentLoad', () => {
-  pageLoader.shouldNotExist()
+  cy.then(() => pageLoader.shouldNotExist())
 })
 
 Cypress.Commands.add('CheckGrcMainPage', () => {
@@ -198,4 +212,64 @@ Cypress.Commands.add('goToPolicyClusterPage', (policyName, policyConfig, cluster
   cy.get('.one-cluster-status').children('a').contains(clusterName).click()
   pageLoader.shouldNotExist()
   cy.location('pathname').should('eq', '/multicloud/policies/policy/'+clusterName+'/'+namespace+'.'+policyName)
+})
+
+Cypress.Commands.add('createPolicyFromSelection', (uPolicyName, create=true, policyConfig) => {
+  cy.then(() => action_createPolicyFromSelection(uPolicyName, create, policyConfig))
+})
+
+Cypress.Commands.add('verifyPolicyInListing', (uPolicyName, create, policyConfig) => {
+  cy.then(() => action_verifyPolicyInListing(uPolicyName, create, policyConfig))
+})
+
+Cypress.Commands.add('verifyPolicyNotInListing', (uPolicyName) => {
+  cy.then(() => action_verifyPolicyNotInListing(uPolicyName))
+})
+
+Cypress.Commands.add('actionPolicyActionInListing', (uName, action, cancel=false) => {
+  cy.then(() => action_actionPolicyActionInListing(uName, action, cancel))
+})
+
+Cypress.Commands.add('createPolicyFromYAML', (policyYAML, create=true) => {
+  cy.then(() => action_createPolicyFromYAML(policyYAML, create))
+})
+
+Cypress.Commands.add('verifyPolicyInPolicyDetails', (uName, policyConfig, enabled='enabled', violationsCounter='', targetStatus = null) => {
+  cy.then(() => action_verifyPolicyInPolicyDetails(uName, policyConfig, enabled, violationsCounter, targetStatus))
+})
+
+Cypress.Commands.add('verifyPolicyInPolicyDetailsTemplates', (uName, policyConfig) => {
+  cy.then(() => action_verifyPolicyInPolicyDetailsTemplates(uName, policyConfig))
+})
+
+Cypress.Commands.add('verifyPlacementRuleInPolicyDetails', (uName, policyConfig) => {
+  cy.then(() => action_verifyPlacementRuleInPolicyDetails(uName, policyConfig))
+})
+
+Cypress.Commands.add('verifyPlacementBindingInPolicyDetails', (uName, policyConfig) => {
+  cy.then(() => action_verifyPlacementBindingInPolicyDetails,(uName, policyConfig))
+})
+
+Cypress.Commands.add('verifyViolationsInPolicyStatusClusters', (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
+  cy.then(() => action_verifyViolationsInPolicyStatusClusters(policyName, policyConfig, clusterViolations, violationPatterns, clusters))
+
+})
+Cypress.Commands.add('verifyViolationsInPolicyStatusTemplates', (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
+  cy.then(() => action_verifyViolationsInPolicyStatusTemplates,(policyName, policyConfig, clusterViolations, violationPatterns, clusters))
+})
+
+Cypress.Commands.add('verifyPolicyDetailsInCluster', (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+  cy.then(() => action_verifyPolicyDetailsInCluster(policyName, policyConfig, clusterName, clusterViolations, violationPatterns))
+})
+
+Cypress.Commands.add('verifyPolicyTemplatesInCluster', (policyName, policyConfig, clusterName, clusterViolations) => {
+  cy.then(() => action_verifyPolicyTemplatesInCluster(policyName, policyConfig, clusterName, clusterViolations))
+})
+
+Cypress.Commands.add('verifyPolicyViolationDetailsInCluster', (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+  cy.then(() => action_verifyPolicyViolationDetailsInCluster(policyName, policyConfig, clusterName, clusterViolations, violationPatterns))
+})
+
+Cypress.Commands.add('verifyPolicyViolationDetailsInHistory', (templateName, violations, violationPatterns) => {
+  cy.then(() => action_verifyPolicyViolationDetailsInHistory(templateName, violations, violationPatterns))
 })

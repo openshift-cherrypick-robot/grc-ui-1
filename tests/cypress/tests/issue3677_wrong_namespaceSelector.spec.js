@@ -1,9 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /// <reference types="cypress" />
-import { createPolicyFromSelection, verifyPolicyInListing, actionPolicyActionInListing,
-         verifyPolicyNotInListing, getDefaultSubstitutionRules, verifyViolationsInPolicyStatusClusters,
-         getViolationsPerPolicy, getViolationsCounter
-       } from '../common/views'
+import { getDefaultSubstitutionRules, getViolationsPerPolicy, getViolationsCounter } from '../common/views'
 import { getConfigObject } from '../config'
 
 describe('RHACM4K-1648 - GRC UI: [P2][Sev2][policy-grc] CertPolicy with wrong namespace selector', () => {
@@ -25,7 +22,7 @@ describe('RHACM4K-1648 - GRC UI: [P2][Sev2][policy-grc] CertPolicy with wrong na
 
   it(`Prefill a new policy ${policyName} using the form`, () => {
     cy.FromGRCToCreatePolicyPage()
-    createPolicyFromSelection(policyName, false, confPolicy)
+      .createPolicyFromSelection(policyName, false, confPolicy)
   })
 
   it('Replace namespaceSelector value with "no-such-namespace"', () => {
@@ -48,7 +45,7 @@ describe('RHACM4K-1648 - GRC UI: [P2][Sev2][policy-grc] CertPolicy with wrong na
   })
 
   it(`Check that policy ${policyName} is present in the policy listing`, () => {
-    verifyPolicyInListing(policyName, confPolicy)
+    cy.verifyPolicyInListing(policyName, confPolicy)
   })
 
   it(`Wait for policy ${policyName} status to become available`, () => {
@@ -58,17 +55,17 @@ describe('RHACM4K-1648 - GRC UI: [P2][Sev2][policy-grc] CertPolicy with wrong na
   it(`Verify policy ${policyName} violations at the Status - Clusters page`, () => {
     cy.visit(`/multicloud/policies/all/${confPolicy['namespace']}/${policyName}/status`).waitForPageContentLoad()
     // verify all violations per cluster
-    verifyViolationsInPolicyStatusClusters(policyName, confPolicy, clusterViolations, confViolationPatterns)
+      .verifyViolationsInPolicyStatusClusters(policyName, confPolicy, clusterViolations, confViolationPatterns)
   })
 
   it(`Delete policy ${policyName}`, () => {
     // we could use a different way how to return to this page
     cy.visit('/multicloud/policies/all').waitForPageContentLoad()
-    actionPolicyActionInListing(policyName, 'Remove')
+      .actionPolicyActionInListing(policyName, 'Remove')
   })
 
   it(`Deleted policy ${policyName} is not present in the policy listing`, () => {
-    verifyPolicyNotInListing(policyName)
+    cy.verifyPolicyNotInListing(policyName)
   })
 
 })

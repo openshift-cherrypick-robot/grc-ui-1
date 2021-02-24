@@ -1,11 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /// <reference types="cypress" />
-import {
-  createPolicyFromYAML, verifyPolicyInListing, verifyPolicyNotInListing,
-  actionPolicyActionInListing, getDefaultSubstitutionRules,
-  verifyPlacementRuleInPolicyDetails, verifyPlacementBindingInPolicyDetails,
-  verifyPolicyInPolicyDetails, verifyPolicyInPolicyDetailsTemplates
-} from '../../common/views'
+import { getDefaultSubstitutionRules } from '../../common/views'
 import { getUniqueResourceName } from '../../scripts/utils'
 import { getConfigObject } from '../../config'
 
@@ -22,11 +17,11 @@ describe('Testing policy named demo-policy in demo.yaml file', () => {
 
     it (`Can create new policy ${uPolicyName} from YAML editor`, () => {
       cy.FromGRCToCreatePolicyPage()
-      createPolicyFromYAML(policyYAML, true)
+        .createPolicyFromYAML(policyYAML, true)
     })
 
     it(`Policy ${uPolicyName} is present in the policy listing`, () => {
-      verifyPolicyInListing(uPolicyName,  policyConfig)
+      cy.verifyPolicyInListing(uPolicyName, policyConfig)
     })
 
     it('Policy status becomes available', () => {
@@ -37,59 +32,57 @@ describe('Testing policy named demo-policy in demo.yaml file', () => {
     })
 
     it('Disable policy', () => {
-      actionPolicyActionInListing(uPolicyName, 'Disable')
+      cy.actionPolicyActionInListing(uPolicyName, 'Disable')
     })
 
     it('Check disabled policy', () => {
-      verifyPolicyInListing(uPolicyName,  policyConfig, 'disabled')
+      cy.verifyPolicyInListing(uPolicyName, policyConfig, 'disabled')
     })
 
     it('Enable policy', () => {
-      actionPolicyActionInListing(uPolicyName, 'Enable')
+      cy.actionPolicyActionInListing(uPolicyName, 'Enable')
     })
 
     it('Check enabled policy', () => {
-      verifyPolicyInListing(uPolicyName,  policyConfig, 'enabled', '0/1')
+      cy.verifyPolicyInListing(uPolicyName, policyConfig, 'enabled', '0/1')
     })
 
     it('Enforce policy', () => {
-      actionPolicyActionInListing(uPolicyName, 'Enforce')
+      cy.actionPolicyActionInListing(uPolicyName, 'Enforce')
     })
 
     it('Check enforced policy', () => {
-       policyConfig.enforce = true
-       policyConfig.inform = false
-      verifyPolicyInListing(uPolicyName,  policyConfig)
+      policyConfig.enforce = true
+      policyConfig.inform = false
+      cy.verifyPolicyInListing(uPolicyName, policyConfig)
     })
 
     it('Inform policy', () => {
-      actionPolicyActionInListing(uPolicyName, 'Inform')
+      cy.actionPolicyActionInListing(uPolicyName, 'Inform')
     })
 
     it('Check informed policy', () => {
-       policyConfig.enforce = false
-       policyConfig.inform = true
-      verifyPolicyInListing(uPolicyName,  policyConfig)
+      policyConfig.enforce = false
+      policyConfig.inform = true
+      cy.verifyPolicyInListing(uPolicyName, policyConfig)
     })
 
     it('check policy and the detailed policy page', () => {
        // we need to find another way how to access this page
        cy.goToPolicyDetailsPage(uPolicyName, policyConfig['namespace'])
-         .then(() => {
-           verifyPolicyInPolicyDetails(uPolicyName, policyConfig, 'enabled', '0/1')
-           verifyPolicyInPolicyDetailsTemplates(uPolicyName, policyConfig)
-           verifyPlacementRuleInPolicyDetails(uPolicyName, policyConfig, confClusterViolations)
-           verifyPlacementBindingInPolicyDetails(uPolicyName, policyConfig)
-         })
+         .verifyPolicyInPolicyDetails(uPolicyName, policyConfig, 'enabled', '0/1')
+         .verifyPolicyInPolicyDetailsTemplates(uPolicyName, policyConfig)
+         .verifyPlacementRuleInPolicyDetails(uPolicyName, policyConfig, confClusterViolations)
+         .verifyPlacementBindingInPolicyDetails(uPolicyName, policyConfig)
     })
 
     it(`Policy ${uPolicyName} can be deleted in the policy listing`, () => {
       // we could use a different way how to return to this page
       cy.visit('/multicloud/policies/all')
-      actionPolicyActionInListing(uPolicyName, 'Remove')
+        .actionPolicyActionInListing(uPolicyName, 'Remove')
     })
 
     it(`Deleted policy ${uPolicyName} is not present in the policy listing`, () => {
-      verifyPolicyNotInListing(uPolicyName)
+      cy.verifyPolicyNotInListing(uPolicyName)
     })
 })

@@ -1,8 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 /// <reference types="cypress" />
-import { createPolicyFromYAML, actionPolicyActionInListing, getDefaultSubstitutionRules,
-         verifyPolicyNotInListing, verifyViolationsInPolicyStatusClusters
-       } from '../common/views'
+import { getDefaultSubstitutionRules } from '../common/views'
 import { getConfigObject } from '../config'
 
 const confClusters = getConfigObject('clusters.yaml')
@@ -26,20 +24,20 @@ describe('RHACM4K-1650 - GRC UI: [P1][Sev1][policy-grc] configurationPoicy contr
   // create a Pod policy not matching any namespace in namespaceSelector
   it(`Create Pod policy ${policyName} from YAML, expecting a compliance`, () => {
     cy.FromGRCToCreatePolicyPage()
-      .then(() => { createPolicyFromYAML(rawPolicyYAML, true) } )
+      .createPolicyFromYAML(rawPolicyYAML, true)
       .CheckGrcMainPage()
       .waitForPolicyStatus(policyName)
   })
 
   it('Verify the violation is listed on a policy Status page', () => {
     cy.visit(`/multicloud/policies/all/default/${policyName}/status`).waitForPageContentLoad()
-    verifyViolationsInPolicyStatusClusters(policyName, policyConf, clusterViolations, confViolationPatterns)
+      .verifyViolationsInPolicyStatusClusters(policyName, policyConf, clusterViolations, confViolationPatterns)
   })
 
   it('Delete Pod policy ${policyName}', () => {
     cy.visit('/multicloud/policies/all')
-    actionPolicyActionInListing(policyName, 'Remove')
-    verifyPolicyNotInListing(policyName)
+      .actionPolicyActionInListing(policyName, 'Remove')
+      .verifyPolicyNotInListing(policyName)
   })
 
 })
