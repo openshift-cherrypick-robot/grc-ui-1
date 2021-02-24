@@ -58,6 +58,7 @@ if [ $FAIL_FAST == "true" ]; then
 else
   echo "Running in non fail fast mode"
   export CYPRESS_FAIL_FAST_PLUGIN=false
+  export CANARY=true
   npm run test:cypress-headless || true
 fi
 
