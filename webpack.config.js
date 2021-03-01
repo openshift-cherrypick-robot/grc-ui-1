@@ -108,7 +108,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, './node_modules/monaco-editor'),
+        include: [
+          path.resolve(__dirname, './node_modules/monaco-editor'),
+          path.resolve(__dirname, './node_modules/@open-cluster-management/ui-components'),
+        ],
         use: ['style-loader', 'css-loader'],
       },
       {
@@ -122,7 +125,9 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        include: path.resolve(__dirname, './graphics'),
+        include: [
+          path.resolve(__dirname, './graphics'),
+        ],
         use: [
           'svg-sprite-loader'
         ]

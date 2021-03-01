@@ -37,7 +37,7 @@ module.exports = {
       'redux-logger',
       'redux-thunk',
       'redux',
-      'reselect',
+      'reselect'
     ]
   },
 
@@ -50,7 +50,7 @@ module.exports = {
           'css-loader',],
       },
       {
-        test: /\.(woff2?|ttf|eot|otf)(\?.*$|$)/,
+        test: /\.(png|jpg|jpeg|gif|svg|woff2?|ttf|eot|otf)(\?.*$|$)/,
         exclude: overpassTest,
         loader: 'file-loader',
         options: {
@@ -94,7 +94,7 @@ module.exports = {
     new CompressionPlugin({
       filename: '[path].gz',
       algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
+      test: /\.js$|\.css$|\.html$/
     }),
     new AssetsPlugin({
       path: path.join(__dirname, 'public'),
