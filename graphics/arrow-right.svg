@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 62 (101010) - https://sketch.com -->
+    <title>E19FA250-3A64-4B28-8CF7-BC5E98BAC4BC</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polygon id="path-1" points="7.5 0 6.795 0.705 10.585 4.5 0 4.5 0 5.5 10.585 5.5 6.795 9.295 7.5 10 12.5 5"></polygon>
+    </defs>
+    <g id="Asset-Artboard-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/navigation/arrow/right/20-copy-6-icon/navigation/arrow/right/20">
+            <g id="arrow--right" transform="translate(1.500000, 3.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#2A78E0" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <g id="icon-color-color/blue/60" mask="url(#mask-2)">
+                    <g transform="translate(-1.500000, -3.000000)"></g>
+                </g>
+            </g>
+            <rect id="transparent-rectangle" x="0" y="0" width="16" height="16"></rect>
+        </g>
+    </g>
+</svg>

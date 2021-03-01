@@ -1,0 +1,410 @@
+/*******************************************************************************
+ * Licensed Materials - Property of IBM
+ * (c) Copyright IBM Corporation 2018, 2019. All Rights Reserved.
+ *
+ * Note to U.S. Government Users Restricted Rights:
+ * Use, duplication or disclosure restricted by GSA ADP Schedule
+ * Contract with IBM Corp.
+ *******************************************************************************/
+/* Copyright (c) 2020 Red Hat, Inc. */
+@import '../scss/variables.scss';
+@import '_red-hat-font';
+
+@include redhat-font-face;
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  font-family: RedHatText;
+}
+
+.bx--link, .bx--label, .bx--search-input, .bx--overflow-menu-options__btn, .bx--pagination__text, .bx--text-input, .bx--tooltip--icon__top::before, .bx--tooltip--icon__top::after, .bx--tooltip--icon__bottom::before, .bx--tooltip--icon__bottom::after {
+  font-family: RedHatText;
+}
+
+ .welcome {
+   &--introduction {
+     background: linear-gradient(225deg, #000000 0%, #3D3D3D 100%);
+     padding: 0px 0px 0px 5rem;
+     &__description {
+      display: flex;
+      margin: 0 auto;
+      .welcome--text {
+        color: #fff;
+        margin: 65px 15px 50px 0;
+        width: 60%;
+        font-size: 16px;
+        line-height: 24px;
+
+        .dev-preview {
+          font-style: italic;
+          font-size: 14px;
+        }
+      }
+      .welcome--image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        > img {
+          height: 284px;
+          width: 328px;
+          left: 0;
+          right: 0;
+          top: 5px;
+        }
+      }
+      h1 {
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 2.5rem;
+        line-height: 1.3;
+        > span { color: $ibm_color_ultramarine50; }
+       }
+       p {
+        margin-bottom: 15px;
+        font-size: 1.125rem;
+        line-height: 1.8;
+        &:last-child { margin-bottom: 0; }
+        > span {
+          color: $ibm_color_ultramarine50;
+          font-weight: 600;
+        }
+       }
+     }
+   }
+   &--svcs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #EDEDED;
+    padding: 3rem 0;
+
+    &-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+    }
+
+    &-container {
+      display: flex;
+      margin: .5rem;
+      padding: 1.5rem;
+      width: 50%;
+      max-width: 600px;
+      background: #FFF;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,0.12);
+      &-img {
+        width: 32px;
+        height: 32px;
+        margin-right: 1rem;
+      }
+      &-body {
+        .title {
+          color: #45484B;
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 20px;
+          margin: 0 0 .5rem 0;
+        }
+        .desc {
+          color: #4E5156;
+          font-size: 12px;
+          line-height: 16px;
+          max-width: 390px;
+        }
+        .links {
+          margin-top: 1rem;
+          &-link{
+            color: #2A78E0;
+            font-size: 12px;
+            line-height: 24px;
+            text-decoration: none;
+          }
+          .spacer {
+            margin-left: .5rem;
+            padding-left: .5rem;
+            border-left: 1px solid #DCDCDC;
+          }
+        }
+        .dev-preview {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          &-label {
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: .5rem;
+            margin-bottom: .5rem;
+            padding: 0 .5rem;
+            color: #fff;
+            border-radius: 3px;
+            background-color: #D93F00;
+          }
+          .tooltip {
+            visibility: hidden;
+            position: absolute;
+            z-index: 1;
+            color: #EDEDED;
+            background: #333;
+            text-align: left;
+            padding: 1rem;
+            border-radius: 3px;
+            width: 18rem;
+            font-size: 12px;
+          }
+          .tooltip::after {
+            content: " ";
+            position: absolute;
+            bottom: 100%;  /* At the top of the tooltip */
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #333 transparent;
+          }
+          &:hover .tooltip {
+            visibility: visible;
+            width: 18rem;
+            margin-left: -4.5rem
+          }
+        }
+      }
+    }
+   }
+   &--info {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    background: #FFF;
+    padding-top: 60px;
+    padding-bottom: 85px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.12);
+    &__heading {
+      h2 {
+        font-size: 24px;
+        line-height: 34px;
+        color: #3C3F42;
+        margin: 0 5rem 0 5rem;
+        width: 10rem;
+      }
+    }
+    &__details {
+      display: flex;
+      flex-direction: column;
+      width: calc(100% - 30rem);
+
+      &-top {
+        color: #45484B;
+        font-size: 14px;
+        line-height: 24px;
+        padding-bottom: 1rem;
+        max-width: 660px;
+      }
+      &-container {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid #DCDCDC;
+        width: 100%;
+
+        .container-row {
+          display: flex;
+          flex-direction: row;
+        }
+        &-item {
+          width: 33%;
+          padding-right: 1rem;
+          margin: 1rem 1rem 1rem 0;
+
+          .header {
+            color: #45484B;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.125rem;
+            letter-spacing: 0;
+          }
+          .desc {
+            color: #45484B; 
+            font-size: 12px;
+            line-height: 16px;
+            max-width: 287px;
+          }
+        }
+      }
+
+      .spacer {
+        border-right: 1px solid #DCDCDC;
+      }
+    }
+   }
+   &--connect {
+     display: flex;
+     align-items: flex-start;
+     background: #EDEDED;
+     padding-top: 60px;
+     padding-bottom: 85px;
+     &__heading {
+      h2 {
+        font-size: 24px;
+        line-height: 34px;
+        color: #3C3F42;
+        margin: 0 5rem 0 5rem;
+        width: 10rem;
+      }
+      p {
+        font-weight: 300;
+        line-height: 1.4;
+        font-size: 1.375rem;
+      }
+     }
+      &__details {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 70%;
+        .welcome--connect__section {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          max-width: 15rem;
+          margin: 0 auto;
+
+          &-title {
+            color: #3C3F42;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 18px;
+            text-align: left;
+          }
+          &-body {
+            color: #3C3F42;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: left;
+            height: 32px;
+            margin-top: 9px;
+          }
+          &.has-divider {
+            position: relative;
+            margin-left: 200px;
+            margin-right: 200px;
+            &:before {
+              content: "";
+              background: $ibm_color_ultramarine10;
+              position: absolute;
+              width: 1px;
+              height: 307px;
+              top: 10px;
+              right: 375px;
+            }
+            &:after {
+              content: "";
+              background: $ibm_color_ultramarine10;
+              position: absolute;
+              width: 1px;
+              height: 307px;
+              top: 10px;
+              left: 375px;
+            }
+          }
+          &-launch {
+            margin-left: 6px;
+            color: #2A78E0;
+          }
+          .bx--link {
+            display: flex;
+            align-items: center;
+            line-height: 2;
+            margin-top: 9px;
+            text-decoration: none;
+            font-size: 12px;
+            color: #2A78E0;
+          }
+          .connect-coming-soon {
+            color: #6D7278;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 12px;
+            margin: 9px 0 0 0;
+            line-height: 2;
+            align-items: center;
+          }
+          .welcome--img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 40px;
+          }
+        }
+      }
+   }
+ }
+
+ @media (max-width: 1580px)  {
+  .welcome {
+    &--introduction__description {
+      .welcome--image { width: 45%; }
+      .welcome--text { width: 55%; }
+    }
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+  .welcome {
+    &--introduction__description {
+      .welcome--image {
+        width: 601px;
+        overflow: hidden;
+      }
+      .welcome--text { max-width: 550px; }
+    }
+    &--connect .welcome--connect__details .welcome--connect__section.has-divider {
+      margin-left: 125px;
+      margin-right: 125px;
+      &:before { right: 325px; }
+      &:after { left: 325px; }
+    }
+  }
+}
+
+@media (min-width: 1080px) and (max-width: 1199px) {
+  .welcome {
+    &--introduction__description {
+      .welcome--image {
+        width: 470px;
+        > img {
+          width: 470px;
+          height: 479px;
+          top: 75px;
+        }
+      }
+      .welcome--text { min-width: 550px; }
+    }
+    &--connect .welcome--connect__details .welcome--connect__section.has-divider {
+      margin-left: 100px;
+      margin-right: 100px;
+      &:before { right: 300px; }
+      &:after { left: 300px; }
+    }
+  }
+}
+
+@media (max-width: 1079px)  {
+  .welcome {
+    &--introduction__description {
+      .welcome--image { display: none; }
+      .welcome--text { width: 100%; }
+    }
+    &--collapsed__inner {
+      flex-direction: column;
+      img { display: none; }
+      .welcome--expand { padding-bottom: 9px; }
+    }
+    &--connect__details {
+      flex-direction: column;
+      .welcome--connect__section {
+        margin-bottom: 40px;
+        &:before, &:after { display: none; }
+        p + p, img { margin-bottom: 10px; }
+      }
+    }
+  }
+}
