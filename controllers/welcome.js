@@ -8,6 +8,7 @@
  *******************************************************************************/
 /* Copyright (c) 2020 Red Hat, Inc. */
 'use strict'
+import resources from '../lib/shared/resources'
 
 const ReactDOMServer = require('react-dom/server'),
       thunkMiddleware = require('redux-thunk').default,
@@ -22,6 +23,9 @@ const ReactDOMServer = require('react-dom/server'),
       Provider = require('react-redux').Provider,
       router = express.Router({ mergeParams: true })
 
+resources(() => {
+  require('../scss/welcome.scss')
+})
 
 let reducers, WelcomeStatic  //laziy initialize to reduce startup time seen on k8s
 
@@ -40,8 +44,10 @@ router.get('*', (req, res) => {
 
 function fetchHeader(req, res, store, ctx) {
 
-  res.render('home', Object.assign({
-    manifest: appUtil.app().locals.manifest,
+  const manifest = appUtil.app().locals.manifest
+
+  res.render('welcome', Object.assign({
+    manifest: manifest,
     content: ReactDOMServer.renderToString(
       <Provider store={store}>
         <StaticRouter
