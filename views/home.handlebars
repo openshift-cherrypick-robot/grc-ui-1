@@ -1,18 +1,18 @@
 {{!-- Copyright (c) 2020 Red Hat, Inc. --}}
 
 <body class="bx--global-light-ui" aria-label={{title}}>
-    <div id="header">{{{header}}}</div>
+    {{!-- <div id="header">{{{header}}}</div> --}}
     <div id="page">{{{content}}}</div>
     {{{body}}}
-    <script charset="UTF-8">window.__PRELOADED_STATE__= {{{json stateH}}}</script>
+    {{!-- <script charset="UTF-8">window.__PRELOADED_STATE__= {{{json stateH}}}</script> --}}
     <script id='config' type='application/json'>{{{json config}}}</script>
     <script id='context' type='application/json'>{{{json context}}}</script>
     <script id='propshcm' type='application/json'>{{{json props}}}</script>
     <script src="{{contextPath}}/{{manifest.vendorhcm.js}}"></script>
-    <script id='props' type='application/json'>{{{json propsH}}}</script>
+    {{!-- <script id='props' type='application/json'>{{{json propsH}}}</script>
     <script src="{{filesH.nls.path}}"></script>
     <script src="{{filesH.dll.path}}"></script>
-    <script src="{{filesH.js.path}}"></script>
+    <script src="{{filesH.js.path}}"></script> --}}
     <script src="{{contextPath}}/{{{properties 'nls/platform.properties' context.locale}}}"></script>
     <script charset="UTF-8">window.__PRELOADED_STATE__= {{{json state}}}</script>
     <script src="{{contextPath}}/{{manifest.main.js}}"></script>

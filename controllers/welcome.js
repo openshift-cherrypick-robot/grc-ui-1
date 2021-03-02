@@ -9,8 +9,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
 'use strict'
 
-import { WelcomeStatic } from '../src-web/containers/Welcome'
-
 const ReactDOMServer = require('react-dom/server'),
       thunkMiddleware = require('redux-thunk').default,
       redux = require('redux'),
@@ -25,7 +23,7 @@ const ReactDOMServer = require('react-dom/server'),
       router = express.Router({ mergeParams: true })
 
 
-let reducers  //laziy initialize to reduce startup time seen on k8s
+let reducers, WelcomeStatic  //laziy initialize to reduce startup time seen on k8s
 
 router.get('*', (req, res) => {
   reducers = reducers === undefined ? require('../src-web/reducers') : reducers
@@ -33,6 +31,8 @@ router.get('*', (req, res) => {
   const store = redux.createStore(redux.combineReducers(reducers), redux.applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
   ))
+
+  WelcomeStatic = WelcomeStatic === undefined ? require('../src-web/containers/Welcome').default : WelcomeStatic
 
   const fetchHeaderContext = getContext(req)
   fetchHeader(req, res, store, fetchHeaderContext)
@@ -52,7 +52,7 @@ function fetchHeader(req, res, store, ctx) {
       </Provider>
     ),
     contextPath: config.get('contextPath'),
-    headerContextPath: config.get('headerContextPath'),
+    headerContextPath: config.get('contextPath'),
     state: store.getState(),
     props: ctx,
   }, ctx))

@@ -26,7 +26,7 @@ router.get('/multicloud/logout', security.logout)
 router.get('/multicloud/common/configure', oauth.oauthInfo)
 router.get('/multicloud/common/username', user.userInfo)
 router.get('/multicloud/common/version', version.version)
-router.get('/multicloud/welcome', welcome)
+router.use('/multicloud/welcome', welcome)
 router.use(config.get('contextPath'), ui)
 
 module.exports = router
