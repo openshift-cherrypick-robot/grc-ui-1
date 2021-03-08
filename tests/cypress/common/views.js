@@ -200,12 +200,14 @@ export const action_createPolicyFromSelection = (uPolicyName, create=true, polic
     .clear()
     .type(uPolicyName)
   // namespace
-  cy.get('.bx--dropdown[aria-label="Choose an item"]')
-    .click()
-    .contains(policyConfig['namespace'])
-    .click()
+  if (policyConfig['namespace']) {
+    cy.get('.bx--dropdown[aria-label="Choose an item"]')
+      .click()
+      .contains(policyConfig['namespace'])
+      .click()
+  }
   //specs
-    .then(() => {
+  cy.then(() => {
       selectItems(policyConfig['specifications'], '.bx--multi-select[aria-label="specs"]')
     })
   // cluster binding
@@ -435,8 +437,9 @@ export const action_actionPolicyActionInListing = (uName, action, cancel=false) 
       .contains(uName)
       .parents('td')
       .siblings('td')
-      .last()
-      .click()
+      .last().within(() => {
+        cy.get('button').click()
+      })
   })
   .then(() => {
     cy.get('button').contains(action, { matchCase: false }).click()
