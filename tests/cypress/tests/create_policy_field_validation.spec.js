@@ -4,7 +4,7 @@
 describe('RHACM4K-2349 - GRC UI: [P1][Sev1][policy-grc] Create policy page: Check policy field validations', () => {
 
   const ID = Cypress.env('RESOURCE_ID')
-  const errorMsgRegExp = /Invalid name due to Kubernetes naming restriction.The name must meet the following requirements:• contain no more than 253 characters• contain only lowercase alphanumeric characters, \'-\' or \'.\'• start with an alphanumeric character• end with an alphanumeric character/
+  const errorMsgRegExp = /Invalid name due to Kubernetes naming restriction.The name must meet the following requirements:• contain no more than 253 characters• contain only lowercase alphanumeric characters, '-' or '.'• start with an alphanumeric character• end with an alphanumeric character/
 //  const errorMsgRegExp = /Invalid name due to Kubernetes naming restriction.The name must meet the following requirements:/
   const alertMsgRegExp = /Name already exists: pressing 'Create' will prompt to update the existing policy/
   const namePatterns = [
