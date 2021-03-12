@@ -1141,14 +1141,14 @@ Object {
       "two",
       "a",
       "four",
-      "one",
+      "seven",
     ],
     Array [
+      "one",
+      "two",
       "a",
-      "two",
-      "k",
       "four",
-      "two",
+      "one",
     ],
     Array [
       "p",
@@ -1179,11 +1179,11 @@ Object {
       "six",
     ],
     Array [
-      "one",
-      "two",
       "a",
+      "two",
+      "k",
       "four",
-      "seven",
+      "two",
     ],
     Array [
       "a",

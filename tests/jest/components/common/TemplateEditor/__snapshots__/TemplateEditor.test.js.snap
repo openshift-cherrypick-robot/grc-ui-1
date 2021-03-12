@@ -1132,7 +1132,7 @@ metadata:
     policy.open-cluster-management.io/categories: PR.DS Data Security
     policy.open-cluster-management.io/controls: PR.DS-2 Data-in-transit
 spec:
-  remediationAction: inform
+  remediationAction: 
   disabled: false
   policy-templates:
   - objectDefinition:
@@ -1188,7 +1188,7 @@ metadata:
     policy.open-cluster-management.io/categories: PR.DS Data Security
     policy.open-cluster-management.io/controls: PR.DS-2 Data-in-transit
 spec:
-  remediationAction: inform
+  remediationAction: 
   disabled: false
   policy-templates:
   - objectDefinition:
@@ -1244,7 +1244,7 @@ metadata:
     policy.open-cluster-management.io/categories: PR.DS Data Security
     policy.open-cluster-management.io/controls: PR.DS-2 Data-in-transit
 spec:
-  remediationAction: inform
+  remediationAction: 
   disabled: true
   policy-templates:
   - objectDefinition:

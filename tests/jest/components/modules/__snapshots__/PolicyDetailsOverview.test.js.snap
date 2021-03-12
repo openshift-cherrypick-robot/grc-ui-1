@@ -132,7 +132,7 @@ exports[`PolicyDetailsOverview component renders as normal 1`] = `
                 <span
                   className="pf-c-description-list__text"
                 >
-                  Enforcement
+                  Remediation
                   <div
                     content="Some policy controllers might not support the enforce feature. If the enforce feature is not supported by the controller, you must remediate it manually."
                     data-testid="mockTooltip"

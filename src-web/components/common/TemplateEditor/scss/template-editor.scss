@@ -202,13 +202,37 @@
 
     }
 
+    &-radiobutton {
+      padding: 0 0.3125rem 1.125rem 0;
+
+      .radio-button-group {
+        align-items: flex-start;
+        flex-direction: column;
+
+        .radio-button {
+          .bx--radio-button__label {
+            align-items: unset;
+
+            .bx--radio-button__appearance {
+              margin-top: -0.125rem;
+            }
+          }
+        }
+
+        .radio-button:last-child {
+          padding-top: 0.75rem;
+        }
+      }
+    }
+
     &-checkbox {
       padding: 0 0.3125rem 1.125rem 0;
       display: flex;
-      align-items: center;
       font-weight: bold;
-      font-size: 0.875rem;
-      position: relative;
+
+      > * {
+        margin-top: 0.5rem
+      }
 
       .bx--form-item {
         flex: 0;

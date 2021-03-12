@@ -121,9 +121,9 @@ const controlData = [
     cacheUserValueKey: 'create.policy.controls',
   },
   {
-    name: 'creation.view.policy.enforce',
-    description: 'policy.create.enforce.tooltip',
-    id: 'enforce',
+    name: 'creation.view.policy.remediation',
+    description: 'policy.create.remediation.tooltip',
+    id: 'remediation',
     type: 'checkbox',
     active: 'inform',
     checked: false,

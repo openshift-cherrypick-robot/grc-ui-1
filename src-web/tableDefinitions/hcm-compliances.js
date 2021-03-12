@@ -441,7 +441,7 @@ export default {
       {
         cells: [
           {
-            resourceKey: 'description.title.enforcement',
+            resourceKey: 'description.title.remediation',
             information: 'grc.remediation.tooltip',
             type: 'i18n'
           },
@@ -649,11 +649,11 @@ export default {
       {
         cells: [
           {
-            resourceKey: 'description.title.enforcement',
+            resourceKey: 'description.title.remediation',
             type: 'i18n'
           },
           {
-            resourceKey: 'enforcement'
+            resourceKey: 'remediation'
           }
         ]
       },
@@ -735,7 +735,7 @@ export default {
       {
         cells: [
           {
-            resourceKey: 'description.title.enforcement',
+            resourceKey: 'description.title.remediation',
             type: 'i18n'
           },
           {

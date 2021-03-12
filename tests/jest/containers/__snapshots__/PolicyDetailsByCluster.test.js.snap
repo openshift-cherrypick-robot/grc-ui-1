@@ -653,7 +653,7 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                     "cells": Array [
                       Object {
                         "information": "grc.remediation.tooltip",
-                        "resourceKey": "description.title.enforcement",
+                        "resourceKey": "description.title.remediation",
                         "type": "i18n",
                       },
                       Object {
@@ -1020,7 +1020,7 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                   Object {
                     "cells": Array [
                       Object {
-                        "resourceKey": "description.title.enforcement",
+                        "resourceKey": "description.title.remediation",
                         "type": "i18n",
                       },
                       Object {
@@ -1073,11 +1073,11 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                   Object {
                     "cells": Array [
                       Object {
-                        "resourceKey": "description.title.enforcement",
+                        "resourceKey": "description.title.remediation",
                         "type": "i18n",
                       },
                       Object {
-                        "resourceKey": "enforcement",
+                        "resourceKey": "remediation",
                       },
                     ],
                   },
@@ -1584,7 +1584,7 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                       "cells": Array [
                         Object {
                           "information": "grc.remediation.tooltip",
-                          "resourceKey": "description.title.enforcement",
+                          "resourceKey": "description.title.remediation",
                           "type": "i18n",
                         },
                         Object {
@@ -1951,7 +1951,7 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                     Object {
                       "cells": Array [
                         Object {
-                          "resourceKey": "description.title.enforcement",
+                          "resourceKey": "description.title.remediation",
                           "type": "i18n",
                         },
                         Object {
@@ -2004,11 +2004,11 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                     Object {
                       "cells": Array [
                         Object {
-                          "resourceKey": "description.title.enforcement",
+                          "resourceKey": "description.title.remediation",
                           "type": "i18n",
                         },
                         Object {
-                          "resourceKey": "enforcement",
+                          "resourceKey": "remediation",
                         },
                       ],
                     },

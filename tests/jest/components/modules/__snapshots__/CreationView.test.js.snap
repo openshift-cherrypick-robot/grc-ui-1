@@ -583,45 +583,80 @@ exports[`CreationView module renders as expected with discovered data 1`] = `
               </div>
             </div>
             <div
-              className="creation-view-controls-checkbox"
+              className="creation-view-controls-radiobutton"
             >
               <div
-                className="bx--form-item bx--checkbox-wrapper"
+                className="creation-view-controls-textbox-title"
               >
-                <input
-                  aria-label="enforce"
-                  checked={false}
-                  className="bx--checkbox"
-                  id="enforce"
-                  onChange={[Function]}
-                  type="checkbox"
-                />
-                <label
-                  className="bx--checkbox-label checkbox"
-                  htmlFor="enforce"
-                  title={null}
+                Remediation
+                <div
+                  content="Represents how violations are handled as defined in the resource."
+                  data-testid="mockTooltip"
                 >
-                  <span
-                    className="bx--visually-hidden"
+                  <svg
+                    className="info-icon"
                   >
-                    
-                  </span>
-                </label>
-              </div>
-              <div>
-                Enforce if supported
+                    <use
+                      href="#diagramIcons_info"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
-                content="Select Enforce, if the feature is supported for your policy, to update remediationAction. When Enforce is not selected, the parameter value for remediationAction is inform."
-                data-testid="mockTooltip"
+                className="bx--form-item"
               >
-                <svg
-                  className="info-icon"
+                <div
+                  className="bx--radio-button-group radio-button-group"
                 >
-                  <use
-                    href="#diagramIcons_info"
-                  />
-                </svg>
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={true}
+                      className="bx--radio-button"
+                      id="remediation-inform"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="false"
+                    />
+                    <label
+                      aria-label="Inform - Reports the violation, which requires manual remediation."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-inform"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Inform - Reports the violation, which requires manual remediation.
+                    </label>
+                  </div>
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={false}
+                      className="bx--radio-button"
+                      id="remediation-enforce"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="true"
+                    />
+                    <label
+                      aria-label="Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-enforce"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported.
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
             <div
@@ -1495,45 +1530,80 @@ exports[`CreationView module renders as expected with empty discovered data 1`] 
               </div>
             </div>
             <div
-              className="creation-view-controls-checkbox"
+              className="creation-view-controls-radiobutton"
             >
               <div
-                className="bx--form-item bx--checkbox-wrapper"
+                className="creation-view-controls-textbox-title"
               >
-                <input
-                  aria-label="enforce"
-                  checked={false}
-                  className="bx--checkbox"
-                  id="enforce"
-                  onChange={[Function]}
-                  type="checkbox"
-                />
-                <label
-                  className="bx--checkbox-label checkbox"
-                  htmlFor="enforce"
-                  title={null}
+                Remediation
+                <div
+                  content="Represents how violations are handled as defined in the resource."
+                  data-testid="mockTooltip"
                 >
-                  <span
-                    className="bx--visually-hidden"
+                  <svg
+                    className="info-icon"
                   >
-                    
-                  </span>
-                </label>
-              </div>
-              <div>
-                Enforce if supported
+                    <use
+                      href="#diagramIcons_info"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
-                content="Select Enforce, if the feature is supported for your policy, to update remediationAction. When Enforce is not selected, the parameter value for remediationAction is inform."
-                data-testid="mockTooltip"
+                className="bx--form-item"
               >
-                <svg
-                  className="info-icon"
+                <div
+                  className="bx--radio-button-group radio-button-group"
                 >
-                  <use
-                    href="#diagramIcons_info"
-                  />
-                </svg>
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={true}
+                      className="bx--radio-button"
+                      id="remediation-inform"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="false"
+                    />
+                    <label
+                      aria-label="Inform - Reports the violation, which requires manual remediation."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-inform"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Inform - Reports the violation, which requires manual remediation.
+                    </label>
+                  </div>
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={false}
+                      className="bx--radio-button"
+                      id="remediation-enforce"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="true"
+                    />
+                    <label
+                      aria-label="Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-enforce"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported.
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
             <div
@@ -2407,45 +2477,80 @@ exports[`CreationView module renders as expected without discovered data 1`] = `
               </div>
             </div>
             <div
-              className="creation-view-controls-checkbox"
+              className="creation-view-controls-radiobutton"
             >
               <div
-                className="bx--form-item bx--checkbox-wrapper"
+                className="creation-view-controls-textbox-title"
               >
-                <input
-                  aria-label="enforce"
-                  checked={false}
-                  className="bx--checkbox"
-                  id="enforce"
-                  onChange={[Function]}
-                  type="checkbox"
-                />
-                <label
-                  className="bx--checkbox-label checkbox"
-                  htmlFor="enforce"
-                  title={null}
+                creation.view.policy.remediation
+                <div
+                  content="policy.create.remediation.tooltip"
+                  data-testid="mockTooltip"
                 >
-                  <span
-                    className="bx--visually-hidden"
+                  <svg
+                    className="info-icon"
                   >
-                    
-                  </span>
-                </label>
-              </div>
-              <div>
-                creation.view.policy.enforce
+                    <use
+                      href="#diagramIcons_info"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
-                content="policy.create.enforce.tooltip"
-                data-testid="mockTooltip"
+                className="bx--form-item"
               >
-                <svg
-                  className="info-icon"
+                <div
+                  className="bx--radio-button-group radio-button-group"
                 >
-                  <use
-                    href="#diagramIcons_info"
-                  />
-                </svg>
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={true}
+                      className="bx--radio-button"
+                      id="remediation-inform"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="false"
+                    />
+                    <label
+                      aria-label="Inform - Reports the violation, which requires manual remediation."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-inform"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Inform - Reports the violation, which requires manual remediation.
+                    </label>
+                  </div>
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={false}
+                      className="bx--radio-button"
+                      id="remediation-enforce"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="true"
+                    />
+                    <label
+                      aria-label="Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-enforce"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported.
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
             <div

@@ -218,7 +218,7 @@ exports[`PolicyClusterDetail component renders as normal 1`] = `
                   className="bx--structured-list-td"
                 >
                   <div>
-                    Enforcement
+                    Remediation
                   </div>
                 </div>
                 <div

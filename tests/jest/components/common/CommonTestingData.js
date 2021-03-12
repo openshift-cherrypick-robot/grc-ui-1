@@ -3729,7 +3729,7 @@ export const staticResourceDataPolicyOverview = {
       {
         'cells': [
           {
-            'resourceKey': 'description.title.enforcement',
+            'resourceKey': 'description.title.remediation',
             'information': 'grc.remediation.tooltip',
             'type': 'i18n'
           },
@@ -3960,7 +3960,7 @@ export const staticResourceDataPolicyOverview = {
       {
         'cells': [
           {
-            'resourceKey': 'description.title.enforcement',
+            'resourceKey': 'description.title.remediation',
             'information': 'grc.remediation.tooltip',
             'type': 'i18n'
           },
@@ -4059,7 +4059,7 @@ export const staticResourceDataPolicyOverview = {
       {
         'cells': [
           {
-            'resourceKey': 'description.title.enforcement',
+            'resourceKey': 'description.title.remediation',
             'information': 'grc.remediation.tooltip',
             'type': 'i18n'
           },
@@ -5999,7 +5999,7 @@ export const staticResourceDataPolicyCluster = {
       {
         'cells':[
           {
-            'resourceKey':'description.title.enforcement',
+            'resourceKey':'description.title.remediation',
             'information':'grc.remediation.tooltip',
             'type':'i18n'
           },
@@ -6186,7 +6186,7 @@ export const staticResourceDataPolicyCluster = {
       {
         'cells':[
           {
-            'resourceKey':'description.title.enforcement',
+            'resourceKey':'description.title.remediation',
             'type':'i18n'
           },
           {
@@ -6272,7 +6272,7 @@ export const staticResourceDataPolicyCluster = {
       {
         'cells':[
           {
-            'resourceKey':'description.title.enforcement',
+            'resourceKey':'description.title.remediation',
             'type':'i18n'
           },
           {
