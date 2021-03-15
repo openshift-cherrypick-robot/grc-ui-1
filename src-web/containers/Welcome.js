@@ -20,7 +20,7 @@ resources(() => {
 import { Route } from 'react-router-dom'
 import client from '../../lib/shared/client'
 import config from '../../lib/shared/config'
-import { AcmHeaderPrototype } from '@open-cluster-management/ui-components'
+import { AcmHeader } from '@open-cluster-management/ui-components'
 import msgs from '../../nls/platform.properties'
 
 class WelcomeStatic extends React.Component {
@@ -222,7 +222,7 @@ class WelcomeStatic extends React.Component {
 // eslint-disable-next-line react/display-name
 export default props => (
   // eslint-disable-next-line react/prop-types
-  <AcmHeaderPrototype urlpath={client ? window.location.pathname : props.url} href="/" target="_self">
+  <AcmHeader urlpath={client ? window.location.pathname : props.url} href="/" target="_self">
     <Route path={'/multicloud/welcome'} serverProps={props} component={WelcomeStatic} />
-  </AcmHeaderPrototype>
+  </AcmHeader>
 )

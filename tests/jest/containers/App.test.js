@@ -48,6 +48,7 @@ describe('App container test', () => {
           <App
             match={match}
             staticContext={staticContext}
+            url={'/multicloud/policies'}
           />
         </BrowserRouter>
       </Provider>
