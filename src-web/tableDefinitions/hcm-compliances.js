@@ -739,7 +739,7 @@ export default {
             type: 'i18n'
           },
           {
-            resourceKey: 'enforcement'
+            resourceKey: 'remediation'
           }
         ]
       },
