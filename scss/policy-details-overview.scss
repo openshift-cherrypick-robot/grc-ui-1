@@ -7,10 +7,12 @@
  * Contract with IBM Corp.
  *******************************************************************************/
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 
 @import 'node_modules/carbon-components/scss/globals/scss/_colors';
 @import 'variables';
- 
+
 .overview-content {
   display: flex;
   flex-wrap: wrap;
@@ -178,7 +180,7 @@
       right: 0;
       margin: auto;
     }
- 
+
     &-second {
       width: 100%;
       display: flex;
@@ -203,7 +205,7 @@
         min-width: 40%;
       }
     }
- 
+
     &-bottom {
       width: 100%;
       flex: 1 0 100%;
@@ -211,7 +213,7 @@
     b { font-weight: bold; }
     li { margin-bottom: .3rem; }
     code { font-size: .6rem; }
- 
+
     .bx--snippet.bx--snippet--code { margin-bottom: .3rem; }
   }
 }

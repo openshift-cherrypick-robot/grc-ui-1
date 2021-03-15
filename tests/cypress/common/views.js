@@ -1,5 +1,9 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 /// <reference types="cypress" />
+
+import { getConfigObject } from '../config'
 
 const closeMenuQuery = 'svg[aria-label="Close menu"]'
 const clearAllBtnQuery = 'svg[aria-label="Clear all selected items"]'
@@ -196,55 +200,155 @@ export const action_createPolicyFromSelection = (uPolicyName, create=true, polic
     .clear()
     .type(uPolicyName)
   // namespace
-  cy.get('.bx--dropdown[aria-label="Choose an item"]')
-    .click()
-    .contains(policyConfig['namespace'])
-    .click()
+  if (policyConfig['namespace']) {
+    cy.get('.bx--dropdown[aria-label="Choose an item"]')
+      .click()
+      .contains(policyConfig['namespace'])
+      .click()
+  }
   //specs
-    .then(() => {
+  if (policyConfig['specifications']) {
+    cy.then(() => {
       selectItems(policyConfig['specifications'], '.bx--multi-select[aria-label="specs"]')
     })
+  }
   // cluster binding
-    .then(() => {
+  if (policyConfig['cluster_binding']) {
+    cy.then(() => {
       selectItems(policyConfig['cluster_binding'], '.bx--multi-select[aria-label="clusters"]', )
     })
+  }
   // standards
-    .then(() => {
+  if (policyConfig['standards']) {
+    cy.then(() => {
       selectItems(policyConfig['standards'], '.bx--multi-select[aria-label="standards"]', )
     })
+  }
   // categories
-    .then(() => {
+  if (policyConfig['categories']) {
+    cy.then(() => {
       selectItems(policyConfig['categories'], '.bx--multi-select[aria-label="categories"]', )
     })
+  }
   // controls
-    .then(() => {
+  if (policyConfig['controls']) {
+    cy.then(() => {
       selectItems(policyConfig['controls'], '.bx--multi-select[aria-label="controls"]', )
     })
+  }
   // enforce
-    .then(() => {
+  if (policyConfig['enforce']) {
+    cy.then(() => {
       if (policyConfig['enforce']) {
         cy.get('input[aria-label="enforce"][type="checkbox"]')
           .next('label')
           .click()
       }
     })
+  }
   // disable
-    .then(() => {
+  if (policyConfig['disable']) {
+    cy.then(() => {
       if (policyConfig['disable']) {
         cy.get('input[aria-label="disabled"][type="checkbox"]')
           .next('label')
           .click()
       }
     })
+  }
   // create
-    .then(() => {
-      if (create) {
-        cy.get('#create-button-portal-id-btn').click()
-        // after creation, always return to grc main page
-        cy.CheckGrcMainPage()
+  cy.then(() => {
+    if (create) {
+      cy.get('#create-button-portal-id-btn').click()
+      // after creation, always return to grc main page
+      cy.CheckGrcMainPage()
+    }
+  })
+}
+
+// this function verify whether create policy form contain values matching the policy configuration
+// oldPolicyName is used only to wait for a form update (since we cannot use wait() )
+export const action_verifyCreatePolicySelection = (policyName, policyConfig) => {
+  // first wait for the form update
+  //cy.get('#name').invoke('val').should('not.match', /policy-grc/)
+  // now check the updated policy name
+  cy.get('#name').invoke('val').should('match', new RegExp('^'+policyName+'$'))
+  // namespace
+  if (policyConfig['namespace']) {
+    cy.get('div[aria-label="namespace"]').contains(new RegExp('^'+policyConfig['namespace']+'$'))
+  }
+  //specs
+  if (policyConfig['specifications']) {
+    cy.then(() => {
+        verifyItemsChecked(policyConfig['specifications'], '.bx--multi-select[aria-label="specs"]')
+      })
+      // also check that the number of selected items matches
+      .get('.bx--multi-select[aria-label="specs"]').within(() => {
+        cy.get('div[title="Clear all selected items"]').contains(new RegExp('[^0-9]?'+policyConfig['specifications'].length+'[^0-9]?'))
+      })
+  }
+  // cluster binding
+  if (policyConfig['cluster_binding']) {
+    cy.then(() => {
+        verifyItemsChecked(policyConfig['cluster_binding'], '.bx--multi-select[aria-label="clusters"]')
+      })
+      // also check that the number of selected items matches
+      .get('.bx--multi-select[aria-label="clusters"]').within(() => {
+        cy.get('div[title="Clear all selected items"]').contains(new RegExp('[^0-9]?'+policyConfig['cluster_binding'].length+'[^0-9]?'))
+      })
+  }
+  // standards
+  if (policyConfig['standards']) {
+    cy.then(() => {
+        verifyItemsChecked(policyConfig['standards'], '.bx--multi-select[aria-label="standards"]')
+      })
+      // also check that the number of selected items matches
+      .get('.bx--multi-select[aria-label="standards"]').within(() => {
+        cy.get('div[title="Clear all selected items"]').contains(new RegExp('[^0-9]?'+policyConfig['standards'].length+'[^0-9]?'))
+      })
+  }
+  // categories
+  if (policyConfig['categories']) {
+    cy.then(() => {
+        verifyItemsChecked(policyConfig['categories'], '.bx--multi-select[aria-label="categories"]')
+      })
+      // also check that the number of selected items matches
+      .get('.bx--multi-select[aria-label="categories"]').within(() => {
+        cy.get('div[title="Clear all selected items"]').contains(new RegExp('[^0-9]?'+policyConfig['categories'].length+'[^0-9]?'))
+      })
+  }
+  // controls
+  if (policyConfig['controls']) {
+    cy.then(() => {
+        verifyItemsChecked(policyConfig['controls'], '.bx--multi-select[aria-label="controls"]')
+      })
+      // also check that the number of selected items matches
+      .get('.bx--multi-select[aria-label="controls"]').within(() => {
+        cy.get('div[title="Clear all selected items"]').contains(new RegExp('[^0-9]?'+policyConfig['controls'].length+'[^0-9]?'))
+      })
+  }
+  // enforce
+  if (policyConfig['enforce']) {
+    cy.then(() => {
+      if (policyConfig['enforce']) {
+        cy.get('input[aria-label="enforce"][type="checkbox"]').should('be.checked')
+      } else {
+        cy.get('input[aria-label="enforce"][type="checkbox"]').should('not.be.checked')
       }
     })
+  }
+  // disable
+  if (policyConfig['disable']) {
+    cy.then(() => {
+      if (policyConfig['disable']) {
+        cy.get('input[aria-label="disabled"][type="checkbox"]').should('be.checked')
+      } else {
+        cy.get('input[aria-label="disabled"][type="checkbox"]').should('not.be.checked')
+      }
+    })
+  }
 }
+
 
 // enabled='enabled', checking if policy is enabled; enabled='disabled', checking if policy is disabled
 // targetStatus = 0, don't check policy status; targetStatus = 1, check policy status is non-violation
@@ -420,6 +524,34 @@ export const isClusterPolicyStatusAvailable = (clusterViolations, clusterList=nu
   }).then(() => statusAvailable )
 })
 }
+
+// needs to be run at /multicloud/policies/all at ClusterViolations tab
+// optionally, specific violationsCounter value can be provided
+export const isClusterViolationsStatusAvailable = (name, violationsCounter) => {
+  let statusAvailable = false
+  // page /multicloud/policies/all
+  return cy.then(() => {
+    cy.get('[aria-label="Sortable Table"]').within(() => {
+      cy.get('a').contains(name).parents('td').siblings('td').spread((namespace, counter) => {
+        // check the violation status
+        cy.wrap(counter).find('path').then((elems) => {
+          if (elems.length === 1) {
+            const d = elems[0].getAttribute('d')
+            // M569 seem to be unique to an icon telling that policy status is not available for some cluster
+            statusAvailable = !d.startsWith('M569')
+            if (statusAvailable && violationsCounter) { // also check if violations counter matches
+              if (!counter.textContent.match('\\b'+violationsCounter+'\\b')) { // not found
+                statusAvailable = false
+              }
+            }
+          }
+        })
+      })
+    })
+    .then(() => statusAvailable)
+  })
+}
+
 
 
 // needs to be run either at /multicloud/policies/all or /multicloud/policies/all/{namespace}/{policy} page
@@ -1166,4 +1298,82 @@ export const verifyPolicyTemplateViolationDetailsForCluster = (policyName, polic
       cy.wrap(details).contains(pattern)
     }
   })
+}
+
+export const action_verifyClusterViolationsInListing = (clusterName, violationsCounter = '', violatedPolicies = [], targetStatus = null) => {
+  if (targetStatus == null) {
+    if (violationsCounter && violationsCounter[0] != '[') {
+      targetStatus = violationsCounter.startsWith('0/') ? 1 : 2
+    } else {
+      targetStatus = 0
+    }
+  }
+  doTableSearch(clusterName)
+  cy.get('table[aria-label="Sortable Table"]').within(() => {
+    cy.get('a').contains(clusterName).parents('td').siblings('td')
+    .spread((namespace, violations, policies) => {
+      // FIXME: skip namespace
+      // check the violation status
+      if ([1,2].includes(targetStatus)) {
+        cy.wrap(violations).find('svg').then((elems) => {
+          if (elems.length === 1) {
+            expect(getStatusIconFillColor(targetStatus)).to.equal(elems[0].getAttribute('fill').trim().toLowerCase())
+          }
+        })
+      }
+      // check the cluster violations counter value
+      if (violationsCounter) {
+        cy.wrap(violations.textContent).should('match', new RegExp('^'+violationsCounter+'$'))
+      } else {
+        cy.wrap(violations.textContent).should('match', /^[0-9]+\/[0-9]+$/)
+      }
+      // check violated policies
+      // in fact there is no sense checking it precisely since policy listing woudl be truncated in the UI
+      if (violatedPolicies.length > 0) {
+        if (policies.textContent.includes('...')) {  // policy listing is truncated
+          const [prefix, suffix] = policies.textContent.split('...', 2)
+          const allPolicies = violatedPolicies.join()
+          expect(allPolicies).to.contain(prefix)
+          expect(allPolicies).to.contain(suffix)
+        } else {  // listing is not truncated
+          for (const policyName of violatedPolicies) {
+            cy.wrap(policies).contains(policyName)
+          }
+        }
+      }
+    })
+  })
+  clearTableSearch()
+}
+
+export const getClusterViolationsCounterAndPolicyList = (clusterName, clusterList, confFileViolations, confPolicies) => {
+  let counter = 0
+  const violatedPolicies = []
+  let violationCounter = ''
+
+  // first we need to find out the proper violationsCounter value by counting violated policies
+  for (const policyName in confPolicies) {
+    // we need to do the substitution per policy
+    const confClusterViolations = getConfigObject(confFileViolations, 'yaml', getDefaultSubstitutionRules({policyname:policyName}))
+    const clusterViolations = getViolationsPerPolicy(policyName, confPolicies[policyName], confClusterViolations, clusterList)
+    // in theory there could be multiple violations found by one policy
+    // also, if the policy has multiple specifications there could be even multiple compliances
+    for (const violation of clusterViolations[clusterName]) {
+      const id = violation.replace(/^.*-/, '')
+      if (id == '?') { // unspecific violation, we won't ever know exact value of violationCounter
+        counter = '?'
+      } else if (counter != '?' && id[0] != '0') {  // if there is an actual violation (non-zero ID)
+        counter = counter + 1
+        violatedPolicies.push(policyName)
+        break  // stop checking this policy
+      }
+    }
+  }
+  // now build a regexp for violationCounter based on counter and violatedPolicies
+  if (counter == '?') {
+    violationCounter = '[0-9]+/' + Object.keys(confPolicies).length.toString()
+  } else {
+    violationCounter = counter.toString() + '/' + Object.keys(confPolicies).length.toString()
+  }
+  return [ violationCounter, violatedPolicies]
 }

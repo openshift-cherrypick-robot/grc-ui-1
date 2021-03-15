@@ -1,6 +1,14 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
+// BEWARE: The execution if this test is altered by an environment variable
+// STANDALONE_TESTSUITE_EXECUTION (resp. CYPRESS_STANDALONE_TESTSUITE_EXECUTION)
+// when set to 'FALSE', some checks are loosened due to possible conflicts with
+// other tests running in the environment
+
 /// <reference types="cypress" />
-import { getDefaultSubstitutionRules, getViolationsPerPolicy, getViolationsCounter } from './views'
+import { getDefaultSubstitutionRules, getViolationsPerPolicy, getViolationsCounter,
+         getClusterViolationsCounterAndPolicyList } from './views'
 import { getConfigObject } from '../config'
 
 
@@ -11,6 +19,14 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
   const substitutionRules = [ [/\[ID\]/g, Cypress.env('RESOURCE_ID')] ]
   // policy-config is used for policy creation and validation
   const confPolicies = getConfigObject(confFilePolicy, 'yaml', substitutionRules)
+
+  if (Cypress.env('STANDALONE_TESTSUITE_EXECUTION') !== 'FALSE') {
+    // first check there are no policies, otherwise numbers won't match
+    it('Verify there are no policies present', () => {
+      cy.get('div.no-resource')  // there should be no-resource element
+        .get('.grc-view-by-policies-table').should('not.exist')  // there should not be policy table
+   })
+  }
 
   for (const policyName in confPolicies) {
 
@@ -54,6 +70,36 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
 
     it(`Check enabled policy ${policyName}`, () => {
       cy.verifyPolicyInListing(policyName, confPolicies[policyName], 'enabled', violationsCounter)
+    })
+
+  }
+
+  // verify cluster violation listed on the All policies page, Clusters tab
+  for (const clusterName of clusterList) {
+    const [violationCounter, violatedPolicies] = getClusterViolationsCounterAndPolicyList(clusterName, clusterList, confFileViolationsInform, confPolicies)
+
+    // BEWARE: The check would only work if there were no other policies present on the cluster
+    // if this is not the case, avoid passing violationCounter and violatedPolicies to
+    // waitForClusterViolationsStatus() and verifyClusterViolationsInListing() functions below
+    // Currently this is controlled using STANDALONE_TESTSUITE_EXECUTION variable
+    it('Wait for cluster violation status to become available', () => {
+      // switch to the Clusters tab
+      cy.get('#grc-cluster-view').click()
+        .then(() => {
+          if (Cypress.env('STANDALONE_TESTSUITE_EXECUTION') !== 'FALSE') {
+            cy.waitForClusterViolationsStatus(clusterName, violationCounter)
+          } else {
+            cy.waitForClusterViolationsStatus(clusterName)
+          }
+        })
+    })
+
+    it(`Check cluster ${clusterName} violations`, () => {
+      if (Cypress.env('STANDALONE_TESTSUITE_EXECUTION') !== 'FALSE') {
+        cy.verifyClusterViolationsInListing(clusterName, violationCounter, violatedPolicies)
+      } else {
+        cy.verifyClusterViolationsInListing(clusterName)
+      }
     })
 
   }
@@ -143,6 +189,36 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
       it(`Check enabled policy ${policyName}`, () => {
         cy.verifyPolicyInListing(policyName, confPolicies[policyName], 'enabled', violationsCounter)
       })
+
+      // verify cluster violation listed on the All policies page, Clusters tab
+      for (const clusterName of clusterList) {
+        const [violationCounter, violatedPolicies] = getClusterViolationsCounterAndPolicyList(clusterName, clusterList, confFileViolationsEnforce, confPolicies)
+
+        // BEWARE: The check would only work if there were no other policies present on the cluster
+        // if this is not the case, avoid passing violationCounter and violatedPolicies to
+        // waitForClusterViolationsStatus() and verifyClusterViolationsInListing() functions below
+        // Currently this is controlled using STANDALONE_TESTSUITE_EXECUTION variable
+        it('Wait for cluster violation status to become available', () => {
+          // switch to the Clusters tab
+          cy.get('#grc-cluster-view').click()
+            .then(() => {
+              if (Cypress.env('STANDALONE_TESTSUITE_EXECUTION') !== 'FALSE') {
+                cy.waitForClusterViolationsStatus(clusterName, violationCounter)
+              } else {
+                cy.waitForClusterViolationsStatus(clusterName)
+              }
+            })
+        })
+
+        it(`Check cluster ${clusterName} violations`, () => {
+          if (Cypress.env('STANDALONE_TESTSUITE_EXECUTION') !== 'FALSE') {
+            cy.verifyClusterViolationsInListing(clusterName, violationCounter, violatedPolicies)
+          } else {
+            cy.verifyClusterViolationsInListing(clusterName)
+          }
+        })
+
+      }
 
       it(`Verify policy ${policyName} details at the detailed page`, () => {
         cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`).waitForPageContentLoad()

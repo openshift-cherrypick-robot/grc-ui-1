@@ -1,3 +1,5 @@
+[comment]: # ( Copyright Contributors to the Open Cluster Management project )
+
 # Additional notes on Cypress test development and execution
 
 ## Running the ACM server on localhost

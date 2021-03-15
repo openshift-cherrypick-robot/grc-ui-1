@@ -1,4 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 /// <reference types="cypress" />
 import { test_genericPolicyGovernance, test_applyPolicyYAML } from '../../common/tests'
 

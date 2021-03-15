@@ -1,0 +1,52 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: certificatepolicy
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/standards: NIST-CSF
+    policy.open-cluster-management.io/categories: PR.DS Data Security
+    policy.open-cluster-management.io/controls: PR.DS-2 Data-in-transit
+spec:
+  remediationAction: inform
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: CertificatePolicy # cert management expiration
+      metadata:
+        name: certificatepolicy-cert-expiration
+      spec:
+        namespaceSelector:
+          include: ["default"]
+          exclude: ["kube-*"]
+        remediationAction: inform # will be overridden by remediationAction in parent policy
+        severity: low
+        minimumDuration: 300h
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-certificatepolicy
+  namespace: default
+placementRef:
+  name: placement-certificatepolicy
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: certificatepolicy
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-certificatepolicy
+  namespace: default
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: local-cluster, operator: In, values: ["true"]}

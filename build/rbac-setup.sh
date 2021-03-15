@@ -1,10 +1,11 @@
 #!/bin/bash
-
 # Copyright (c) 2020 Red Hat, Inc.
+# Copyright Contributors to the Open Cluster Management project
+
+
 
 # Description:
 #     Sets up cluster users and resources for RBAC tests
-#
 # From the grc-ui project directory, invoke as:
 #     ./build/rbac-setup.sh
 # Be sure to export the desired password beforehand:

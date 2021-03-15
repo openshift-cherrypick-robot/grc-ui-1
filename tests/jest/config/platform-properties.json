@@ -72,7 +72,7 @@
   "error.policy.nameFormat.short": "Invalid name: should only have lowercase alphanumeric characters, '-', or '.' and not begin or end with punctuation",
   "error.policy.nameFormat.hint": "Invalid name due to Kubernetes naming restriction.",
   "error.policy.nameFormat": "The name must meet the following requirements:",
-  "error.policy.nameFormat.Rule1": "• contain no more than 253 characters",
+  "error.policy.nameFormat.Rule1": "• the combined length of namespace and policy name should not exceed 63 characters",
   "error.policy.nameFormat.Rule2": "• contain only lowercase alphanumeric characters, '-' or '.'",
   "error.policy.nameFormat.Rule3": "• start with an alphanumeric character",
   "error.policy.nameFormat.Rule4": "• end with an alphanumeric character",

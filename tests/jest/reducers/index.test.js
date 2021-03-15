@@ -1,4 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 
 import { predicate } from '../../../src-web/reducers/index'
 import { RESOURCE_TYPES } from '../../../lib/shared/constants'

@@ -7,6 +7,8 @@
  * Contract with IBM Corp.
  *******************************************************************************/
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 import {
   MODAL_UPDATE, CLEAR_REQUEST_STATUS, POST_REQUEST, PUT_REQUEST,
   PATCH_REQUEST, DEL_REQUEST, REQUEST_STATUS, POST_RECEIVE_SUCCESS,

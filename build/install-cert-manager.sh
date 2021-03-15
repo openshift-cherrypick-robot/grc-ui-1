@@ -1,5 +1,7 @@
 #!/bin/bash
 # Copyright (c) 2020 Red Hat, Inc.
+# Copyright Contributors to the Open Cluster Management project
+
 
 if [ $(oc get ns cert-manager | grep Active | wc -l | tr -d '[:space:]') -eq 1 ]; then
     echo "Cert manager already installed"

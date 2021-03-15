@@ -7,6 +7,8 @@
  * Contract with IBM Corp.
  *******************************************************************************/
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 import {
   REQUEST_STATUS, USER_LOGIN_RECEIVE_SUCCESS, USER_LOGIN_STATUS,
   USER_LOGOUT_REQUEST, USER_LOGOUT_RECEIVE_SUCCESS, USER_LOGOUT_RECEIVE_FAILURE,

@@ -6,7 +6,7 @@ services:
 
 branches:
   only:
-    - master
+    - main
     - /^release-[0-9]+\..*$/
 addons:
   chrome: stable
@@ -31,7 +31,7 @@ stages:
   - unit-test
   - e2e-test
   - publish
- 
+
 before_script:
   - make init
 
@@ -50,14 +50,14 @@ jobs:
         - make component/push
         - echo '"finished image push"' && echo -en 'travis_fold:end:script.build\\r'
         - if [ "$IMAGE_SCAN" != "false" ]; then make security/scans; fi;
-        - if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "master" ]; then 
+        - if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "main" ]; then 
             COMPONENT_NEWTAG="latest-dev" make component/tag;
             COMPONENT_VERSION="latest" COMPONENT_TAG_EXTENSION="-dev" make component/push;
           fi;
         - if [ "$IMAGE_SCAN" != "false" ]; then make security/scans; fi;
     - stage: build
       name: "Build the test image"
-      if: type != pull_request AND branch = master
+      if: type != pull_request AND branch = main
       script:
         - set -e
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
@@ -84,7 +84,7 @@ jobs:
         - make component/test/unit
     - stage: e2e-test
       name: "Run unit tests and e2e tests"
-      if: branch = master OR type = pull_request
+      if: branch = main OR type = pull_request
       script:
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
         - make sonar/js/jest-init
