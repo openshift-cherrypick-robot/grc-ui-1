@@ -1,8 +1,18 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 import { getOpt } from '../scripts/utils'
 import 'cypress-wait-until'
-import { pageLoader } from '../views/common'
-import { isPolicyStatusAvailable, isClusterPolicyStatusAvailable, doTableSearch, clearTableSearch } from '../views/policy'
+import { pageLoader, isPolicyStatusAvailable, isClusterPolicyStatusAvailable, isClusterTemplateStatusAvailable,
+         doTableSearch, clearTableSearch, action_createPolicyFromSelection, action_verifyPolicyInListing,
+         action_verifyPolicyNotInListing, action_actionPolicyActionInListing, action_createPolicyFromYAML,
+         action_verifyPolicyInPolicyDetails, action_verifyPolicyInPolicyDetailsTemplates,
+         action_verifyPlacementRuleInPolicyDetails, action_verifyPlacementBindingInPolicyDetails,
+         action_verifyViolationsInPolicyStatusClusters, action_verifyViolationsInPolicyStatusTemplates,
+         action_verifyPolicyDetailsInCluster, action_verifyPolicyTemplatesInCluster,
+         action_verifyPolicyViolationDetailsInCluster, action_verifyPolicyViolationDetailsInHistory,
+         action_verifyCreatePolicySelection, isClusterViolationsStatusAvailable, action_verifyClusterViolationsInListing
+} from '../common/views'
 
 Cypress.Commands.add('login', (OPTIONS_HUB_USER, OPTIONS_HUB_PASSWORD, OC_IDP) => {
   var user = process.env.SELENIUM_USER || OPTIONS_HUB_USER || Cypress.env('OPTIONS_HUB_USER')
@@ -16,10 +26,10 @@ Cypress.Commands.add('login', (OPTIONS_HUB_USER, OPTIONS_HUB_PASSWORD, OC_IDP) =
       // Check if identity providers are configured
       if (body.find('form').length === 0)
         cy.contains(idp).click()
-      cy.get('#inputUsername', { timeout: 20000 }).click().focused().type(user)
-      cy.get('#inputPassword', { timeout: 20000 }).click().focused().type(password)
-      cy.get('button[type="submit"]', { timeout: 20000 }).click()
-      cy.get('#header', { timeout: 30000 }).should('exist')
+      cy.get('#inputUsername').click().focused().type(user)
+      cy.get('#inputPassword').click().focused().type(password)
+      cy.get('button[type="submit"]').click()
+      cy.get('#header').should('exist')
     }
   })
   cy.CheckGrcMainPage()
@@ -151,18 +161,34 @@ Cypress.Commands.add('YAMLeditor', (uri = undefined) => {
 // optionally can wait for the specific violations counter to appear
 Cypress.Commands.add('waitForPolicyStatus', (name, violationsCounter) => {
   doTableSearch(name)
-  cy.waitUntil(() => isPolicyStatusAvailable(name, violationsCounter), {'interval': 2000, 'timeout':120000})
+  cy.waitUntil(() => isPolicyStatusAvailable(name, violationsCounter), {'interval': 500, 'timeout':120000})
     .then(() => clearTableSearch())
 })
+
+// needs to be run at /multicloud/policies/all at Cluster violations tab
+// see isClusterViolationsStatusAvailable()
+// optionally can wait for the specific violations counter to appear
+Cypress.Commands.add('waitForClusterViolationsStatus', (name, violationsCounter) => {
+  doTableSearch(name)
+  cy.waitUntil(() => isClusterViolationsStatusAvailable(name, violationsCounter), {'interval': 500, 'timeout':120000})
+    .then(() => clearTableSearch())
+})
+
 
 // needs to be run on /multicloud/policies/all/{namespace}/{policy} page
 // see isClusterPolicyStatusAvailable()
 Cypress.Commands.add('waitForClusterPolicyStatus', (clusterViolations, clusterList=null) => {
-  cy.waitUntil(() => { return isClusterPolicyStatusAvailable(clusterViolations, clusterList) }, {'interval': 2000, 'timeout':60000})
+  cy.waitUntil(() => { return isClusterPolicyStatusAvailable(clusterViolations, clusterList) }, {'interval': 500, 'timeout':60000})
+})
+
+// needs to be run on /multicloud/policies/all/{namespace}/{policy}/status page
+// see isClusterTemplateStatusAvailable()
+Cypress.Commands.add('waitForClusterTemplateStatus', (clusterViolations = {}) => {
+  cy.waitUntil(() => { return isClusterTemplateStatusAvailable(clusterViolations) }, {'interval': 500, 'timeout':60000})
 })
 
 Cypress.Commands.add('waitForPageContentLoad', () => {
-  pageLoader.shouldNotExist()
+  cy.then(() => pageLoader.shouldNotExist())
 })
 
 Cypress.Commands.add('CheckGrcMainPage', () => {
@@ -172,7 +198,7 @@ Cypress.Commands.add('CheckGrcMainPage', () => {
 })
 
 Cypress.Commands.add('FromGRCToCreatePolicyPage', () => {
-  cy.get('#create-policy', { timeout: 20000 }).should('exist')
+  cy.get('#create-policy').should('exist')
   cy.get('#create-policy').click()
   cy.location('pathname').should('eq', '/multicloud/policies/create')
   pageLoader.shouldNotExist()
@@ -199,4 +225,166 @@ Cypress.Commands.add('goToPolicyClusterPage', (policyName, policyConfig, cluster
   cy.get('.one-cluster-status').children('a').contains(clusterName).click()
   pageLoader.shouldNotExist()
   cy.location('pathname').should('eq', '/multicloud/policies/policy/'+clusterName+'/'+namespace+'.'+policyName)
+})
+
+Cypress.Commands.add('createPolicyFromSelection', (uPolicyName, create=true, policyConfig) => {
+  cy.then(() => action_createPolicyFromSelection(uPolicyName, create, policyConfig))
+})
+
+Cypress.Commands.add('verifyPolicyInListing', (uPolicyName, create, policyConfig) => {
+  cy.then(() => action_verifyPolicyInListing(uPolicyName, create, policyConfig))
+})
+
+Cypress.Commands.add('verifyPolicyNotInListing', (uPolicyName) => {
+  cy.then(() => action_verifyPolicyNotInListing(uPolicyName))
+})
+
+Cypress.Commands.add('actionPolicyActionInListing', (uName, action, cancel=false) => {
+  cy.then(() => action_actionPolicyActionInListing(uName, action, cancel))
+})
+
+Cypress.Commands.add('createPolicyFromYAML', (policyYAML, create=true) => {
+  cy.then(() => action_createPolicyFromYAML(policyYAML, create))
+})
+
+Cypress.Commands.add('verifyPolicyInPolicyDetails', (uName, policyConfig, enabled='enabled', violationsCounter='', targetStatus = null) => {
+  cy.then(() => action_verifyPolicyInPolicyDetails(uName, policyConfig, enabled, violationsCounter, targetStatus))
+})
+
+Cypress.Commands.add('verifyPolicyInPolicyDetailsTemplates', (uName, policyConfig) => {
+  cy.then(() => action_verifyPolicyInPolicyDetailsTemplates(uName, policyConfig))
+})
+
+Cypress.Commands.add('verifyPlacementRuleInPolicyDetails', (uName, policyConfig) => {
+  cy.then(() => action_verifyPlacementRuleInPolicyDetails(uName, policyConfig))
+})
+
+Cypress.Commands.add('verifyPlacementBindingInPolicyDetails', (uName, policyConfig) => {
+  cy.then(() => action_verifyPlacementBindingInPolicyDetails,(uName, policyConfig))
+})
+
+Cypress.Commands.add('verifyViolationsInPolicyStatusClusters', (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
+  cy.then(() => action_verifyViolationsInPolicyStatusClusters(policyName, policyConfig, clusterViolations, violationPatterns, clusters))
+
+})
+Cypress.Commands.add('verifyViolationsInPolicyStatusTemplates', (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
+  cy.then(() => action_verifyViolationsInPolicyStatusTemplates,(policyName, policyConfig, clusterViolations, violationPatterns, clusters))
+})
+
+Cypress.Commands.add('verifyPolicyDetailsInCluster', (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+  cy.then(() => action_verifyPolicyDetailsInCluster(policyName, policyConfig, clusterName, clusterViolations, violationPatterns))
+})
+
+Cypress.Commands.add('verifyPolicyTemplatesInCluster', (policyName, policyConfig, clusterName, clusterViolations) => {
+  cy.then(() => action_verifyPolicyTemplatesInCluster(policyName, policyConfig, clusterName, clusterViolations))
+})
+
+Cypress.Commands.add('verifyPolicyViolationDetailsInCluster', (policyName, policyConfig, clusterName, clusterViolations, violationPatterns) => {
+  cy.then(() => action_verifyPolicyViolationDetailsInCluster(policyName, policyConfig, clusterName, clusterViolations, violationPatterns))
+})
+
+Cypress.Commands.add('verifyPolicyViolationDetailsInHistory', (templateName, violations, violationPatterns) => {
+  cy.then(() => action_verifyPolicyViolationDetailsInHistory(templateName, violations, violationPatterns))
+})
+
+Cypress.Commands.add('verifyClusterViolationsInListing', (clusterName, violationsCounter, violatedPolicies) => {
+  cy.then(() => action_verifyClusterViolationsInListing(clusterName, violationsCounter, violatedPolicies))
+})
+
+// must be run on /multicloud/policies/all
+Cypress.Commands.add('verifyCardsOnPolicyListingPage', (cardName, cardValuesDict, skipNumCardsCheck=false) => {
+  const numCards = Object.keys(cardValuesDict).length
+  cy.url().should('match', /\/multicloud\/policies\/all[?]?/)
+  // switch to the required card
+  cy.get('#grc-cards-toggle').click()
+  cy.get('div.module-grc-cards').within(() => {
+    cy.get('li').contains(cardName).click()
+  })
+  // check the summary header and counter
+  cy.get('#summary-toggle').within(() => {
+    cy.get('.header-title').contains('Summary')
+    if (skipNumCardsCheck) {  // loosened check for unknown card number
+      cy.get('.grc-cards-count').contains(/^[0-9]+$/)
+    } else {
+      cy.get('.grc-cards-count').contains(new RegExp('^'+numCards+'$'))
+    }
+  })
+  // check number of cards displayed
+  if (!skipNumCardsCheck) {
+    cy.get('dd.grc-cards-container').within(() => {
+      cy.get('.card-container').should('have.length', numCards)
+    })
+  }
+  // verify all cards
+  for (const [name, violations] of Object.entries(cardValuesDict)) {
+    // find card by name
+    cy.get('.card-name').contains(name).parents('.card-content').within(() => {
+      // verify cluster violations
+      cy.get('div').contains('Cluster violations').prev('div.card-count').contains(violations[0])
+      // verify policy violations
+      cy.get('div').contains('Policy violations').prev('div.card-count').contains(violations[1])
+    })
+  }
+})
+
+// click on the button to set content visibility on or off
+Cypress.Commands.add('toggleVisibilityButton', (buttonSelector, contentSelector, state='') => {
+  cy.get(contentSelector).then($content => {
+    if ((state == '') ||  // either we want to do the switch
+        (state == 'off' && $content.is(':visible')) ||  // or it is visible and we want to hide it
+        (state == 'on' && $content.is(':visible') == false)) {  // or it is hidden and we want to show it
+      cy.get(buttonSelector).click()
+    }
+  })
+})
+
+Cypress.Commands.add('verifyCreatePolicySelection', (policyName, policyConf) => {
+  cy.then(() => action_verifyCreatePolicySelection(policyName, policyConf))
+})
+
+Cypress.Commands.add('simpleYAMLupdate', (regExp='', text='', lineNumber) => {
+  cy.YAMLeditor()
+    .then($ed => {
+      const line = $ed.getLineContent(lineNumber)
+      const newLine = line.replace(regExp, text)
+      if (line != newLine) {
+        $ed.pushEditOperations([],
+          [{
+            range: {
+              startColumn: 1,
+              endColumn: line.length + 1,
+              startLineNumber: lineNumber,
+              endLineNumber: lineNumber
+            },
+            text: newLine
+          }])
+      }
+    })
+})
+
+// wait for document.lastModified timestamp to change, but at most $timeout miliseconds, just in case
+// we have already missed the update
+// command can be used instead of cy.wait()
+Cypress.Commands.add('waitForDocumentUpdate', (timeout=5000) => {
+  cy.document().then($doc => {
+    const lastUpdate = $doc.lastModified  // save current timestamp
+    cy.waitUntil(() => { return cy.document().its('lastModified').then($newUpdate => $newUpdate != lastUpdate) }, {'interval': 200, 'timeout':timeout})
+  })
+})
+
+Cypress.Commands.add('verifyClusterViolationsInListing', (clusterName, violationsCounter, violatedPolicies) => {
+  cy.then(() => action_verifyClusterViolationsInListing(clusterName, violationsCounter, violatedPolicies))
+})
+// To check the no resoures icon and message
+Cypress.Commands.add('checkPolicyNoResourcesIconMessage', (present=true, message='Resource not found') => {
+  if(present)
+  {
+    cy.get('.no-resource-title').should('not.exist')
+    cy.get('img[alt="No resource"]').should('not.exist')
+  }
+  else
+  {
+    cy.get('.no-resource-title').should('contain', message)
+    cy.get('img[alt="No resource"]').should('exist')
+  }
 })

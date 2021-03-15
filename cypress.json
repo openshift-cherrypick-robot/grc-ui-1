@@ -5,7 +5,7 @@
   },
   "baseUrl": "https://localhost:3000",
   "chromeWebSecurity": false,
-  "defaultCommandTimeout": 30000,
+  "defaultCommandTimeout": 60000,
   "integrationFolder": "tests/cypress/tests",
   "ignoreTestFiles": "**/ignoredTestFiles/*.spec.js",
   "fixturesFolder": "tests/cypress/fixtures",

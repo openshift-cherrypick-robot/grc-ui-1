@@ -1,4 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 'use strict'
 
 import React from 'react'
@@ -55,7 +57,7 @@ class GrcToggleModule extends React.Component {
     }
     return (
       <div className='grc-toggle'>
-        {showGrcTabToggle && <ToggleGroup className='grc-toggle-button' variant='light'>
+        {showGrcTabToggle && <ToggleGroup className='grc-toggle-button'>
           <ToggleGroupItem
             buttonId={'grc-policies-view'}
             onChange={handleToggleClick}

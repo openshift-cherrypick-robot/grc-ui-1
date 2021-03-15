@@ -1,8 +1,11 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 import './commands'
 require('cypress-terminal-report/src/installLogsCollector')()
 
 import '@cypress/code-coverage/support'
+import 'cypress-fail-fast'
 
 Cypress.Cookies.defaults({
   preserve: ['acm-access-token-cookie', '_oauth_proxy', 'XSRF-TOKEN', '_csrf']

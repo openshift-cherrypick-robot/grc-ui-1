@@ -1069,7 +1069,7 @@ exports[`on control change function renders as expected 1`] = `
           <br />
           The name must meet the following requirements:
           <br />
-          • contain no more than 253 characters
+          • the combined length of namespace and policy name should not exceed 63 characters
           <br />
           • contain only lowercase alphanumeric characters, '-' or '.'
           <br />
@@ -1106,7 +1106,7 @@ exports[`on control change function renders as expected 2`] = `
           <br />
           The name must meet the following requirements:
           <br />
-          • contain no more than 253 characters
+          • the combined length of namespace and policy name should not exceed 63 characters
           <br />
           • contain only lowercase alphanumeric characters, '-' or '.'
           <br />

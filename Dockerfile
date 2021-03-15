@@ -1,4 +1,6 @@
-FROM registry.access.redhat.com/ubi8/nodejs-12:1
+# Copyright Contributors to the Open Cluster Management project
+
+FROM registry.access.redhat.com/ubi8/nodejs-14:1
 
 # Root needed for yum update, gets reset to 1001 below.
 USER root

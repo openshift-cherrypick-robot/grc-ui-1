@@ -7,6 +7,8 @@
  * Contract with IBM Corp.
  *******************************************************************************/
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 
 const BASE_DIR = `${__dirname}/../..`
 const reportFolder = `${BASE_DIR}/test-output/e2e`
@@ -27,7 +29,9 @@ module.exports = {
 
   // External after hook is ran at the very end of the tests run, after closing the Selenium session
   after: function(done) {
-    coverageReporter.save() // call this function in your global after hook
+    if (!process.env.SELENIUM_CLUSTER) {
+      coverageReporter.save()
+    }
     done()
   },
 
@@ -38,7 +42,7 @@ module.exports = {
 
   // This will be run after each test suite is finished
   afterEach: function(browser, done) {
-    if(process.env.SELENIUM_CLUSTER) {
+    if (process.env.SELENIUM_CLUSTER) {
       done()
     } else {
       browser.collectCoverage(() => {

@@ -1,0 +1,53 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: full-yaml-policy
+  namespace: hive
+  annotations:
+    policy.open-cluster-management.io/standards: NIST-CSF, FISMA
+    policy.open-cluster-management.io/categories: PR.AC Identity Management and Access Control, PR.DS Data Security
+    policy.open-cluster-management.io/controls: PR.AC-4 Access Control, PR.PT-1 Audit Logging, PR.AC-5 Network Integrity
+spec:
+  remediationAction: enforce
+  disabled: true
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: IamPolicy # limit clusteradmin roles
+      metadata:
+        name: full-yaml-policy-limit-clusteradmin
+      spec:
+        severity: medium
+        namespaceSelector:
+          include: ["*"]
+          exclude: ["kube-*", "openshift-*"]
+        remediationAction: inform # will be overridden by remediationAction in parent policy
+        maxClusterRoleBindingUsers: 5
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-full-yaml-policy
+  namespace: hive
+placementRef:
+  name: placement-full-yaml-policy
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: full-yaml-policy
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-full-yaml-policy
+  namespace: hive
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: vendor, operator: In, values: ["OpenShift"]}
+      - {key: cloud, operator: In, values: ["Amazon"]}

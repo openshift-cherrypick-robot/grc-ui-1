@@ -1,0 +1,51 @@
+original-iam-policy:
+  namespace: 'default'
+#  cluster_binding:
+#    - 'name: "dhaks1020-2-dho-461"'
+#    - 'local-cluster: "true"'
+  specifications:
+    - 'IamPolicy'
+  standards:
+    - 'NIST-CSF'
+  categories:
+    - 'PR.AC Identity Management and Access Control'
+  controls:
+    - 'PR.AC-4 Access Control'
+  enforce: False
+  disable: False
+
+updated-iam-policy:
+  namespace: 'openshift'
+#  cluster_binding:
+#    - 'local-cluster: "true"'
+  specifications:
+    - 'IamPolicy'
+  standards:
+    - 'FISMA'
+  categories:
+    - 'PR.DS Data Security'
+  controls:
+    - 'PR.DS-1 Data-at-rest'
+  enforce: True
+  disable: True
+# these are policies required by following Polarion test cases:
+
+full-yaml-policy:
+  namespace: 'hive'
+  cluster_binding:
+    - 'vendor: "OpenShift"'
+    - 'cloud: "Amazon"'
+  specifications:
+    - 'Custom specifications'
+  standards:
+    - 'NIST-CSF'
+    - 'FISMA'
+  categories:
+    - 'PR.AC Identity Management and Access Control'
+    - 'PR.DS Data Security'
+  controls:
+    - 'PR.AC-4 Access Control'
+    - 'PR.PT-1 Audit Logging'
+    - 'PR.AC-5 Network Integrity'
+  enforce: True
+  disable: True

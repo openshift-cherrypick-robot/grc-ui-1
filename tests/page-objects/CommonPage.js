@@ -7,6 +7,8 @@
  * Contract with IBM Corp.
  *******************************************************************************/
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 const parser = require('../utils/yamlHelper')
 const config = require('../../config')
 const allpolicy = require('./AllPolicyPage')
