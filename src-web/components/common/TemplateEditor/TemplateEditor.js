@@ -374,6 +374,7 @@ export default class TemplateEditor extends React.Component {
           <div className='creation-view-controls-radiobutton'>
             <div className="creation-view-controls-textbox-title">
               {name}
+              <div className='creation-view-controls-must-exist'>*</div>
               <Tooltip content={description}>
                 <svg className='info-icon'>
                   <use href={diagramIconsInfoStr} ></use>
@@ -398,6 +399,14 @@ export default class TemplateEditor extends React.Component {
     }
     return (
       <React.Fragment>
+        <div className="creation-view-controls-textbox-title">
+          {name}
+          <Tooltip content={description}>
+            <svg className='info-icon'>
+              <use href={diagramIconsInfoStr} ></use>
+            </svg>
+          </Tooltip>
+        </div>
         <div className='creation-view-controls-checkbox'>
           <Checkbox
             aria-label={id}
@@ -407,12 +416,7 @@ export default class TemplateEditor extends React.Component {
             labelText=''
             checked={checked}
             onChange={this.onChange.bind(this, id)} />
-          <div>{name}</div>
-          <Tooltip content={description}>
-            <svg className='info-icon'>
-              <use href={diagramIconsInfoStr} ></use>
-            </svg>
-          </Tooltip>
+            <div>{msgs.get(`description.title.${id}`)}</div>
         </div>
       </React.Fragment>
     )
