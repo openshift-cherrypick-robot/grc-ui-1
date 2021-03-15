@@ -292,7 +292,7 @@ Cypress.Commands.add('verifyClusterViolationsInListing', (clusterName, violation
 })
 
 // must be run on /multicloud/policies/all
-Cypress.Commands.add('verifyCardsOnPolicyListingPage', (cardName, cardValuesDict) => {
+Cypress.Commands.add('verifyCardsOnPolicyListingPage', (cardName, cardValuesDict, skipNumCardsCheck=false) => {
   const numCards = Object.keys(cardValuesDict).length
   cy.url().should('match', /\/multicloud\/policies\/all[?]?/)
   // switch to the required card
@@ -303,12 +303,18 @@ Cypress.Commands.add('verifyCardsOnPolicyListingPage', (cardName, cardValuesDict
   // check the summary header and counter
   cy.get('#summary-toggle').within(() => {
     cy.get('.header-title').contains('Summary')
-    cy.get('.grc-cards-count').contains(new RegExp('^'+numCards+'$'))
+    if (skipNumCardsCheck) {  // loosened check for unknown card number
+      cy.get('.grc-cards-count').contains(/^[0-9]+$/)
+    } else {
+      cy.get('.grc-cards-count').contains(new RegExp('^'+numCards+'$'))
+    }
   })
   // check number of cards displayed
-  cy.get('dd.grc-cards-container').within(() => {
-    cy.get('.card-container').should('have.length', numCards)
-  })
+  if (!skipNumCardsCheck) {
+    cy.get('dd.grc-cards-container').within(() => {
+      cy.get('.card-container').should('have.length', numCards)
+    })
+  }
   // verify all cards
   for (const [name, violations] of Object.entries(cardValuesDict)) {
     // find card by name

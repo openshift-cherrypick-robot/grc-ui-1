@@ -200,54 +200,70 @@ export const action_createPolicyFromSelection = (uPolicyName, create=true, polic
     .clear()
     .type(uPolicyName)
   // namespace
-  cy.get('.bx--dropdown[aria-label="Choose an item"]')
-    .click()
-    .contains(policyConfig['namespace'])
-    .click()
+  if (policyConfig['namespace']) {
+    cy.get('.bx--dropdown[aria-label="Choose an item"]')
+      .click()
+      .contains(policyConfig['namespace'])
+      .click()
+  }
   //specs
-    .then(() => {
+  if (policyConfig['specifications']) {
+    cy.then(() => {
       selectItems(policyConfig['specifications'], '.bx--multi-select[aria-label="specs"]')
     })
+  }
   // cluster binding
-    .then(() => {
+  if (policyConfig['cluster_binding']) {
+    cy.then(() => {
       selectItems(policyConfig['cluster_binding'], '.bx--multi-select[aria-label="clusters"]', )
     })
+  }
   // standards
-    .then(() => {
+  if (policyConfig['standards']) {
+    cy.then(() => {
       selectItems(policyConfig['standards'], '.bx--multi-select[aria-label="standards"]', )
     })
+  }
   // categories
-    .then(() => {
+  if (policyConfig['categories']) {
+    cy.then(() => {
       selectItems(policyConfig['categories'], '.bx--multi-select[aria-label="categories"]', )
     })
+  }
   // controls
-    .then(() => {
+  if (policyConfig['controls']) {
+    cy.then(() => {
       selectItems(policyConfig['controls'], '.bx--multi-select[aria-label="controls"]', )
     })
+  }
   // enforce
-    .then(() => {
+  if (policyConfig['enforce']) {
+    cy.then(() => {
       if (policyConfig['enforce']) {
         cy.get('input[aria-label="enforce"][type="checkbox"]')
           .next('label')
           .click()
       }
     })
+  }
   // disable
-    .then(() => {
+  if (policyConfig['disable']) {
+    cy.then(() => {
       if (policyConfig['disable']) {
         cy.get('input[aria-label="disabled"][type="checkbox"]')
           .next('label')
           .click()
       }
     })
+  }
   // create
-    .then(() => {
-      if (create) {
-        cy.get('#create-button-portal-id-btn').click()
-        // after creation, always return to grc main page
-        cy.CheckGrcMainPage()
-      }
-    })
+  cy.then(() => {
+    if (create) {
+      cy.get('#create-button-portal-id-btn').click()
+      // after creation, always return to grc main page
+      cy.CheckGrcMainPage()
+    }
+  })
 }
 
 // this function verify whether create policy form contain values matching the policy configuration
@@ -1308,6 +1324,8 @@ export const action_verifyClusterViolationsInListing = (clusterName, violationsC
       // check the cluster violations counter value
       if (violationsCounter) {
         cy.wrap(violations.textContent).should('match', new RegExp('^'+violationsCounter+'$'))
+      } else {
+        cy.wrap(violations.textContent).should('match', /^[0-9]+\/[0-9]+$/)
       }
       // check violated policies
       // in fact there is no sense checking it precisely since policy listing woudl be truncated in the UI

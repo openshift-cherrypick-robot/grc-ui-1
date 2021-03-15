@@ -1,0 +1,116 @@
+IamPolicy:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'IamPolicy'
+  enforce: False
+  disable: False
+
+CertificatePolicy:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'CertificatePolicy'
+  enforce: False
+  disable: False
+
+ComplianceOperator:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'ComplianceOperator'
+  enforce: False
+  disable: False
+ 
+EtcdEncryption:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'EtcdEncryption'
+  enforce: False
+  disable: False
+
+GatekeeperOperator:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'GatekeeperOperator'
+  enforce: False
+  disable: False
+ 
+ImageManifestVulnPolicy:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'ImageManifestVulnPolicy'
+  enforce: False
+  disable: False
+ 
+LimitRange:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'LimitRange'
+  enforce: False
+  disable: False
+ 
+Namespace:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'Namespace'
+  enforce: False
+  disable: False
+
+Pod:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'Pod'
+  enforce: False
+  disable: False
+
+PodSecurityPolicy:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'PodSecurityPolicy'
+  enforce: False
+  disable: False
+
+Role:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'Role'
+  enforce: False
+  disable: False
+
+RoleBinding:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'RoleBinding'
+  enforce: False
+  disable: False
+
+SecurityContextConstraints:
+  namespace: 'default'
+  cluster_binding:
+   - 'local-cluster: "true"'
+  specifications:
+    - 'SecurityContextConstraints'
+  enforce: False
+  disable: False

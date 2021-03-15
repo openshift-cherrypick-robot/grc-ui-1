@@ -42,8 +42,8 @@ const validateTextControl = (reverse, parsed, exceptions, locale, mustExist) => 
   const active = _.get(parsed, reverse[0])
   const path = reverse[0].split('.')
   // This is a simplified version of the RegEx used by Kubernetes for validation
-  // (it's 243 to account for the 10 character PlacementRule prefix 'placement-')
-  const policyNameRegex = RegExp(/^[a-z0-9][a-z0-9-.]{0,241}[a-z0-9]$/)
+  // (it's 63 to account for `${policyNS}.${policyName}`)
+  const policyNameRegex = RegExp(/^[a-z0-9][a-z0-9-.]{0,63}[a-z0-9]$/)
   // Add exception if it's required but missing
   if (mustExist && !active) {
     addMissingException(path, parsed, exceptions, locale)

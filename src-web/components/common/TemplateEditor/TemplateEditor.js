@@ -43,9 +43,8 @@ import _ from 'lodash'
 const tempCookie = 'template-editor-open-cookie'
 const diagramIconsInfoStr = '#diagramIcons_info'
 // Regex to test valid policy name format
-// (253 allowable characters, but we have a 'placement-' prefix for PlacementRule,
-// so we're limiting the name input to 243 characters)
-const policyNameRegex = RegExp(/^[a-z0-9][a-z0-9-.]{0,241}[a-z0-9]$/)
+// (it's 63 characters for `${policyNS}.${policyName}`)
+const policyNameRegex = RegExp(/^[a-z0-9][a-z0-9-.]{0,63}[a-z0-9]$/)
 export default class TemplateEditor extends React.Component {
 
   static propTypes = {
@@ -322,7 +321,7 @@ export default class TemplateEditor extends React.Component {
         isDuplicateName = existing.includes(policyName) && existingByNamespace[policyName] === policyNS
       }
       // Validate name with RegEx
-      validPolicyNameFormat = policyNameRegex.test(policyName)
+      validPolicyNameFormat = policyNameRegex.test(`${policyNS}.${policyName}`)
     }
     // Set state appropriately
     this.setState({
