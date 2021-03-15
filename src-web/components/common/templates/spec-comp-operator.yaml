@@ -62,7 +62,6 @@ replacements: # if user select this choice, the template variable names and valu
                   name: compliance-operator
                   namespace: openshift-compliance
                 spec:
-                  channel: "4.6"
                   installPlanApproval: Automatic
                   name: compliance-operator
                   source: redhat-operators
