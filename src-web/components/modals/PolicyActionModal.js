@@ -6,9 +6,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Notification } from 'carbon-components-react'
-import { Modal } from '@open-cluster-management/ui-components'
-import { Spinner } from '@patternfly/react-core'
+import '@patternfly/react-core/dist/styles/base.css'
+import { AcmModal, AcmButton, AcmAlert } from '@open-cluster-management/ui-components'
+import { Spinner, ButtonVariant } from '@patternfly/react-core'
 import msgs from '../../../nls/platform.properties'
 import { withRouter } from 'react-router-dom'
 import { REQUEST_STATUS } from '../../actions/index'
@@ -59,10 +59,10 @@ export class PolicyActionModal extends React.Component {
 
   render() {
     const { type:modalType, label, locale, open, reqErrorMsg, reqStatus } = this.props
-    let dangerFlag = false, modalId = '', modalMsg = ''
+    let dangerFlag = 'default', modalId = '', modalMsg = ''
     switch(modalType) {
     case 'resource-disable':
-      dangerFlag = true
+      dangerFlag = 'danger'
       modalId = 'disable-resource-modal'
       modalMsg = 'modal.disable.description'
       break
@@ -71,7 +71,7 @@ export class PolicyActionModal extends React.Component {
       modalMsg = 'modal.enable.description'
       break
     case 'resource-enforce':
-      dangerFlag = true
+      dangerFlag = 'danger'
       modalId = 'enforce-resource-modal'
       modalMsg = 'modal.enforce.description'
       break
@@ -85,27 +85,32 @@ export class PolicyActionModal extends React.Component {
     return (
       <div>
         {reqStatus === REQUEST_STATUS.IN_PROGRESS && <Spinner className='patternfly-spinner' />}
-        <Modal
-          danger={dangerFlag}
+        <AcmModal
+          titleIconVariant={dangerFlag}
+          variant='medium'
           id={modalId}
-          open={open}
-          primaryButtonText={msgs.get(label.primaryBtn, locale)}
-          secondaryButtonText={msgs.get('modal.button.cancel', locale)}
-          modalLabel={msgs.get(label.label, locale)}
-          modalHeading={msgs.get(label.heading, locale)}
-          onRequestClose={this.handleCloseClick}
-          onRequestSubmit={this.handleSubmitClick}
-          role='region'
-          aria-label={msgs.get(label.heading, locale)}>
+          isOpen={open}
+          showClose={true}
+          onClose={this.handleCloseClick}
+          title={msgs.get(label.heading, locale)}
+          actions={[
+            <AcmButton key="cancel" variant={ButtonVariant.link} onClick={this.handleCloseClick}>
+            {msgs.get('modal.button.cancel', locale)}
+            </AcmButton>,
+            <AcmButton key="confirm" variant={ButtonVariant.primary} onClick={this.handleSubmitClick}>
+                {msgs.get(label.primaryBtn, locale)}
+            </AcmButton>,
+          ]}
+        >
           <div>
             {reqStatus === REQUEST_STATUS.ERROR &&
-              <Notification
-                kind='error'
+              <AcmAlert
+                variant='danger'
                 title=''
                 subtitle={reqErrorMsg || msgs.get('error.default.description', locale)} />}
           </div>
-          <p>{msgs.get(modalMsg, locale)}</p>
-        </Modal>
+           {msgs.get(modalMsg, locale)}
+        </AcmModal>
       </div>
     )
   }
