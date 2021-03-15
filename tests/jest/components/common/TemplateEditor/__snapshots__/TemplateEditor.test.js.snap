@@ -718,36 +718,93 @@ exports[`TemplateEditor component renders as expected 1`] = `
               </div>
             </div>
             <div
-              className="creation-view-controls-checkbox"
+              className="creation-view-controls-radiobutton"
             >
               <div
-                className="bx--form-item bx--checkbox-wrapper"
+                className="creation-view-controls-textbox-title"
               >
-                <input
-                  aria-label="enforce"
-                  checked={false}
-                  className="bx--checkbox"
-                  id="enforce"
-                  onChange={[Function]}
-                  type="checkbox"
-                />
-                <label
-                  className="bx--checkbox-label checkbox"
-                  htmlFor="enforce"
-                  title={null}
+                Remediation
+                <div
+                  className="creation-view-controls-must-exist"
                 >
-                  <span
-                    className="bx--visually-hidden"
+                  *
+                </div>
+                <div
+                  content="Represents how violations are handled as defined in the resource."
+                  data-testid="mockTooltip"
+                >
+                  <svg
+                    className="info-icon"
                   >
-                    
-                  </span>
-                </label>
-              </div>
-              <div>
-                Enforce if supported
+                    <use
+                      href="#diagramIcons_info"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
-                content="Select Enforce, if the feature is supported for your policy, to update remediationAction. When Enforce is not selected, the parameter value for remediationAction is inform."
+                className="bx--form-item"
+              >
+                <div
+                  className="bx--radio-button-group radio-button-group"
+                >
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={true}
+                      className="bx--radio-button"
+                      id="remediation-inform"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="false"
+                    />
+                    <label
+                      aria-label="Inform - Reports the violation, which requires manual remediation."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-inform"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Inform - Reports the violation, which requires manual remediation.
+                    </label>
+                  </div>
+                  <div
+                    className="radio-button bx--radio-button-wrapper radioButtonWrapper"
+                  >
+                    <input
+                      aria-label="remediation"
+                      checked={false}
+                      className="bx--radio-button"
+                      id="remediation-enforce"
+                      name="radio-button-group"
+                      onChange={[Function]}
+                      type="radio"
+                      value="true"
+                    />
+                    <label
+                      aria-label="Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported."
+                      className="bx--radio-button__label"
+                      htmlFor="remediation-enforce"
+                    >
+                      <span
+                        className="bx--radio-button__appearance"
+                      />
+                      Enforce - Automatically runs remediation action that is defined in the source, if this feature is supported.
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="creation-view-controls-textbox-title"
+            >
+              Disable policy
+              <div
+                content="Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table."
                 data-testid="mockTooltip"
               >
                 <svg
@@ -786,19 +843,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 </label>
               </div>
               <div>
-                Disable policy
-              </div>
-              <div
-                content="Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table."
-                data-testid="mockTooltip"
-              >
-                <svg
-                  className="info-icon"
-                >
-                  <use
-                    href="#diagramIcons_info"
-                  />
-                </svg>
+                Disabled
               </div>
             </div>
           </div>
@@ -1132,7 +1177,7 @@ metadata:
     policy.open-cluster-management.io/categories: PR.DS Data Security
     policy.open-cluster-management.io/controls: PR.DS-2 Data-in-transit
 spec:
-  remediationAction: 
+  remediationAction: inform
   disabled: false
   policy-templates:
   - objectDefinition:
@@ -1188,7 +1233,7 @@ metadata:
     policy.open-cluster-management.io/categories: PR.DS Data Security
     policy.open-cluster-management.io/controls: PR.DS-2 Data-in-transit
 spec:
-  remediationAction: 
+  remediationAction: inform
   disabled: false
   policy-templates:
   - objectDefinition:
@@ -1244,7 +1289,7 @@ metadata:
     policy.open-cluster-management.io/categories: PR.DS Data Security
     policy.open-cluster-management.io/controls: PR.DS-2 Data-in-transit
 spec:
-  remediationAction: 
+  remediationAction: inform
   disabled: true
   policy-templates:
   - objectDefinition:

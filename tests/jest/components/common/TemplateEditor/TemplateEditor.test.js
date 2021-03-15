@@ -217,9 +217,9 @@ const controlData = [
     ]
   },
   {
-    'name': 'Enforce if supported',
-    'description': 'Select Enforce, if the feature is supported for your policy, to update remediationAction. When Enforce is not selected, the parameter value for remediationAction is inform.',
-    'id': 'enforce',
+    'name': `${msgs['creation.view.policy.remediation']}`,
+    'description': `${msgs['policy.create.remediation.tooltip']}`,
+    'id': 'remediation',
     'type': 'checkbox',
     'active': 'inform',
     'checked': false,
@@ -302,10 +302,10 @@ describe('on control change function', () => {
     expect(wrapper.instance().onChange('categories', evt)).toEqual('categories')
     expect(wrapper.instance().onChange('controls', evt)).toEqual('controls')
     expect(wrapper.instance().onChange('clusters', evt)).toEqual('clusters')
-    const evt_inform = false
-    expect(wrapper.instance().onChange('enforce', evt_inform)).toEqual('enforce')
-    const evt_enforce = true
-    expect(wrapper.instance().onChange('enforce', evt_enforce)).toEqual('enforce')
+    const evt_inform = 'false'
+    expect(wrapper.instance().onChange('remediation', evt_inform)).toEqual('remediation')
+    const evt_enforce = 'true'
+    expect(wrapper.instance().onChange('remediation', evt_enforce)).toEqual('remediation')
     const evt_spec = {
       target: { value: 'value-testing' },
       selectedItems: ['CertificatePolicy - cert management expiration']
@@ -356,10 +356,10 @@ describe('on control change function', () => {
     expect(wrapper.instance().onChange('categories', evt)).toEqual('categories')
     expect(wrapper.instance().onChange('controls', evt)).toEqual('controls')
     expect(wrapper.instance().onChange('clusters', evt)).toEqual('clusters')
-    const evt_inform = false
-    expect(wrapper.instance().onChange('enforce', evt_inform)).toEqual('enforce')
-    const evt_enforce = true
-    expect(wrapper.instance().onChange('enforce', evt_enforce)).toEqual('enforce')
+    const evt_inform = 'false'
+    expect(wrapper.instance().onChange('remediation', evt_inform)).toEqual('remediation')
+    const evt_enforce = 'true'
+    expect(wrapper.instance().onChange('remediation', evt_enforce)).toEqual('remediation')
     const evt_spec = {
       target: { value: 'value-testing' },
       selectedItems: ['CertificatePolicy - cert management expiration']

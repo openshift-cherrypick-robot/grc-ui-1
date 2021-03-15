@@ -590,6 +590,11 @@ exports[`CreationView module renders as expected with discovered data 1`] = `
               >
                 Remediation
                 <div
+                  className="creation-view-controls-must-exist"
+                >
+                  *
+                </div>
+                <div
                   content="Represents how violations are handled as defined in the resource."
                   data-testid="mockTooltip"
                 >
@@ -660,6 +665,23 @@ exports[`CreationView module renders as expected with discovered data 1`] = `
               </div>
             </div>
             <div
+              className="creation-view-controls-textbox-title"
+            >
+              Disable policy
+              <div
+                content="Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table."
+                data-testid="mockTooltip"
+              >
+                <svg
+                  className="info-icon"
+                >
+                  <use
+                    href="#diagramIcons_info"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
               className="creation-view-controls-checkbox"
             >
               <div
@@ -686,19 +708,7 @@ exports[`CreationView module renders as expected with discovered data 1`] = `
                 </label>
               </div>
               <div>
-                Disable policy
-              </div>
-              <div
-                content="Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table."
-                data-testid="mockTooltip"
-              >
-                <svg
-                  className="info-icon"
-                >
-                  <use
-                    href="#diagramIcons_info"
-                  />
-                </svg>
+                Disabled
               </div>
             </div>
           </div>
@@ -1537,6 +1547,11 @@ exports[`CreationView module renders as expected with empty discovered data 1`] 
               >
                 Remediation
                 <div
+                  className="creation-view-controls-must-exist"
+                >
+                  *
+                </div>
+                <div
                   content="Represents how violations are handled as defined in the resource."
                   data-testid="mockTooltip"
                 >
@@ -1607,6 +1622,23 @@ exports[`CreationView module renders as expected with empty discovered data 1`] 
               </div>
             </div>
             <div
+              className="creation-view-controls-textbox-title"
+            >
+              Disable policy
+              <div
+                content="Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table."
+                data-testid="mockTooltip"
+              >
+                <svg
+                  className="info-icon"
+                >
+                  <use
+                    href="#diagramIcons_info"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
               className="creation-view-controls-checkbox"
             >
               <div
@@ -1633,19 +1665,7 @@ exports[`CreationView module renders as expected with empty discovered data 1`] 
                 </label>
               </div>
               <div>
-                Disable policy
-              </div>
-              <div
-                content="Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table."
-                data-testid="mockTooltip"
-              >
-                <svg
-                  className="info-icon"
-                >
-                  <use
-                    href="#diagramIcons_info"
-                  />
-                </svg>
+                Disabled
               </div>
             </div>
           </div>
@@ -2484,6 +2504,11 @@ exports[`CreationView module renders as expected without discovered data 1`] = `
               >
                 creation.view.policy.remediation
                 <div
+                  className="creation-view-controls-must-exist"
+                >
+                  *
+                </div>
+                <div
                   content="policy.create.remediation.tooltip"
                   data-testid="mockTooltip"
                 >
@@ -2554,6 +2579,23 @@ exports[`CreationView module renders as expected without discovered data 1`] = `
               </div>
             </div>
             <div
+              className="creation-view-controls-textbox-title"
+            >
+              creation.view.policy.disabled
+              <div
+                content="policy.create.disabled.tooltip"
+                data-testid="mockTooltip"
+              >
+                <svg
+                  className="info-icon"
+                >
+                  <use
+                    href="#diagramIcons_info"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
               className="creation-view-controls-checkbox"
             >
               <div
@@ -2580,19 +2622,7 @@ exports[`CreationView module renders as expected without discovered data 1`] = `
                 </label>
               </div>
               <div>
-                creation.view.policy.disabled
-              </div>
-              <div
-                content="policy.create.disabled.tooltip"
-                data-testid="mockTooltip"
-              >
-                <svg
-                  className="info-icon"
-                >
-                  <use
-                    href="#diagramIcons_info"
-                  />
-                </svg>
+                Disabled
               </div>
             </div>
           </div>

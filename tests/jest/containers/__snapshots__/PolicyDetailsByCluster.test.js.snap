@@ -325,7 +325,7 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                             "kind": "Field",
                             "name": Object {
                               "kind": "Name",
-                              "value": "enforcement",
+                              "value": "remediation",
                             },
                             "selectionSet": undefined,
                           },
@@ -1024,7 +1024,7 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                         "type": "i18n",
                       },
                       Object {
-                        "resourceKey": "enforcement",
+                        "resourceKey": "remediation",
                       },
                     ],
                   },
@@ -1955,7 +1955,7 @@ exports[`PolicyDetailsByCluster container test renders as expected 1`] = `
                           "type": "i18n",
                         },
                         Object {
-                          "resourceKey": "enforcement",
+                          "resourceKey": "remediation",
                         },
                       ],
                     },
