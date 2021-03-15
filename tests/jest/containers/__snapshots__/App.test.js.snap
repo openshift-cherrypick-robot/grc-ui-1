@@ -49,6 +49,7 @@ exports[`App container test renders as expected 1`] = `
           "xsrfToken": "tXcZ8lkN-bDcRaa7cJmmIMX5EmsmJ_vI_YnU",
         }
       }
+      url="/multicloud/policies"
     />
   </BrowserRouter>
 </ContextProvider>
