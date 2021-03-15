@@ -1,3 +1,5 @@
+/* Copyright Contributors to the Open Cluster Management project */
+
 
 /*******************************************************************************
  * Licensed Materials - Property of IBM
@@ -40,8 +42,8 @@ const validateTextControl = (reverse, parsed, exceptions, locale, mustExist) => 
   const active = _.get(parsed, reverse[0])
   const path = reverse[0].split('.')
   // This is a simplified version of the RegEx used by Kubernetes for validation
-  // (it's 243 to account for the 10 character PlacementRule prefix 'placement-')
-  const policyNameRegex = RegExp(/^[a-z0-9][a-z0-9-.]{0,241}[a-z0-9]$/)
+  // (it's 63 to account for `${policyNS}.${policyName}`)
+  const policyNameRegex = RegExp(/^[a-z0-9][a-z0-9-.]{0,63}[a-z0-9]$/)
   // Add exception if it's required but missing
   if (mustExist && !active) {
     addMissingException(path, parsed, exceptions, locale)
@@ -116,8 +118,14 @@ const validateMultiSelectControl = (control, reverse, parsed, exceptions, locale
 }
 
 const validateMultiSelectLabelControl = (control, reverse, parsed, exceptions, locale, mustExist) => {
-  const matchLabels = _.get(parsed, `${reverse[0]}.matchLabels`)
-  const matchExpressions = _.get(parsed, `${reverse[0]}.matchExpressions`)
+  let matchLabels = _.get(parsed, `${reverse[0]}.matchLabels`)
+  if (matchLabels && matchLabels.constructor === Array) {
+    matchLabels = matchLabels.length
+  }
+  let matchExpressions = _.get(parsed, `${reverse[0]}.matchExpressions`)
+  if (matchExpressions && matchExpressions.constructor === Array) {
+    matchExpressions = matchExpressions.length
+  }
   // Add exception if it's required but missing
   if (mustExist && !matchLabels && !matchExpressions) {
     const path = reverse[0].split('.')
@@ -126,12 +134,24 @@ const validateMultiSelectLabelControl = (control, reverse, parsed, exceptions, l
 }
 
 const validateMultiSelectReplacementControl = (control, reverse, parsed, exceptions, locale, mustExist) => {
-  const hasOne = reverse.some(path=>{
-    return !!_.get(parsed, path)
-  })
+  const active = _.get(parsed, reverse[0])
+  let hasOne = active
+  if (active && active.constructor === Array) {
+    hasOne = active.length
+  }
+  const path = reverse[0].split('.')
   // Add exception if it's required but missing
   if (mustExist && !hasOne) {
-    addMissingException(reverse[0].split('.'), parsed, exceptions, locale)
+    addMissingException(path, parsed, exceptions, locale)
+  }
+  // Add validation exception
+  else if (active && active.constructor !== Array){
+    exceptions.push({
+      row: getRow(path, parsed),
+      column: 0,
+      text: msgs.get('validation.invalid.type', [getKey(path), 'Array'], locale),
+      type: 'error',
+    })
   }
 }
 

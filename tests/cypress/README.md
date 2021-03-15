@@ -1,3 +1,5 @@
+[comment]: # ( Copyright Contributors to the Open Cluster Management project )
+
 # Additional notes on Cypress test development and execution
 
 ## Running the ACM server on localhost
@@ -122,7 +124,7 @@ In this section we are going to present and explain configuration file types tha
 ### cluster list
  * State: used in tests
  * Path: tests/cypress/config/clusters.yaml
- * Example: [config/demo/clusters.yaml](https://github.com/open-cluster-management/grc-ui/pull/358/files#diff-20a8e39681436d2de40012e88cf54929a00a2f38bcba179d79dbdd1a2fc76946)
+ * Example: [config/clusters.yaml](https://github.com/open-cluster-management/grc-ui/blob/master/tests/cypress/config/clusters.yaml)
 
 This configuration file contains details about clusters avaialable in RHACM. It is created by the `start_cypress_tests.sh` script before tests starts. However for locally issued tests you can modify this file with a different content.
 

@@ -7,6 +7,8 @@
  * Contract with IBM Corp.
  *******************************************************************************/
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 'use strict'
 
 import {diff} from 'deep-diff'
@@ -124,8 +126,13 @@ export const generateYAML = (template, controlData) => {
   //format yaml from custom specifications
   if (templateData['specsCapture']) {
     const parsed = parseYAML(templateData['specsCapture'])
-    const raw = parsed['parsed']['unknown'][0]['$raw']
-    templateData['specsCapture'] = jsYaml.safeDump(raw)
+    // Only process if it's valid, otherwise throw it out
+    if (parsed['parsed']['unknown']) {
+      const raw = parsed['parsed']['unknown'][0]['$raw']
+      templateData['specsCapture'] = jsYaml.safeDump(raw)
+    } else {
+      templateData['specsCapture'] = []
+    }
   }
   let yaml = template(templateData) || ''
   yaml = yaml.replace(/[\r\n]+/g, '\n')

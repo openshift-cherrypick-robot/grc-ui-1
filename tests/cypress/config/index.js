@@ -1,4 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 const fs = require('fs')
 const jsYaml = require('js-yaml')
 
@@ -6,7 +8,7 @@ const jsYaml = require('js-yaml')
 // specifying the substitutions variable as an array of touples where first iteam
 // in a touple is a regular expression and the second item is the new value
 // e.g. rules = [ [/\[LABEL\]/g, "mylabel"] ]
-exports.doSubstitutionsInText = (text, rules={}) => {
+exports.doSubstitutionsInText = (text, rules=[]) => {
   let newText = text
   for (const [regExp, newValue] of rules) {
     newText = newText.replace(regExp, newValue)

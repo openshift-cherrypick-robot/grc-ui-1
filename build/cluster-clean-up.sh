@@ -1,9 +1,12 @@
 #!/bin/bash
 # Copyright (c) 2020 Red Hat, Inc.
+# Copyright Contributors to the Open Cluster Management project
+
 
 
 function hub() {
     echo "Hub: clean up"
+    oc delete ns duplicatetest || true
     for ns in default e2e-rbac-test-1 e2e-rbac-test-2
         do
             oc delete policies.policy.open-cluster-management.io -n $ns --all || true

@@ -1,7 +1,9 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 /// <reference types="cypress" />
 
-import { checkItems, verifyItemsChecked } from '../views/common'
+import { checkItems, verifyItemsChecked } from '../common/views'
 
 const specificationsList = ['CertificatePolicy', 'EtcdEncryption']
 const selectSpecsQuery = '.bx--multi-select[aria-label="specs"]'

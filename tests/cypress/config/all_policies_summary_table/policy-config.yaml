@@ -1,0 +1,54 @@
+# these are policies required by following Polarion test cases:
+# this is basically Namespace policy
+test-policy-1-[ID]:
+  apiVersion: 'policy.open-cluster-management.io/v1'
+  namespace: 'default'
+  binding_selector:
+    - 'matchExpressions =[]'
+  kind: 'ConfigurationPolicy'
+  specifications:
+    - 'Namespace'
+  standards:
+    - 'NIST-CSF'
+  categories:
+    - 'PR.IP Information Protection Processes and Procedures'
+  controls:
+    - 'PR.IP-1 Baseline Configuration'
+  enforce: False
+  disable: False
+
+# this is Namespace policy but with different category
+test-policy-2-[ID]:
+  apiVersion: 'policy.open-cluster-management.io/v1'
+  namespace: 'default'
+  binding_selector:
+    - 'matchExpressions =[]'
+  kind: 'ConfigurationPolicy'
+  specifications:
+    - 'Namespace'
+  standards:
+    - 'NIST-CSF'
+  categories:
+    - 'PR.AC Identity Management and Access Control'
+  controls:
+    - 'PR.IP-1 Baseline Configuration'
+  enforce: False
+  disable: False
+
+# this is Namespace policy but with different standard and category
+test-policy-3-[ID]:
+  apiVersion: 'policy.open-cluster-management.io/v1'
+  namespace: 'default'
+  binding_selector:
+    - 'matchExpressions =[]'
+  kind: 'ConfigurationPolicy'
+  specifications:
+    - 'Namespace'
+  standards:
+    - 'FISMA'
+  categories:
+    - 'PR.DS Data Security'
+  controls:
+    - 'PR.IP-1 Baseline Configuration'
+  enforce: False
+  disable: False

@@ -1,4 +1,6 @@
 /* Copyright (c) 2020 Red Hat, Inc. */
+/* Copyright Contributors to the Open Cluster Management project */
+
 export const getOpt = (opts, key, defaultValue) => {
   if (opts && opts[key]) {
     return opts[key]

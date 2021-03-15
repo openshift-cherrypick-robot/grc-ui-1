@@ -1,3 +1,5 @@
+[comment]: # ( Copyright Contributors to the Open Cluster Management project )
+
 #Jest Unit Test
 
 Link: https://facebook.github.io/jest/docs/en/tutorial-react.html
