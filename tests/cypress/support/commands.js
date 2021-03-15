@@ -21,7 +21,7 @@ Cypress.Commands.add('login', (OPTIONS_HUB_USER, OPTIONS_HUB_PASSWORD, OC_IDP) =
   cy.visit('/multicloud/policies')
   cy.get('body').then(body => {
     // Check if logged in
-    if (body.find('#header').length === 0) {
+    if (body.find('.pf-c-page__header').length === 0) {
 
       // Check if identity providers are configured
       if (body.find('form').length === 0)
@@ -29,7 +29,7 @@ Cypress.Commands.add('login', (OPTIONS_HUB_USER, OPTIONS_HUB_PASSWORD, OC_IDP) =
       cy.get('#inputUsername').click().focused().type(user)
       cy.get('#inputPassword').click().focused().type(password)
       cy.get('button[type="submit"]').click()
-      cy.get('#header').should('exist')
+      cy.get('.pf-c-page__header').should('exist')
     }
   })
   cy.CheckGrcMainPage()
