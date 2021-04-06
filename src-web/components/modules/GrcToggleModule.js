@@ -168,14 +168,18 @@ class GrcToggleModule extends React.Component {
               }
             )
           }
-          actionsList.push(
-            {
-              title: createDisableTooltip(disableFlag, action, locale, msgs.get(action, locale)),
-              isDisabled: disableFlag ? true : false,
-              onClick: () =>
-                (disableFlag ? null : getResourceAction(action, row, resourceType))
-            }
-          )
+          // if consoleURL is unavailable then don't show launch cluster button
+          const removeLaunchCluster = (action.includes('launch.cluster')) && ((row && !row.consoleURL) || (row && row.consoleURL && row.consoleURL === '-'))
+          if (!removeLaunchCluster) {
+            actionsList.push(
+              {
+                title: createDisableTooltip(disableFlag, action, locale, msgs.get(action, locale)),
+                isDisabled: disableFlag ? true : false,
+                onClick: () =>
+                  (disableFlag ? null : getResourceAction(action, row, resourceType))
+              }
+            )
+          }
         })
       }
     }
