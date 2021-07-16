@@ -21,7 +21,9 @@
     "test:cypress-headless": "export BABEL_ENV=cypress && export BROWSER=chrome && ./tests/cypress/start_cypress_tests.sh",
     "test:watch": "jest --watch",
     "test:update-snapshot": "jest --updateSnapshot",
-    "merge:coverage": "lcov-result-merger test-output/**/lcov.info ./lcov-merged.info"
+    "merge:coverage": "lcov-result-merger test-output/**/lcov.info ./lcov-merged.info",
+    "rbac:clean": "./build/rbac-clean.sh",
+    "rbac:setup": "./build/rbac-setup.sh"
   },
   "repository": {
     "type": "git",
