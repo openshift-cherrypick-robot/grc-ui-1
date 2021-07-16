@@ -58,11 +58,12 @@ export OC_HUB_CLUSTER_PASS=${RBAC_PASS}
 export OC_CLUSTER_PASS=${RBAC_PASS}
 export OC_IDP=grc-e2e-htpasswd
 
-export OC_CONSOLE_URL=https://`oc get route console -n openshift-console -o=jsonpath='{.spec.host}'`
+acm_installed_namespace=`oc get subscriptions.operators.coreos.com --all-namespaces | grep advanced-cluster-management | awk '{print $1}'`
+export CYPRESS_BASE_URL=https://`oc get route multicloud-console -n $acm_installed_namespace -o=jsonpath='{.spec.host}'`
 # test oauth server and see if idp has been setup
 i=0
 while true; do
-  IDP=`curl -L -k ${OC_CONSOLE_URL} | grep ${OC_IDP}` || true
+  IDP=`curl -L -k ${CYPRESS_BASE_URL} | grep ${OC_IDP}` || true
   if [ -z ${IDP// /} ]; then
     echo "wait for idp ${OC_IDP} to take effect..."
     sleep 10
@@ -71,9 +72,9 @@ while true; do
     echo ${IDP}
     break
   fi
-  # Try for up to 4 minutes
+  # Try for up to 5 minutes
   i=$[i + 1]
-  if [[ "$i" == '24' ]]; then
+  if [[ "$i" == '30' ]]; then
     echo "timeout waiting for idp ${OC_IDP}..."
     exit 1
   fi
