@@ -60,6 +60,15 @@ else
   oc login --server=${CYPRESS_OPTIONS_HUB_CLUSTER_URL} --token=$CYPRESS_OPTIONS_HUB_TOKEN --insecure-skip-tls-verify
 fi
 
+if [[ $CYPRESS_OPTIONS_HUB_CLUSTER_URL =~ openshiftapps.com ]]; then
+  echo "ROSA cluster detected - excluding @rbac tests"
+  if [[ -z $CYPRESS_TAGS_EXCLUDE ]]; then
+    export CYPRESS_TAGS_EXCLUDE="@rbac"
+  else
+    export CYPRESS_TAGS_EXCLUDE="@rbac|${CYPRESS_TAGS_EXCLUDE}"
+  fi
+fi
+
 acm_installed_namespace=`oc get subscriptions.operators.coreos.com --all-namespaces | grep advanced-cluster-management | awk '{print $1}'`
 RHACM_CONSOLE_URL=https://`oc get route multicloud-console -n $acm_installed_namespace -o=jsonpath='{.spec.host}'`
 
