@@ -26,24 +26,6 @@ acm_installed_namespace=`oc get subscriptions.operators.coreos.com --all-namespa
 export CYPRESS_BASE_URL=https://`oc get route multicloud-console -n $acm_installed_namespace -o=jsonpath='{.spec.host}'`
 # show all envs
 printenv
-# test oauth server and see if idp has been setup
-i=0
-while true; do
-  IDP=`curl -L -k ${CYPRESS_BASE_URL} | grep ${OC_IDP}` || true
-  if [ -z ${IDP// /} ]; then
-    echo "wait for idp ${OC_IDP} to take effect..."
-    sleep 10
-  else
-    echo "idp ${OC_IDP} has taken effect..."
-    echo ${IDP}
-    break
-  fi
-  i=$[i + 1]
-  if [[ "$i" == '24' ]]; then
-    echo "timeout waiting for idp ${OC_IDP}..."
-    exit 1
-  fi
-done
 
 # run test
 export PAUSE=${PAUSE:-60}
