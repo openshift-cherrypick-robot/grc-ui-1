@@ -185,6 +185,6 @@ These are a few useful links that provide technical reference and best practices
 - [Redux Best Practices](https://medium.com/@kylpo/redux-best-practices-eef55a20cc72)
 
 <!---
-Date: 08/17/2021
+Date: 08/25/2021
 -->
 
