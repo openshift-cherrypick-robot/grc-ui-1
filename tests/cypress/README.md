@@ -14,7 +14,6 @@ The procedure basically follows the setup described in
 1. Export environment variables necessary for a server to run and login. E.g.
 ```
 export NODE_ENV="development"
-export headerUrl="https://multicloud-console.apps.YOURSERVER.red-chesterfield.com"  # replace with your server name
 export API_SERVER_URL="https://api.YOURSERVER.red-chesterfield.com:6443"  # replace with your server name
 export SERVICEACCT_TOKEN="sha256~12345...abcde"  # replace with your token
 export OAUTH2_CLIENT_ID="multicloudingress"

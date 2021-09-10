@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "setup": "./setup-env.sh",
     "start": "cross-env NODE_ENV=development node app.js",
     "start:production": "cross-env NODE_ENV=production node app.js",
     "start:instrument": "nyc --reporter=text --reporter=lcov --report-dir=./test-output/server/coverage node app.js",

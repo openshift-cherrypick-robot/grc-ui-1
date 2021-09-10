@@ -6,7 +6,6 @@
     "docUrl": "https://github.com/open-cluster-management/rhacm-docs",
     "feature_search-api": true,
     "grcUiApiUrl": "",
-    "headerUrl":"https://management-ingress",
     "httpPort": 3000,
     "OAUTH2_CLIENT_ID": "",
     "OAUTH2_CLIENT_SECRET": "",

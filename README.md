@@ -1,7 +1,8 @@
 [comment]: # ( Copyright Contributors to the Open Cluster Management project )
 
 # grc-ui
-[![Build Status](https://travis-ci.com/open-cluster-management/grc-ui.svg?token=2jHocNax82kqKsGV1uTE&branch=main)](https://travis-ci.com/open-cluster-management/grc-ui)
+[![Build](https://img.shields.io/badge/build-Prow-informational)](https://prow.ci.openshift.org/?repo=open-cluster-management%2Fgrc-ui)
+[![License](https://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 The UI microservice, `grc-ui`, is the governance and risk dashboard for Red Hat Advanced Cluster Management. (See [`grc-ui-api`](https://github.com/open-cluster-management/grc-ui-api) for the API Server microservice it uses)
 
@@ -41,19 +42,19 @@ The UI Platform is developed as an isomorphic React application. View the list o
 
 **SECURITY WARNING:** The GRC UI provides an SSL certificate in `/sslcert` that is open to the public. In order to run this in production, you'll need to replace these certificates. For our production builds, we replace these certificates using its Helm chart.
 
-1. The following environment variables need to be set to point to a running Openshift cluster. Your environment might resemble the following content:
+1. Setup environment
+   You need:
+   - to be connected to a OpenShift 4.x.x cluster
+   - to have Advanced Cluster Management installed on the cluster
+   - Run one of the following commands:
 
-   ```json
-   {
-      "NODE_ENV": "development",
-      "headerUrl": "<url-to-rhacm-console>",
-      "API_SERVER_URL": "<url-to-openshift-apiserver>",
-      "SERVICEACCT_TOKEN": "<openshift-token-to-authenticate>",
-      "OAUTH2_CLIENT_ID": "multicloudingress",
-      "OAUTH2_CLIENT_SECRET": "multicloudingresssecret",
-      "OAUTH2_REDIRECT_URL": "https://localhost:3000/multicloud/policies/auth/callback",
-   }
    ```
+   npm run setup
+   OR
+   ./setup-env.sh
+   ```
+
+   This will create a `.env` file in the main directory containing the environment variables. You can run `source .env` to set the variables for use.
 
    The `SERVICEACCT_TOKEN` expires so if you need to get a new one:
    - From the UI...
@@ -64,6 +65,8 @@ The UI Platform is developed as an isomorphic React application. View the list o
          ```bash
          oc whoami -t
          ```
+    
+    Note: If you want to develop against both the grc-ui & the grc-ui-api you can start the API server and configure the grc-ui to query against the local grc-ui-api server. If you have already sourced the `.env` file you can run `unset grcUiApiUrl` to revert to using the default localhost url for communication with grc-ui-api. See the following on how to setup the api server: [`grc-ui-api`](https://github.com/open-cluster-management/grc-ui-api).
 
 2. Start the server for production by running the following command:
 
@@ -77,8 +80,6 @@ The UI Platform is developed as an isomorphic React application. View the list o
    npm run build:watch
    npm run start
    ```
-
-   - Start the API server alongside it. See: [`grc-ui-api`](https://github.com/open-cluster-management/grc-ui-api)
 
 5.Open a browser to `https://localhost:3000/multicloud/policies` and log in using your cluster admin credentials.
 
