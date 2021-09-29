@@ -53,7 +53,7 @@ else
   export CLUSTER_LABEL_SELECTOR="-l name=$MANAGED_CLUSTER_NAME"
 fi
 
-echo -e "\nLogging into Kube API server\n"
+echo -e "\nLogging into Kube API server...\n"
 ATTEMPTS=0
 MAX_ATTEMPTS=10
 INTERVAL=20
@@ -84,12 +84,14 @@ if [[ "${CYPRESS_OPTIONS_HUB_CLUSTER_URL}" =~ "openshiftapps.com" ]]; then
   fi
 fi
 
-# Determine whether an IDP is configured
+# We're assuming here both that 'kubeadmin' is still enabled and that the IDP is configured properly
+echo -e "\nDetermining whether any IDPs are configured..."
 IDP=$(oc get oauth -o jsonpath={.items[*].spec.identityProviders})
 if [[ -n "${IDP}" ]] && [[ "${IDP}" != "[]" ]]; then
   export CYPRESS_OC_IDP_CONFIGURED="true"
 fi
 
+echo -e "\nFetching ACM namespace and console URL...\n"
 acm_installed_namespace=`oc get subscriptions.operators.coreos.com --all-namespaces | grep advanced-cluster-management | awk '{print $1}'`
 RHACM_CONSOLE_URL=https://`oc get route multicloud-console -n $acm_installed_namespace -o=jsonpath='{.spec.host}'`
 

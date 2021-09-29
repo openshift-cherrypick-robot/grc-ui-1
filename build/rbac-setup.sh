@@ -61,3 +61,7 @@ export OC_HUB_CLUSTER_PASS=${RBAC_PASS}
 export OC_CLUSTER_PASS=${RBAC_PASS}
 export OC_IDP=grc-e2e-htpasswd
 
+echo "* Waiting for oauth pod restart"
+# Sleep instead of deleting pods to prevent authentication disruption in the environment
+sleep 15
+./build/wait_for.sh pod -l app=oauth-openshift -A
