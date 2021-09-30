@@ -174,7 +174,6 @@ const policyTemplateDetailsPage = ({ name, namespace, cluster, apiGroup, version
     breadcrumb: [
       { text: msgs.get(policiesMsg, locale), to: config.contextPath },
       { text: name, to: `${config.contextPath}/all/${namespace}/${name}`},
-      { text: msgs.get('table.header.status', locale), to: `${config.contextPath}/all/${namespace}/${name}/status` },
       { text: template, to: template }
     ],
     children: (props) => <PolicyTemplateDetailsView {...props} selfLink={selfLink} />
