@@ -10,7 +10,7 @@
 'use strict'
 
 import React from 'react'
-import { Gallery, GalleryItem } from '@patternfly/react-core'
+import { Gallery, GalleryItem, Text, TextContent, TextVariants } from '@patternfly/react-core'
 import config from '../../server/lib/shared/config'
 import msgs from '../nls/platform.properties'
 
@@ -23,21 +23,30 @@ export default class WelcomeStatic extends React.Component {
   }
 
   welcomeCard(img, title, desc, linkText, linkRoute) {
-    return (
-      <div className="welcome--svcs-container">
-        <div className="welcome--svcs-container-img">
-          <img src={`${config.contextPath}/graphics/${img}`} alt={''} />
-        </div>
-        <div className="welcome--svcs-container-text">
-          <div className="welcome--svcs-container-text-title">
-            <p>{title}</p>
-            <a href={linkRoute} className='welcome--svcs-container-text-title-link'>{linkText}</a>
-          </div>
-          <p className="welcome--svcs-container-text-desc">{desc}</p>
-        </div>
-      </div>
-    )
-  }
+		return (
+			<div className="welcome--svcs-container">
+				<div className="welcome--svcs-container-img">
+					<img
+						src={`${config.contextPath}/graphics/${img}`}
+						alt={''}
+					/>
+				</div>
+				<div className="welcome--svcs-container-text">
+					<TextContent>
+						<Text className={'welcome--svcs-container-text-title'} style={{ marginBottom: 0 }} component={TextVariants.h3}>{title}</Text>
+						<Text
+							className={'welcome--svcs-container-text-title-link'}
+							component={TextVariants.a}
+							href={linkRoute}
+						>
+							{linkText}
+						</Text>
+					</TextContent>
+          <Text className={'welcome--svcs-container-text-desc'} component={TextVariants.p}>{desc}</Text>
+				</div>
+			</div>
+		)
+	}
 
   render() {
     const { locale } = this.context
@@ -47,10 +56,10 @@ export default class WelcomeStatic extends React.Component {
       <div className={'welcome'}>
         <div className='welcome--introduction' role='region' aria-label={msgs.get('welcome.label', locale)}>
           <div className='welcome--introduction__description'>
-            <div className='welcome--text'>
-              <h1>{msgs.get('welcome.acm', locale)}</h1>
-              <p>{msgs.get('welcome.paragraph.description', locale)}</p>
-            </div>
+            <TextContent className={'welcome--text'}>
+              <Text component={TextVariants.h1}>{msgs.get('welcome.acm', locale)}</Text>
+              <Text component={TextVariants.p}>{msgs.get('welcome.paragraph.description', locale)}</Text>
+            </TextContent>
             <div className='welcome--image'>
               <img
                 width="32px"
@@ -125,39 +134,39 @@ export default class WelcomeStatic extends React.Component {
         </div>
         <div className='welcome--info' role='region' aria-label={msgs.get(welcomeBoxLabelStr, locale)} >
           <div className='welcome--info__heading'>
-            <h2>{msgs.get('welcome.information.heading', locale)}</h2>
+              <Text component={TextVariants.h2}>{msgs.get('welcome.information.heading', locale)}</Text>
           </div>
           <div className='welcome--info__details'>
             <div className="welcome--info__details-top">
-              <p>{msgs.get('welcome.information.top', locale)}</p>
+              <Text component={TextVariants.p}>{msgs.get('welcome.information.top', locale)}</Text>
             </div>
             <div className="welcome--info__details-container">
               <div className="container-row">
                 <div className="welcome--info__details-container-item spacer">
-                  <p className="header">{msgs.get('welcome.information.items.kubernetes.title', locale)}</p>
-                  <p className="desc">{msgs.get('welcome.information.items.kubernetes.desc', locale)}</p>
+                  <Text className="header" component={TextVariants.p}>{msgs.get('welcome.information.items.kubernetes.title', locale)}</Text>
+                  <Text className="desc" component={TextVariants.p}>{msgs.get('welcome.information.items.kubernetes.desc', locale)}</Text>
                 </div>
                 <div className="welcome--info__details-container-item spacer">
-                  <p className="header">{msgs.get('welcome.information.items.policies.title', locale)}</p>
-                  <p className="desc">{msgs.get('welcome.information.items.policies.desc', locale)}</p>
+                  <Text className="header" component={TextVariants.p}>{msgs.get('welcome.information.items.policies.title', locale)}</Text>
+                  <Text className="desc" component={TextVariants.p}>{msgs.get('welcome.information.items.policies.desc', locale)}</Text>
                 </div>
                 <div className="welcome--info__details-container-item">
-                  <p className="header">{msgs.get('welcome.information.items.landscape.title', locale)}</p>
-                  <p className="desc">{msgs.get('welcome.information.items.landscape.desc', locale)}</p>
+                  <Text className="header" component={TextVariants.p}>{msgs.get('welcome.information.items.landscape.title', locale)}</Text>
+                  <Text className="desc" component={TextVariants.p}>{msgs.get('welcome.information.items.landscape.desc', locale)}</Text>
                 </div>
               </div>
               <div className="container-row">
                 <div className="welcome--info__details-container-item spacer">
-                  <p className="header">{msgs.get('welcome.information.items.envs.title', locale)}</p>
-                  <p className="desc">{msgs.get('welcome.information.items.envs.desc', locale)}</p>
+                  <Text className="header" component={TextVariants.p}>{msgs.get('welcome.information.items.envs.title', locale)}</Text>
+                  <Text className="desc" component={TextVariants.p}>{msgs.get('welcome.information.items.envs.desc', locale)}</Text>
                 </div>
                 <div className="welcome--info__details-container-item spacer">
-                  <p className="header">{msgs.get('welcome.information.items.integration.title', locale)}</p>
-                  <p className="desc">{msgs.get('welcome.information.items.integration.desc', locale)}</p>
+                  <Text className="header" component={TextVariants.p}>{msgs.get('welcome.information.items.integration.title', locale)}</Text>
+                  <Text className="desc" component={TextVariants.p}>{msgs.get('welcome.information.items.integration.desc', locale)}</Text>
                 </div>
                 <div className="welcome--info__details-container-item">
-                  <p className="header">{msgs.get('welcome.information.items.alerts.title', locale)}</p>
-                  <p className="desc">{msgs.get('welcome.information.items.alerts.desc', locale)}</p>
+                  <Text className="header" component={TextVariants.p}>{msgs.get('welcome.information.items.alerts.title', locale)}</Text>
+                  <Text className="desc" component={TextVariants.p}>{msgs.get('welcome.information.items.alerts.desc', locale)}</Text>
                 </div>
               </div>
             </div>
@@ -165,7 +174,7 @@ export default class WelcomeStatic extends React.Component {
         </div>
         <div className='welcome--connect' role='region' aria-label={msgs.get(welcomeBoxLabelStr, locale)} >
           <div className='welcome--connect__heading'>
-            <h2>{msgs.get('welcome.connect.heading', locale)}</h2>
+            <Text component={TextVariants.h2}>{msgs.get('welcome.connect.heading', locale)}</Text>
           </div>
           <div className='welcome--connect__details'>
             <div className='welcome--connect__section'>
@@ -173,28 +182,23 @@ export default class WelcomeStatic extends React.Component {
                 className='welcome--img'
                 src={`${config.contextPath}/graphics/welcome-community-icon.svg`}
                 alt={msgs.get('svg.description.blog', locale)} />
-              <p className='welcome--connect__section-title'>{msgs.get('welcome.connect.box.one.title.one', locale)}</p>
-              <p className='welcome--connect__section-body'>{msgs.get('welcome.connect.box.one.title.two', locale)}</p>
-              <a
-                target='dev-community'
-                href='https://www.redhat.com/en/blog/products'
-                className='welcome--link'
-                aria-describedby='launchWindow'>
-                {msgs.get(welcomeBoxLinkStr, locale)}
+              <Text className="welcome--connect__section-title" component={TextVariants.p}>{msgs.get('welcome.connect.box.one.title.one', locale)}</Text>
+              <Text className="welcome--connect__section-body" component={TextVariants.p}>{msgs.get('welcome.connect.box.one.title.two', locale)}</Text>
+              <Text className="welcome--link" target='dev-community' component={TextVariants.a} href='https://www.redhat.com/en/blog/products'>{msgs.get(welcomeBoxLinkStr, locale)}
                 <img
                   className='welcome--connect__section-launch'
                   src={`${config.contextPath}/graphics/arrow-right.svg`}
                   alt={msgs.get(welcomeBoxLinkStr, locale)} />
-              </a>
+              </Text>
             </div>
             <div className='welcome--connect__section'>
               <img
                 className='welcome--img'
                 src={`${config.contextPath}/graphics/welcome-slack-icon.svg`}
                 alt={msgs.get('svg.description.slack', locale)} />
-              <p className='welcome--connect__section-title'>{msgs.get('welcome.connect.box.two.title.one', locale)}</p>
-              <p className='welcome--connect__section-body'>{msgs.get('welcome.connect.box.two.title.two', locale)}</p>
-              <p className='connect-coming-soon'>{msgs.get('welcome.connect.box.coming.soon')}</p>
+              <Text className="welcome--connect__section-title" component={TextVariants.p}>{msgs.get('welcome.connect.box.two.title.one', locale)}</Text>
+              <Text className="welcome--connect__section-body" component={TextVariants.p}>{msgs.get('welcome.connect.box.two.title.two', locale)}</Text>
+              <Text className="connect-coming-soon" component={TextVariants.p}>{msgs.get('welcome.connect.box.coming.soon')}</Text>
             </div>
             <div className='welcome--connect__section'>
               <img
@@ -202,24 +206,15 @@ export default class WelcomeStatic extends React.Component {
                 src={`${config.contextPath}/graphics/welcome-support-icon.svg`}
                 alt={msgs.get('svg.description.support', locale)}
               />
-              <p className='welcome--connect__section-title'>{msgs.get('welcome.connect.box.three.title.one', locale)}</p>
-              <div className='welcome--connect__section-body'>
-                {msgs.get('welcome.connect.box.three.title.two', locale)}
-                <br />
-                {msgs.get('welcome.connect.box.three.title.three', locale)}
-              </div>
-              <a
-                target='support'
-                href='https://access.redhat.com/support'
-                className='welcome--link'
-                aria-describedby='launchWindow'>
-                {msgs.get(welcomeBoxLinkStr, locale)}
+              <Text className="welcome--connect__section-title" component={TextVariants.p}>{msgs.get('welcome.connect.box.three.title.one', locale)}</Text>
+              <Text className="welcome--connect__section-body" component={TextVariants.p}>{msgs.get('welcome.connect.box.three.title.two', locale)}</Text>
+              <Text className="welcome--connect__section-body" style={{ marginTop: 0 }} component={TextVariants.p}>{msgs.get('welcome.connect.box.three.title.three', locale)}</Text>
+              <Text className="welcome--link" target='support' component={TextVariants.a} href='https://access.redhat.com/support'>{msgs.get(welcomeBoxLinkStr, locale)}
                 <img
                   className='welcome--connect__section-launch'
                   src={`${config.contextPath}/graphics/arrow-right.svg`}
-                  alt={msgs.get(welcomeBoxLinkStr, locale)}
-                />
-              </a>
+                  alt={msgs.get(welcomeBoxLinkStr, locale)} />
+              </Text>
             </div>
           </div>
         </div>

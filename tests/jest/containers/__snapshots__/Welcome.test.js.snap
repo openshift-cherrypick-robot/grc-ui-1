@@ -13,12 +13,24 @@ exports[`Welcome component renders as expected 1`] = `
       className="welcome--introduction__description"
     >
       <div
-        className="welcome--text"
+        className="pf-c-content welcome--text"
       >
-        <h1>
+        <h1
+          className=""
+          data-ouia-component-id="OUIA-Generated-Text-1"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
+        >
           Welcome! Let’s get started.
         </h1>
-        <p>
+        <p
+          className=""
+          data-ouia-component-id="OUIA-Generated-Text-2"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
+        >
           Red Hat Advanced Cluster Management for Kubernetes provides the tools and capabilities to address various challenges with managing multiple clusters and consoles, distributed business applications, and inconsistent security controls across Kubernetes clusters that are deployed on-premises, or across public clouds.
         </p>
       </div>
@@ -70,13 +82,28 @@ exports[`Welcome component renders as expected 1`] = `
             className="welcome--svcs-container-text"
           >
             <div
-              className="welcome--svcs-container-text-title"
+              className="pf-c-content"
             >
-              <p>
+              <h3
+                className="welcome--svcs-container-text-title"
+                data-ouia-component-id="OUIA-Generated-Text-3"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
+                style={
+                  Object {
+                    "marginBottom": 0,
+                  }
+                }
+              >
                 End-to-end visibility
-              </p>
+              </h3>
               <a
                 className="welcome--svcs-container-text-title-link"
+                data-ouia-component-id="OUIA-Generated-Text-4"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
                 href="/overview"
               >
                 Go to Overview
@@ -84,6 +111,10 @@ exports[`Welcome component renders as expected 1`] = `
             </div>
             <p
               className="welcome--svcs-container-text-desc"
+              data-ouia-component-id="OUIA-Generated-Text-5"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               View system alerts, critical application metrics, and overall system health. Search, identify, and resolve issues that are impacting distributed workloads using an operational dashboard designed for Site Reliability Engineers (SREs).
             </p>
@@ -106,13 +137,28 @@ exports[`Welcome component renders as expected 1`] = `
             className="welcome--svcs-container-text"
           >
             <div
-              className="welcome--svcs-container-text-title"
+              className="pf-c-content"
             >
-              <p>
+              <h3
+                className="welcome--svcs-container-text-title"
+                data-ouia-component-id="OUIA-Generated-Text-6"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
+                style={
+                  Object {
+                    "marginBottom": 0,
+                  }
+                }
+              >
                 Cluster lifecycle
-              </p>
+              </h3>
               <a
                 className="welcome--svcs-container-text-title-link"
+                data-ouia-component-id="OUIA-Generated-Text-7"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
                 href="/multicloud/clusters"
               >
                 Go to Clusters
@@ -120,6 +166,10 @@ exports[`Welcome component renders as expected 1`] = `
             </div>
             <p
               className="welcome--svcs-container-text-desc"
+              data-ouia-component-id="OUIA-Generated-Text-8"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Create, update, scale, and remove clusters reliably, consistently using an open source programming model that supports and encourages Infrastructure as Code best practices and design principles.
             </p>
@@ -142,13 +192,28 @@ exports[`Welcome component renders as expected 1`] = `
             className="welcome--svcs-container-text"
           >
             <div
-              className="welcome--svcs-container-text-title"
+              className="pf-c-content"
             >
-              <p>
+              <h3
+                className="welcome--svcs-container-text-title"
+                data-ouia-component-id="OUIA-Generated-Text-9"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
+                style={
+                  Object {
+                    "marginBottom": 0,
+                  }
+                }
+              >
                 Application lifecycle
-              </p>
+              </h3>
               <a
                 className="welcome--svcs-container-text-title-link"
+                data-ouia-component-id="OUIA-Generated-Text-10"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
                 href="/multicloud/applications"
               >
                 Go to Applications
@@ -156,6 +221,10 @@ exports[`Welcome component renders as expected 1`] = `
             </div>
             <p
               className="welcome--svcs-container-text-desc"
+              data-ouia-component-id="OUIA-Generated-Text-11"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Define a business application using open standards and deploy the applications using placement policies that are integrated into existing CI/CD pipelines and governance controls.
             </p>
@@ -178,13 +247,28 @@ exports[`Welcome component renders as expected 1`] = `
             className="welcome--svcs-container-text"
           >
             <div
-              className="welcome--svcs-container-text-title"
+              className="pf-c-content"
             >
-              <p>
+              <h3
+                className="welcome--svcs-container-text-title"
+                data-ouia-component-id="OUIA-Generated-Text-12"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
+                style={
+                  Object {
+                    "marginBottom": 0,
+                  }
+                }
+              >
                 Governance, Risk, and Compliance
-              </p>
+              </h3>
               <a
                 className="welcome--svcs-container-text-title-link"
+                data-ouia-component-id="OUIA-Generated-Text-13"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
                 href="/multicloud/policies"
               >
                 Go to Governance
@@ -192,6 +276,10 @@ exports[`Welcome component renders as expected 1`] = `
             </div>
             <p
               className="welcome--svcs-container-text-desc"
+              data-ouia-component-id="OUIA-Generated-Text-14"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Use policies to automatically configure and maintain consistency of security controls required by industry or other corporate standards. Prevent unintentional or malicious configuration drift that might expose unwanted and unnecessary threat vectors.
             </p>
@@ -214,13 +302,28 @@ exports[`Welcome component renders as expected 1`] = `
             className="welcome--svcs-container-text"
           >
             <div
-              className="welcome--svcs-container-text-title"
+              className="pf-c-content"
             >
-              <p>
+              <h3
+                className="welcome--svcs-container-text-title"
+                data-ouia-component-id="OUIA-Generated-Text-15"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
+                style={
+                  Object {
+                    "marginBottom": 0,
+                  }
+                }
+              >
                 Multicluster networking
-              </p>
+              </h3>
               <a
                 className="welcome--svcs-container-text-title-link"
+                data-ouia-component-id="OUIA-Generated-Text-16"
+                data-ouia-component-type="PF4/Text"
+                data-ouia-safe={true}
+                data-pf-content={true}
                 href="/multicloud/cluster-sets"
               >
                 Go to Cluster sets
@@ -228,6 +331,10 @@ exports[`Welcome component renders as expected 1`] = `
             </div>
             <p
               className="welcome--svcs-container-text-desc"
+              data-ouia-component-id="OUIA-Generated-Text-17"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Enable direct networking connection between different on-premises or cloud-hosted Kubernetes clusters by grouping them in cluster sets and enabling the Submariner add-on.
             </p>
@@ -244,7 +351,13 @@ exports[`Welcome component renders as expected 1`] = `
     <div
       className="welcome--info__heading"
     >
-      <h2>
+      <h2
+        className=""
+        data-ouia-component-id="OUIA-Generated-Text-18"
+        data-ouia-component-type="PF4/Text"
+        data-ouia-safe={true}
+        data-pf-content={true}
+      >
         Easy, simple, and secure.
       </h2>
     </div>
@@ -254,7 +367,13 @@ exports[`Welcome component renders as expected 1`] = `
       <div
         className="welcome--info__details-top"
       >
-        <p>
+        <p
+          className=""
+          data-ouia-component-id="OUIA-Generated-Text-19"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
+        >
           Easy to use and simple to understand, Red Hat Advanced Cluster Management for Kubernetes provides the following mission critical capabilities based on open source projects:
         </p>
       </div>
@@ -269,11 +388,19 @@ exports[`Welcome component renders as expected 1`] = `
           >
             <p
               className="header"
+              data-ouia-component-id="OUIA-Generated-Text-20"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Kubernetes
             </p>
             <p
               className="desc"
+              data-ouia-component-id="OUIA-Generated-Text-21"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Easily provision Kubernetes clusters and offer complete cluster lifecycle management in a single console.
             </p>
@@ -283,11 +410,19 @@ exports[`Welcome component renders as expected 1`] = `
           >
             <p
               className="header"
+              data-ouia-component-id="OUIA-Generated-Text-22"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Policies
             </p>
             <p
               className="desc"
+              data-ouia-component-id="OUIA-Generated-Text-23"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Enforce policies at the target clusters using Kubernetes-supported custom resource definitions.
             </p>
@@ -297,11 +432,19 @@ exports[`Welcome component renders as expected 1`] = `
           >
             <p
               className="header"
+              data-ouia-component-id="OUIA-Generated-Text-24"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Cluster landscape
             </p>
             <p
               className="desc"
+              data-ouia-component-id="OUIA-Generated-Text-25"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Deploy and maintain day two operations of applications distributed across your cluster landscape.
             </p>
@@ -315,11 +458,19 @@ exports[`Welcome component renders as expected 1`] = `
           >
             <p
               className="header"
+              data-ouia-component-id="OUIA-Generated-Text-26"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Range of environments
             </p>
             <p
               className="desc"
+              data-ouia-component-id="OUIA-Generated-Text-27"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Work across a range of environments, including multiple data centers, and private and public clouds.
             </p>
@@ -329,11 +480,19 @@ exports[`Welcome component renders as expected 1`] = `
           >
             <p
               className="header"
+              data-ouia-component-id="OUIA-Generated-Text-28"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Application topology
             </p>
             <p
               className="desc"
+              data-ouia-component-id="OUIA-Generated-Text-29"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Quickly view service endpoints, pods, and dependant resources that comprise your application topology.
             </p>
@@ -343,11 +502,19 @@ exports[`Welcome component renders as expected 1`] = `
           >
             <p
               className="header"
+              data-ouia-component-id="OUIA-Generated-Text-30"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Cluster labels and placement rules
             </p>
             <p
               className="desc"
+              data-ouia-component-id="OUIA-Generated-Text-31"
+              data-ouia-component-type="PF4/Text"
+              data-ouia-safe={true}
+              data-pf-content={true}
             >
               Use cluster labels and application placement rules to easily move workloads across clusters, even between multiple cloud providers.
             </p>
@@ -364,7 +531,13 @@ exports[`Welcome component renders as expected 1`] = `
     <div
       className="welcome--connect__heading"
     >
-      <h2>
+      <h2
+        className=""
+        data-ouia-component-id="OUIA-Generated-Text-32"
+        data-ouia-component-type="PF4/Text"
+        data-ouia-safe={true}
+        data-pf-content={true}
+      >
         Converse and connect.
       </h2>
     </div>
@@ -381,17 +554,28 @@ exports[`Welcome component renders as expected 1`] = `
         />
         <p
           className="welcome--connect__section-title"
+          data-ouia-component-id="OUIA-Generated-Text-33"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
         >
           Technical community
         </p>
         <p
           className="welcome--connect__section-body"
+          data-ouia-component-id="OUIA-Generated-Text-34"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
         >
           Want more information? Check out the developer community.
         </p>
         <a
-          aria-describedby="launchWindow"
           className="welcome--link"
+          data-ouia-component-id="OUIA-Generated-Text-35"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
           href="https://www.redhat.com/en/blog/products"
           target="dev-community"
         >
@@ -413,16 +597,28 @@ exports[`Welcome component renders as expected 1`] = `
         />
         <p
           className="welcome--connect__section-title"
+          data-ouia-component-id="OUIA-Generated-Text-36"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
         >
           Slack channel
         </p>
         <p
           className="welcome--connect__section-body"
+          data-ouia-component-id="OUIA-Generated-Text-37"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
         >
           Join our Slack community to connect and chat with us.
         </p>
         <p
           className="connect-coming-soon"
+          data-ouia-component-id="OUIA-Generated-Text-38"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
         >
           Coming soon
         </p>
@@ -437,19 +633,42 @@ exports[`Welcome component renders as expected 1`] = `
         />
         <p
           className="welcome--connect__section-title"
+          data-ouia-component-id="OUIA-Generated-Text-39"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
         >
           Support center
         </p>
-        <div
+        <p
           className="welcome--connect__section-body"
+          data-ouia-component-id="OUIA-Generated-Text-40"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
         >
           Need technical support?
-          <br />
+        </p>
+        <p
+          className="welcome--connect__section-body"
+          data-ouia-component-id="OUIA-Generated-Text-41"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
+          style={
+            Object {
+              "marginTop": 0,
+            }
+          }
+        >
           Contact us.
-        </div>
+        </p>
         <a
-          aria-describedby="launchWindow"
           className="welcome--link"
+          data-ouia-component-id="OUIA-Generated-Text-42"
+          data-ouia-component-type="PF4/Text"
+          data-ouia-safe={true}
+          data-pf-content={true}
           href="https://access.redhat.com/support"
           target="support"
         >
