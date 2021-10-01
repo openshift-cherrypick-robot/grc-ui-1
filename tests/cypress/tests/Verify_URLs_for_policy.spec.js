@@ -26,7 +26,7 @@ describeT('RHACM4K-2354 - GRC UI: [P1][Sev1][policy-grc] Check existent and non-
     cy.visit('/multicloud/policies/all/not-a-namespace/not-a-policy').waitForPageContentLoad()
     .checkPolicyNoResourcesIconMessage(false, 'Resource not found')
     cy.visit('/multicloud/policies/all/not-a-namespace/not-a-policy/clusters').waitForPageContentLoad()
-    .checkPolicyNoResourcesIconMessage(false, 'No policy status found')
+    .checkPolicyNoResourcesIconMessage(false, 'Resource not found')
   })
   it('Delete the policy', () => {
     cy.visit('/multicloud/policies/all').waitForPageContentLoad()

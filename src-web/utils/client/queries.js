@@ -203,11 +203,10 @@ export const ALL_POLICIES = gql`
 // retrieve policy details for policy details drilldown
 export const SINGLE_POLICY = gql`
   query getSinglePolicy($name: String!, $namespace: String) {
-    source: compliances(name: $name, namespace: $namespace) {
-      source
-    }
     items: compliances(name: $name, namespace: $namespace) {
       raw
+      external
+      source
       metadata {
         creationTimestamp
         name
@@ -275,8 +274,13 @@ query getPolicyTemplateDetails($name: String!, $kind: String!, $cluster: String!
 // retrieve policy status for policy status tab
 export const POLICY_STATUS = gql`
   query getPolicyStatus($policyName: String!, $hubNamespace: String!) {
-    source: compliances(name: $policyName, namespace: $hubNamespace) {
+    compliances: compliances(name: $policyName, namespace: $hubNamespace) {
+      external
       source
+      metadata {
+        name
+        namespace
+      }
     }
     items: policyStatus(policyName: $policyName, hubNamespace: $hubNamespace) {
       templateName

@@ -30,11 +30,11 @@ class PolicyStatusView extends React.Component {
   static contextType = LocaleContext
 
   render() {
-    const { grouping, items=[], userAccess } = this.props
+    const { grouping, items=[], resourceNotFound, userAccess } = this.props
     const { locale } = this.context
     if (items.length === 0) {
       return <NoResource
-        title={msgs.get('no-status.title', [msgs.get('routes.grc', locale)], locale)}
+        title={msgs.get(resourceNotFound ? 'error.not.found' : 'no-status.title', [msgs.get('routes.grc', locale)], locale)}
         svgName='EmptyPagePlanet-illus.png'>
       </NoResource>
     }
@@ -135,9 +135,9 @@ function groupByTemplate(status, locale) {
 }
 
 PolicyStatusView.propTypes = {
-  grouping: PropTypes.oneOf(['clusters, templates']),
+  grouping: PropTypes.oneOf(['clusters', 'templates']),
   items: PropTypes.array,
-  // searchValue: PropTypes.string,
+  resourceNotFound: PropTypes.bool,
   userAccess: PropTypes.array,
 }
 
