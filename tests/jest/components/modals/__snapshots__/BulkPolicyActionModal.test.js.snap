@@ -24,7 +24,6 @@ exports[`PolicyActionModal component Modal returns notification on error 1`] = `
     onClose={[Function]}
     showClose={true}
     title="Inform {0} policies?"
-    titleIconVariant={null}
     variant="medium"
   >
     <AcmAlert

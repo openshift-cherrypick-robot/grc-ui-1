@@ -18,7 +18,6 @@ import { withRouter } from 'react-router-dom'
 import { REQUEST_STATUS } from '../../actions/index'
 import {
 	bulkPolicyActions,
-	bulkRemovePolicies,
 	clearRequestStatus,
 	receivePatchError,
 	updateModal,
@@ -66,20 +65,6 @@ const policyTableColumns = (modalType) => {
 					cell: 'status.title',
 				},
 			]
-		case 'bulk-policy-action-delete':
-			return [
-				{
-					header: 'Policy name',
-					sort: 'name.rawData',
-					cell: 'name.rawData',
-					search: 'name.rawData',
-				},
-				{
-					header: 'Source',
-					sort: 'source.text',
-					cell: 'source.text',
-				},
-			]
 		/* istanbul ignore next */
 		default:
 			break
@@ -100,7 +85,6 @@ export class BulkPolicyActionModal extends React.Component {
 		const {
 			type: modalType,
 			handleSubmit,
-			handleDeleteSubmit,
 			data = [],
 		} = this.props
 		switch (modalType) {
@@ -140,9 +124,6 @@ export class BulkPolicyActionModal extends React.Component {
 					bulkPolicyActions
 				)
 				break
-			case 'bulk-policy-action-delete':
-				handleDeleteSubmit(data, modalType, bulkRemovePolicies)
-				break
 			default:
 				break
 		}
@@ -170,11 +151,6 @@ export class BulkPolicyActionModal extends React.Component {
 					<Spinner className="patternfly-spinner" />
 				)}
 				<AcmModal
-					titleIconVariant={
-						modalType === 'bulk-policy-action-delete'
-							? 'warning'
-							: null
-					}
 					variant="medium"
 					id={`bulk-${actionType}-policy-modal'`}
 					isOpen={open}
@@ -191,11 +167,7 @@ export class BulkPolicyActionModal extends React.Component {
 					actions={[
 						<AcmButton
 							key="confirm"
-							variant={
-								modalType === 'bulk-policy-action-delete'
-									? ButtonVariant.danger
-									: ButtonVariant.primary
-							}
+							variant={ButtonVariant.primary}
 							onClick={this.handleSubmitClick}
 						>
 							{msgs.get(label.primaryBtn, locale)}
@@ -276,7 +248,6 @@ BulkPolicyActionModal.propTypes = {
 	actionType: PropTypes.string,
 	data: PropTypes.array,
 	handleClose: PropTypes.func,
-	handleDeleteSubmit: PropTypes.func,
 	handleSubmit: PropTypes.func,
 	label: PropTypes.shape({
 		heading: PropTypes.string,
@@ -306,9 +277,6 @@ const mapDispatchToProps = (dispatch) => {
 			dispatchFn
 		) => {
 			dispatch(dispatchFn(policies, newData, resourcePath, modalType))
-		},
-		handleDeleteSubmit: (policies, modalType, dispatchFn) => {
-			dispatch(dispatchFn(policies, modalType))
 		},
 		handleClose: (modalType) => {
 			dispatch(clearRequestStatus())

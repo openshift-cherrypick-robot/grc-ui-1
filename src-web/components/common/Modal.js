@@ -32,7 +32,6 @@ const Modal = ({ type, open, ...rest }) => {
     case 'bulk-policy-action-disable':
     case 'bulk-policy-action-inform':
     case 'bulk-policy-action-enforce':
-    case 'bulk-policy-action-delete':
       return open && getBulkPolicyActionModal({ type, open, ...rest })
   default:
     return null

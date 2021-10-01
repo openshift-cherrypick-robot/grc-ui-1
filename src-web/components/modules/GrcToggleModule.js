@@ -122,16 +122,6 @@ class GrcToggleModule extends React.Component {
         ],
         variant: 'action-group',
       },
-      {
-        id: 'separator-2',
-        variant: 'action-seperator',
-      },
-      {
-        id: 'delete',
-        title: 'Delete',
-        click: (it) => onClickTableAction(it, 'delete'),
-        variant: 'bulk-action',
-      },
     ]
     return (
       <div className='grc-toggle'>
