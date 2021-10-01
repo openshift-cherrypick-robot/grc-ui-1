@@ -53,11 +53,26 @@ else
   export CLUSTER_LABEL_SELECTOR="-l name=$MANAGED_CLUSTER_NAME"
 fi
 
-echo -e "\nLogging into Kube API server\n"
-if [ -z "$CYPRESS_OPTIONS_HUB_TOKEN" ]; then
-  oc login --server="$CYPRESS_OPTIONS_HUB_CLUSTER_URL" -u "$CYPRESS_OPTIONS_HUB_USER" -p "$CYPRESS_OPTIONS_HUB_PASSWORD" --insecure-skip-tls-verify
-else
-  oc login --server="$CYPRESS_OPTIONS_HUB_CLUSTER_URL" --token="$CYPRESS_OPTIONS_HUB_TOKEN" --insecure-skip-tls-verify
+echo -e "\nLogging into Kube API server...\n"
+ATTEMPTS=0
+MAX_ATTEMPTS=10
+INTERVAL=20
+FAILED="true"
+while [[ "${FAILED}" == "true" ]] && (( ATTEMPTS != MAX_ATTEMPTS )); do
+  if [ -z "$CYPRESS_OPTIONS_HUB_TOKEN" ]; then
+    oc login --server="$CYPRESS_OPTIONS_HUB_CLUSTER_URL" -u "$CYPRESS_OPTIONS_HUB_USER" -p "$CYPRESS_OPTIONS_HUB_PASSWORD" --insecure-skip-tls-verify
+  else
+    oc login --server="$CYPRESS_OPTIONS_HUB_CLUSTER_URL" --token="$CYPRESS_OPTIONS_HUB_TOKEN" --insecure-skip-tls-verify
+  fi
+  if [[ "$?" != "0" ]]; then
+    echo "* Error logging in to cluster. Trying again in ${INTERVAL}s (Retry $((++ATTEMPTS))/${MAX_ATTEMPTS})"
+  else
+    FAILED="false"
+  fi
+  sleep ${INTERVAL}
+done
+if [[ "${FAILED}" == "true" ]]; then
+  echo -e "\nERROR: Failed to log in to cluster. The following commands will likely fail.\n"
 fi
 
 if [[ "${CYPRESS_OPTIONS_HUB_CLUSTER_URL}" =~ "openshiftapps.com" ]]; then
