@@ -7,6 +7,7 @@
  * @type {Cypress.PluginConfig}
  */
 
+const del = require('del')
 const glob = require('glob')
 const path = require('path')
 const getConfig = require('../config').getConfig
@@ -29,6 +30,15 @@ module.exports = (on, config) => {
   require('cypress-terminal-report/src/installLogsPrinter')(on)
 
   require('cypress-fail-fast/plugin')(on, config)
+
+  // Delete videos for test suites with no failures
+  on('after:spec', (spec, results) => {
+    if (results && results.video) {
+      if (results.stats && results.stats.failures === 0) {
+        return del(results.video)
+      }
+    }
+  })
 
   return config
 }

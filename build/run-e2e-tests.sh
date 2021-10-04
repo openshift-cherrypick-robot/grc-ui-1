@@ -73,10 +73,18 @@ echo "* Launching Cypress E2E test"
 touch ${DIR}/tmpkube
 export KUBECONFIG=${DIR}/tmpkube
 # Run E2E tests
-npm run test:cypress-headless
+npm run test:cypress-headless || ERROR_CODE=$?
 # Clean up the kubeconfig
 unset KUBECONFIG
 rm ${DIR}/tmpkube
+
+if [[ -n "${ARTIFACT_DIR}" ]]; then
+  echo "* Copying 'test-output/cypress/' directory to '${ARTIFACT_DIR}'..."
+  cp -r $DIR/../test-output/* ${ARTIFACT_DIR}
+fi
+
+# Since we obfuscated the error code on the test run, we'll manually exit here with the collected code
+exit ${ERROR_CODE}
 
 # kill the node process to let nyc generate coverage report
 # NODE_PROCESS=$(ps -ef | grep 'node app.js' | grep -v grep)
