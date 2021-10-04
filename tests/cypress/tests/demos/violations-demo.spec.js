@@ -28,7 +28,9 @@ describe('Testing policy deviations as specified in the violations.yaml config f
       // verify all violations per cluster
         .verifyViolationsInPolicyStatusClusters(uPolicyName, {'namespace': 'default'}, confClusterViolations, confViolationPatterns)
       // open the Templates tab - we should have a command for this
-      cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').click().waitForPageContentLoad()
+      cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible'))
+      cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible').click()
+        .waitForPageContentLoad()
       // verify violations per template
         .verifyViolationsInPolicyStatusTemplates(uPolicyName, {'namespace': 'default'}, confClusterViolations, confViolationPatterns)
     })

@@ -25,7 +25,6 @@ describeT('GRC UI: [P1][Sev1][policy-grc] Welcome page', () => {
         welcomePage.shouldExist()
     })
 
-    // FIXME: Skipping tests until welcome page is fixed.
     it('validate links on Welcome page', () => {
         welcomePage.validateSvcs()
         welcomePage.validateConnect()

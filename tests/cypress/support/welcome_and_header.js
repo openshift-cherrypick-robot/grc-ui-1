@@ -37,7 +37,7 @@ export const oauthIssuer = (token) => {
 export const welcomePage = {
     whenGoToWelcomePage:() => cy.visit('/multicloud/welcome'),
     shouldExist: () => {
-        cy.get('.welcome--introduction').should('contain', 'Welcome! Let’s get started.')
+        cy.get('.welcome--introduction').should('contain', 'Welcome! Let’s get started.').and('be.visible')
         cy.get('.welcome--svcs').should('contain', 'Go to Overview').and('contain', 'Go to Clusters').and('contain', 'Go to Applications').and('contain', 'Go to Governance')
     },
     validateSvcs: () => {
@@ -55,9 +55,11 @@ export const welcomePage = {
 export const leftNav = {
     validateMenu: () => {
         cy.get('#page-sidebar li.pf-c-nav__item').should('be.visible').and('have.length', 11)
-        cy.get('#nav-toggle').click()
+        cy.waitUntil(() => cy.get('#nav-toggle').should('be.visible'))
+        cy.get('#nav-toggle').should('be.visible').click()
         cy.get('#page-sidebar').should('not.be.visible')
-        cy.get('#nav-toggle').click()
+        cy.waitUntil(() => cy.get('#nav-toggle').should('be.visible'))
+        cy.get('#nav-toggle').should('be.visible').click()
     },
     validatePerspective: () => {
         cy.get('#toggle-perspective').should('be.visible')
@@ -66,17 +68,22 @@ export const leftNav = {
         cy.get('#toggle-perspective').should('not.be.visible')
     },
     goToHome: () => {
-        cy.get('#page-sidebar').contains('Home').click()
+        cy.waitUntil(() => cy.get('#page-sidebar').contains('Home').should('be.visible'))
+        cy.get('#page-sidebar').contains('Home').should('be.visible').click()
         cy.get('#page-sidebar').contains('Welcome').should('not.be.visible')
-        cy.get('#page-sidebar').contains('Home').click()
+        cy.waitUntil(() => cy.get('#page-sidebar').contains('Home').should('be.visible'))
+        cy.get('#page-sidebar').contains('Home').should('be.visible').click()
         cy.get('#page-sidebar').contains('Welcome').should('be.visible')
-        cy.get('#page-sidebar').contains('Welcome').click()
+        cy.waitUntil(() => cy.get('#page-sidebar').contains('Welcome').should('be.visible'))
+        cy.get('#page-sidebar').contains('Welcome').should('be.visible').click()
         welcomePage.shouldExist()
     },
     goToOverview: () => {
-        cy.get('#page-sidebar').contains('Home').click()
+        cy.waitUntil(() => cy.get('#page-sidebar').contains('Home').should('be.visible'))
+        cy.get('#page-sidebar').contains('Home').should('be.visible').click()
         cy.get('#page-sidebar').contains('Overview').should('not.be.visible')
-        cy.get('#page-sidebar').contains('Home').click()
+        cy.waitUntil(() => cy.get('#page-sidebar').contains('Home').should('be.visible'))
+        cy.get('#page-sidebar').contains('Home').should('be.visible').click()
         cy.get('#page-sidebar').contains('Overview').should('be.visible')
         cy.get('#page-sidebar').contains('Overview').should('have.prop', 'href', Cypress.config().baseUrl + '/overview')
     },
@@ -96,7 +103,8 @@ export const leftNav = {
 
 export const userMenu = {
     openSearch: () => {
-        cy.get('[aria-label="search-button"]').click()
+        cy.waitUntil(() => cy.get('[aria-label="search-button"]').should('be.visible'))
+        cy.get('[aria-label="search-button"]').should('be.visible').click()
         cy.url().should('equal', Cypress.config().baseUrl + '/search')
         cy.visit('/multicloud/welcome')
     },
@@ -105,28 +113,35 @@ export const userMenu = {
         cy.window().then((window) => {
             cy.stub(window, 'open').as('windowOpen')
         })
-        cy.get('[aria-label="create-button"]').click()
+        cy.waitUntil(() => cy.get('[aria-label="create-button"]').should('be.visible'))
+        cy.get('[aria-label="create-button"]').should('be.visible').click()
         cy.get('@windowOpen').should('be.calledWith', Cypress.config().baseUrl + '/k8s/all-namespaces/import')
         cy.visit('/multicloud/welcome')
     },
     openInfo: () => {
-        cy.get('[data-test="about-dropdown"]').click()
+        cy.waitUntil(() => cy.get('[data-test="about-dropdown"]').should('be.visible'))
+        cy.get('[data-test="about-dropdown"]').should('be.visible').click()
         cy.get('[data-test="about-dropdown"] li').should('be.visible').and('have.length', 2)
         // Since cypress doesn't support multitab testing, we can check to see if the link includes the documentation link.
         // For now we can exclude the doc version, since the docs might not be available for a certain release.
         cy.get('[data-test="about-dropdown"]').contains('Documentation').should('have.attr', 'href').and('contain', 'https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/')
         cy.getCookie('acm-access-token-cookie').should('exist').then((token) => {
             acmVersion(token.value).then((version) => {
-                cy.get('[data-test="about-dropdown"]').contains('About').click().get('.pf-c-spinner', {timeout: 20000}).should('not.exist')
+                cy.waitUntil(() => cy.get('[data-test="about-dropdown"]').contains('About').should('be.visible'))
+                cy.get('[data-test="about-dropdown"]').contains('About').should('be.visible').click()
+                  .get('.pf-c-spinner', {timeout: 20000}).should('not.exist')
                 cy.get('.version-details__no').should('contain', version)
-                cy.get('[aria-label="Close Dialog"]').click()
+                cy.waitUntil(() => cy.get('[aria-label="Close Dialog"]').should('be.visible'))
+                cy.get('[aria-label="Close Dialog"]').should('be.visible').click()
             })
         })
     },
     openUser: () => {
-        cy.get('[data-test="user-dropdown"]').click()
+        cy.waitUntil(() => cy.get('[data-test="user-dropdown"]').should('be.visible'))
+        cy.get('[data-test="user-dropdown"]').should('be.visible').click()
         cy.get('[data-test="user-dropdown"] li').should('be.visible').and('have.length', 2)
-        cy.get('[data-test="user-dropdown"]').click()
+        cy.waitUntil(() => cy.get('[data-test="user-dropdown"]').should('be.visible'))
+        cy.get('[data-test="user-dropdown"]').should('be.visible').click()
         cy.get('#configure').should('not.exist')
         cy.get('#logout').should('not.exist')
         cy.request(Cypress.config().baseUrl + '/multicloud/common/configure').as('configureReq')
@@ -141,17 +156,17 @@ export const userMenu = {
             expect(response.body).to.have.property('data')
         })
         cy.waitUntil(() => {
-            return cy.get('[data-test="app-dropdown"]')
-                .should('be.visible')
+            return cy.get('[data-test="app-dropdown"]').should('be.visible')
         }, {'interval': 1000, 'timeout':120000})
-        cy.get('[data-test="app-dropdown"]').click()
+        cy.get('[data-test="app-dropdown"]').should('be.visible').click()
         // seems the split line is also li
         cy.get('[data-test="app-dropdown"] li').should('be.visible').and('have.length', 5)
-        cy.contains('Red Hat applications').should('exist')
-        cy.contains('Red Hat Openshift Container Platform').should('exist')
-        cy.contains('OpenShift GitOps').should('exist')
-        cy.contains('ArgoCD').should('exist')
-        cy.get('[data-test="app-dropdown"]').click()
+        cy.contains('Red Hat applications').should('be.visible')
+        cy.contains('Red Hat Openshift Container Platform').should('be.visible')
+        cy.contains('OpenShift GitOps').should('be.visible')
+        cy.contains('ArgoCD').should('be.visible')
+        cy.waitUntil(() => cy.get('[data-test="app-dropdown"]').should('be.visible'))
+        cy.get('[data-test="app-dropdown"]').should('be.visible').click()
         cy.contains('ArgoCD').should('not.exist')
     },
     openAppsNoArgo: () => {
@@ -160,11 +175,10 @@ export const userMenu = {
             expect(response.body).to.have.property('data')
         })
         cy.waitUntil(() => {
-            return cy.get('[data-test="app-dropdown"]')
-                .should('be.visible')
+            return cy.get('[data-test="app-dropdown"]').should('be.visible')
         }, {'interval': 1000, 'timeout':120000})
-        cy.get('[data-test="app-dropdown"]').click()
-        cy.contains('Red Hat applications').should('exist')
-        cy.contains('Red Hat Openshift Container Platform').should('exist')
+        cy.get('[data-test="app-dropdown"]').should('be.visible').click()
+        cy.contains('Red Hat applications').should('be.visible')
+        cy.contains('Red Hat Openshift Container Platform').should('be.visible')
     }
 }

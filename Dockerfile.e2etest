@@ -24,7 +24,7 @@ RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 RUN ./build/download-clis.sh
 
 RUN npm install \
-    cypress@7.7.0 \
+    cypress@8.5.0 \
     cypress-multi-reporters \
     cypress-terminal-report \
     cypress-wait-until \

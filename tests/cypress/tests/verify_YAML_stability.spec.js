@@ -30,8 +30,8 @@ const testPolicy = (policyConfFile, templateConfFile) => {
     const choices = ['enforce', 'inform']
     choices.forEach( (choice) => {
       cy.get(`input[name="remediation-${choice}"][type="radio"]`).as(`${choice}`)
-      cy.get(`@${choice}`).next('label').as('label')
-        .get('@label').click()
+      cy.waitUntil(() => cy.get(`@${choice}`).next('label').as('label').get('@label').should('be.visible'))
+      cy.get(`@${choice}`).next('label').as('label').get('@label').should('be.visible').click()
         .waitForDocumentUpdate()
         .get(`@${choice}`).should('be.checked')
     })
