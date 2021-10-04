@@ -4,13 +4,11 @@ test-[ID]-e2e-rbac-test-1:
   namespace: e2e-rbac-test-1
   specifications:
     - 'LimitRange - Limit container memory usage'
-  cluster_binding: [] # skip cluster_binding selection if empty
 
 test-[ID]-e2e-rbac-test-2:
   namespace: e2e-rbac-test-2
   specifications:
     - 'IamPolicy'
-  cluster_binding: [] # skip cluster_binding selection if empty
 
 disabled-policy:
   namespace: e2e-rbac-test-1
