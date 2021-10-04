@@ -32,7 +32,7 @@ export default {
       label: 'compliance',
       searchable: true,
       sortable: true,
-      sortLabel: 'status.rawData',
+      sortLabel: 'compliance.rawData',
       resourceKey: 'status',
       transforms: [cellWidth(15)],
       transformFunction: buildCompliantCellFromMessage
