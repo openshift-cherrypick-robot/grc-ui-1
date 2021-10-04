@@ -61,8 +61,8 @@ const policyTableColumns = (modalType) => {
 				},
 				{
 					header: 'Status',
-					sort: 'status.title',
-					cell: 'status.title',
+					sort: 'status.text',
+					cell: 'status.text',
 				},
 			]
 		/* istanbul ignore next */
