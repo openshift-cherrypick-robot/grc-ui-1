@@ -452,17 +452,17 @@ export const action_actionPolicyActionInListing = (uName, action, cancel=false) 
       })
   })
   .then(() => {
-    cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).should('be.visible'))
-    cy.get('button').contains(action, { matchCase: false }).should('be.visible').click()
+    cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible'))
+    cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible').click()
   })
   .then(() => {
     cy.get('.pf-c-modal-box').within(() => {
       if (cancel) {
-        cy.waitUntil(() => cy.get('button').contains('Cancel', { matchCase: false }).should('be.visible'))
-        cy.get('button').contains('Cancel', { matchCase: false }).should('be.visible').click()
+        cy.waitUntil(() => cy.get('button').contains('Cancel', { matchCase: false }).scrollIntoView().should('be.visible'))
+        cy.get('button').contains('Cancel', { matchCase: false }).scrollIntoView().should('be.visible').click()
       } else {
-        cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).should('be.visible'))
-        cy.get('button').contains(action, { matchCase: false }).should('be.visible').click()
+        cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible'))
+        cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible').click()
       }
     })
   })
@@ -489,8 +489,8 @@ export const action_editPolicyActionInListing = (uName, action='edit') => {
       })
   })
   .then(() => {
-    cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).should('be.visible'))
-    cy.get('button').contains(action, { matchCase: false }).should('be.visible').click()
+    cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible'))
+    cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible').click()
   })
 }
 
@@ -1575,24 +1575,27 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
   //select automation mode based on parameter
   if (mode === 'manual') {
     cy.get('.ansible-configure-table').within(() => {
-      cy.get('.pf-c-radio__label').eq(0).click()
+      cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(0).scrollIntoView().should('be.visible'))
+      cy.get('.pf-c-radio__label').eq(0).scrollIntoView().should('be.visible').click()
       failures = 2
     })
   } else if (mode === 'once') {
     cy.get('.ansible-configure-table').within(() => {
-      cy.get('.pf-c-radio__label').eq(1).click()
+      cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(1).scrollIntoView().should('be.visible'))
+      cy.get('.pf-c-radio__label').eq(1).scrollIntoView().should('be.visible').click()
       failures = 1
     })
   } else {
     cy.get('.ansible-configure-table').within(() => {
-      cy.get('.pf-c-radio__label').eq(2).click()
+      cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(2).scrollIntoView().should('be.visible'))
+      cy.get('.pf-c-radio__label').eq(2).scrollIntoView().should('be.visible').click()
       failures = 0
     })
   }
   //submit automation and check history page
   cy.get('.pf-c-modal-box__footer').within(() => {
-      cy.waitUntil(() => cy.get('button').eq(0).should('be.visible'))
-      cy.get('button').eq(0).should('be.visible').click()
+      cy.waitUntil(() => cy.get('button').eq(0).scrollIntoView().should('be.visible'))
+      cy.get('button').eq(0).scrollIntoView().should('be.visible').click()
     })
     .get('#automation-resource-panel').should('not.exist')
   // after successfully creating automation
