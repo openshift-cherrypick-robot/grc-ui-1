@@ -113,6 +113,7 @@ exports[`render AnsiblePanel component render AnsiblePanel component1 1`] = `
                   isChecked={false}
                   isDisabled={false}
                   isFavorite={null}
+                  isLastOptionBeforeFooter={[Function]}
                   isLoad={false}
                   isLoading={false}
                   isNoResultsOption={false}
@@ -121,6 +122,7 @@ exports[`render AnsiblePanel component render AnsiblePanel component1 1`] = `
                   keyHandler={[Function]}
                   onClick={[Function]}
                   sendRef={[Function]}
+                  setViewMoreNextIndex={[Function]}
                   value="grc-testing-new"
                 />
               </Select>
@@ -333,6 +335,7 @@ exports[`render AnsiblePanel component render AnsiblePanel component2 1`] = `
                   isChecked={false}
                   isDisabled={false}
                   isFavorite={null}
+                  isLastOptionBeforeFooter={[Function]}
                   isLoad={false}
                   isLoading={false}
                   isNoResultsOption={false}
@@ -341,6 +344,7 @@ exports[`render AnsiblePanel component render AnsiblePanel component2 1`] = `
                   keyHandler={[Function]}
                   onClick={[Function]}
                   sendRef={[Function]}
+                  setViewMoreNextIndex={[Function]}
                   value="grc-testing-new"
                 />
               </Select>
@@ -553,6 +557,7 @@ exports[`render AnsiblePanel component render AnsiblePanel component3 1`] = `
                   isChecked={false}
                   isDisabled={false}
                   isFavorite={null}
+                  isLastOptionBeforeFooter={[Function]}
                   isLoad={false}
                   isLoading={false}
                   isNoResultsOption={false}
@@ -561,6 +566,7 @@ exports[`render AnsiblePanel component render AnsiblePanel component3 1`] = `
                   keyHandler={[Function]}
                   onClick={[Function]}
                   sendRef={[Function]}
+                  setViewMoreNextIndex={[Function]}
                   value="grc-testing-new"
                 />
               </Select>
