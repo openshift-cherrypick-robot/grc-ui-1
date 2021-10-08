@@ -118,9 +118,7 @@ exports[`PolicyActionModal component Modal returns notification on error 1`] = `
       }
       keyFn={[Function]}
       plural="policy actions"
-      search=""
       searchPlaceholder="Find by name"
-      setSearch={[Function]}
     />
   </AcmModal>
 </div>

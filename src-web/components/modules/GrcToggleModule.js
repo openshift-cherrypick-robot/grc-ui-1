@@ -133,7 +133,8 @@ class GrcToggleModule extends React.Component {
               rowActionResolver={this.tableActionResolver}
               addSubRows={tableData[grcTabToggleIndex].addSubRows}
               keyFn={tableData[grcTabToggleIndex].keyFn}
-              setSearch={searchValue}
+              search={searchValue}
+              setSearch={this.handleSearch}
               sort={sortValues[grcTabToggleIndex]}
               setSort={this.setSort(grcTabToggleIndex)}
               gridBreakPoint=''

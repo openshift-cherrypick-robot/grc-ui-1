@@ -52,7 +52,7 @@
     "@babel/register": "^7.14.5",
     "@loadable/component": "^5.15.0",
     "@open-cluster-management/security-middleware": "^1.0.4",
-    "@open-cluster-management/ui-components": "^1.19.0",
+    "@open-cluster-management/ui-components": "^1.22.0",
     "@patternfly/patternfly": "^4.135.2",
     "@patternfly/react-core": "^4.157.3",
     "@patternfly/react-icons": "^4.11.17",

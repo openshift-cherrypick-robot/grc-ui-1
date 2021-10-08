@@ -911,6 +911,9 @@ export const action_doTableSearch = (text, inputSelector = null, parentSelector 
       // if (!Cypress.$('#page').find('div.no-resource').length) {
         // FIXME - do this search without a force
       cy.get(inputSelector, {withinSubject: parentSelector}).clear({force: true}).type(text, {force: true})
+      // Wait for search debounce
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500)
       // }
     })
 }

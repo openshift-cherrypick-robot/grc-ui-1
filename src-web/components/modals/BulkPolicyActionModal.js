@@ -74,9 +74,6 @@ const policyTableColumns = (modalType) => {
 export class BulkPolicyActionModal extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			tableSearch: '',
-		}
 		this.handleSubmitClick = this.handleSubmitClick.bind(this)
 		this.handleCloseClick = this.handleCloseClick.bind(this)
 	}
@@ -225,11 +222,6 @@ export class BulkPolicyActionModal extends React.Component {
 					<AcmTable
 						plural="policy actions"
 						items={data}
-						search={this.state.tableSearch}
-						setSearch={(newSearch) =>
-							/* istanbul ignore next */
-							this.setState({ tableSearch: newSearch })
-						}
 						searchPlaceholder={msgs.get(
 							'modal.actions.bulk.table.search.placeholder',
 							locale
