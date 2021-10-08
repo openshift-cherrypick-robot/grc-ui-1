@@ -82,7 +82,7 @@ export function buildViewYamlLink(item, locale) {
   const apiVersion = _.get(item, 'object.apiVersion')
   const kind = _.get(item, 'object.kind')
   const reason = _.get(item, 'reason')
-  if (reason === 'Resource not found but should exist') {
+  if (reason === 'Resource not found but should exist' || reason === 'Resource not found as expected') {
     return ''
   }
   if (cluster && kind && apiVersion && name) {
