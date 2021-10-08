@@ -48,7 +48,7 @@ const controlData = [
     'name': 'Namespace',
     'id': 'namespace',
     'type': 'singleselect',
-    'description': 'The namespace to create and store the policy on the hub cluster.',
+    'description': 'Enter the hub cluster namespace where the policy is created and stored.',
     'available': [
       'blah',
       'default',
@@ -63,7 +63,7 @@ const controlData = [
   },
   {
     'name': 'Specifications',
-    'description': 'The parameter section that describes which set of rules will validate a cluster.',
+    'description': 'Select a policy to define the parameters for a specific policy. The specifications are automatically updated after you select a policy.',
     'placeholder': 'Begin typing to search for label to select',
     'id': 'specs',
     'type': 'multiselect',
@@ -107,7 +107,7 @@ const controlData = [
   },
   {
     'name': 'Cluster selector',
-    'description': 'Fill the required parameter field to select the cluster where your policy is applied. The placement policy and placement binding are required, and added into the YAML file.',
+    'description': 'Search for a label to apply to the policy.',
     'placeholder': 'Begin typing to search for label to select',
     'id': 'clusters',
     'type': 'multiselect',
@@ -141,7 +141,7 @@ const controlData = [
   },
   {
     'name': 'Standards',
-    'description': 'The name or names of security standards your policy should validate. You can only create a new label by adding it directly into the YAML file.',
+    'description': 'Enter the name or names of the specific rules or conditions that are required for this policy.',
     'placeholder': 'Begin typing to search for label to select',
     'id': 'standards',
     'type': 'multiselect',
@@ -165,7 +165,7 @@ const controlData = [
   },
   {
     'name': 'Categories',
-    'description': 'A security control category represent specific requirements for one or more standards. You can only create a new label by adding it directly into the YAML file.',
+    'description': 'Enter the name of the requirements for the standard that you entered.',
     'placeholder': 'Begin typing to search for label to select',
     'id': 'categories',
     'type': 'multiselect',
@@ -189,7 +189,7 @@ const controlData = [
   },
   {
     'name': 'Controls',
-    'description': 'The control contains the instructions for ensuring that a policy meets the security requirements for one or more standards. You can only create a new label by adding it directly into the YAML file.',
+    'description': 'Enter the name of the protection measure that is related to the controls for this policy.',
     'placeholder': 'Begin typing to search for label to select',
     'id': 'controls',
     'type': 'multiselect',
@@ -233,7 +233,7 @@ const controlData = [
   },
   {
     'name': 'Disable policy',
-    'description': 'Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table.',
+    'description': 'Select Disable to pause propagation to your managed clusters.',
     'id': 'disabled',
     'type': 'checkbox',
     'active': false,

@@ -43,8 +43,8 @@ describeT('@extended RHACM4K-1648 - GRC UI: [P2][Sev2][policy-grc] CertPolicy wi
   })
 
   it('Create a customized policy', () => {
-    cy.waitUntil(() => cy.get('#create').should('be.visible'))
-    cy.get('#create').should('be.visible').click()
+    cy.waitUntil(() => cy.get('#create').scrollIntoView().should('be.visible'))
+    cy.get('#create').scrollIntoView().should('be.visible').click()
     // after creation, always return to grc main page
     cy.CheckGrcMainPage()
   })

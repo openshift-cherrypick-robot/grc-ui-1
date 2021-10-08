@@ -47,7 +47,7 @@ describeT('RHACM4K-2343 - [P1][Sev1][policy-grc] All policies page: Verify summa
     cy.toggleVisibilityButton('#summary-toggle', 'dd.grc-cards-container')
       .get('dd.grc-cards-container').should('not.be.visible')
       .toggleVisibilityButton('#summary-toggle', 'dd.grc-cards-container')
-      .get('dd.grc-cards-container').should('be.visible')
+      .get('dd.grc-cards-container').scrollIntoView().should('be.visible')
   })
 
   // verify the actual card content

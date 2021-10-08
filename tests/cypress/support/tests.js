@@ -84,8 +84,8 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
     // Currently this is controlled using STANDALONE_TESTSUITE_EXECUTION variable
     it('Wait for cluster violation status to become available', () => {
       // switch to the Clusters tab
-      cy.waitUntil(() => cy.get('#grc-cluster-view').should('be.visible'))
-      cy.get('#grc-cluster-view').should('be.visible').click().then(() => {
+      cy.waitUntil(() => cy.get('#grc-cluster-view').scrollIntoView().should('be.visible'))
+      cy.get('#grc-cluster-view').scrollIntoView().should('be.visible').click().then(() => {
           if (Cypress.env('STANDALONE_TESTSUITE_EXECUTION') !== 'FALSE') {
             cy.waitForClusterViolationsStatus(clusterName, violationCounter)
           } else {
@@ -127,24 +127,13 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
 
     it(`Verify policy ${policyName} violations at the Status - Templates page`, () => {
       // open the Templates tab - we should have a command for this
-      cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible'))
+      cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible'))
 
-      cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible').click()
+      cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible').click()
         .waitForPageContentLoad()
       // verify violations per template
         .verifyViolationsInPolicyStatusTemplates(policyName, confPolicies[policyName], clusterViolations, confViolationPatterns)
     })
-
-    // for (const clusterName of clusterList) {
-    //   it(`Verify policy details & templates on cluster ${clusterName} detailed page`, () => {
-    //     cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`).waitForPageContentLoad()
-    //     cy.goToPolicyClusterPage(policyName, confPolicies[policyName], clusterName)
-    //       .verifyPolicyDetailsInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations, confViolationPatterns)
-    //       .verifyPolicyTemplatesInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations)
-    //       .verifyPolicyViolationDetailsInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations, confViolationPatterns)
-    //   })
-    // }
-
   }
 
   // run the test for enforced policy only if the config file was given
@@ -191,8 +180,8 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
         // Currently this is controlled using STANDALONE_TESTSUITE_EXECUTION variable
         it('Wait for cluster violation status to become available', () => {
           // switch to the Clusters tab
-          cy.waitUntil(() => cy.get('#grc-cluster-view').should('be.visible'))
-          cy.get('#grc-cluster-view').should('be.visible').click()
+          cy.waitUntil(() => cy.get('#grc-cluster-view').scrollIntoView().should('be.visible'))
+          cy.get('#grc-cluster-view').scrollIntoView().should('be.visible').click()
             .then(() => {
               if (Cypress.env('STANDALONE_TESTSUITE_EXECUTION') !== 'FALSE') {
                 cy.waitForClusterViolationsStatus(clusterName, violationCounter)
@@ -227,24 +216,13 @@ export const test_genericPolicyGovernance = (confFilePolicy, confFileViolationsI
 
       it(`Verify policy ${policyName} violations at the Status - Templates page`, () => {
         // open the Templates tab - we should have a command for this
-        cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible'))
+        cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible'))
 
-        cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible').click()
+        cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible').click()
           .waitForPageContentLoad()
         // verify violations per template
           .verifyViolationsInPolicyStatusTemplates(policyName, confPolicies[policyName], clusterViolations, confViolationPatterns)
       })
-
-      // for (const clusterName of clusterList) {
-      //   it(`Verify policy details & templates on cluster ${clusterName} detailed page`, () => {
-      //     cy.visit(`/multicloud/policies/all/${confPolicies[policyName]['namespace']}/${policyName}`).waitForPageContentLoad()
-      //     cy.goToPolicyClusterPage(policyName, confPolicies[policyName], clusterName)
-      //       .verifyPolicyDetailsInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations, confViolationPatterns)
-      //       .verifyPolicyTemplatesInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations)
-      //       .verifyPolicyViolationDetailsInCluster(policyName, confPolicies[policyName], clusterName, clusterViolations, confViolationPatterns)
-      //   })
-      // }
-
     }
   }
 
@@ -381,8 +359,8 @@ export const test_userPermissionsPageContentCheck = (userName, userPassword, IDP
 
     it(`Check ${firstPolicyName} policy Clusters page as ${userName}`, () => {
       // click on Clusters tab
-      cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Clusters').should('be.visible'))
-      cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Clusters').should('be.visible').click()
+      cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Clusters').scrollIntoView().should('be.visible'))
+      cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Clusters').scrollIntoView().should('be.visible').click()
         .waitForPageContentLoad()
         // check permissions
         .checkPolicyStatusPageUserPermissions(firstPolicyName, permissions, namespaced)
@@ -390,8 +368,8 @@ export const test_userPermissionsPageContentCheck = (userName, userPassword, IDP
         .then(() => {
           if (!namespaced) {
             // click on Templates tab
-            cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible'))
-            cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible').click()
+            cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible'))
+            cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible').click()
               .waitForPageContentLoad()
               .checkPolicyStatusPageUserPermissions(firstPolicyName, permissions, namespaced, 3)
           }
@@ -419,8 +397,8 @@ export const test_userPermissionsPageContentCheck = (userName, userPassword, IDP
     if (permissions.create || elevated) {
       // Check that specified namespaces are visible
       cy.get('button[aria-label="namespace"]').as('dropdown')
-      cy.waitUntil(() => cy.get('@dropdown').should('be.visible'))
-      cy.get('@dropdown').should('be.visible').click()
+      cy.waitUntil(() => cy.get('@dropdown').scrollIntoView().should('be.visible'))
+      cy.get('@dropdown').scrollIntoView().should('be.visible').click()
         .parent().next().within(() => {
         for (const namespace of namespaces) {
           cy.get('li.pf-c-select__menu-wrapper').contains(new RegExp(`^${namespace}$`))
@@ -437,8 +415,8 @@ export const test_userPermissionsPageContentCheck = (userName, userPassword, IDP
         })
       })
       // collapse the drop down again
-      cy.waitUntil(() => cy.get('@dropdown').should('be.visible'))
-      cy.get('@dropdown').should('be.visible').click()
+      cy.waitUntil(() => cy.get('@dropdown').scrollIntoView().should('be.visible'))
+      cy.get('@dropdown').scrollIntoView().should('be.visible').click()
       // now create a test policy
       cy.createPolicyFromSelection(newPolicyName, true, newPolicyConf)
       .verifyPolicyInListing(newPolicyName, newPolicyConf, 'disabled')

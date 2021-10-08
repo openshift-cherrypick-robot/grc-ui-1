@@ -95,7 +95,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 <div
                   content={
                     <div>
-                      The namespace to create and store the policy on the hub cluster.
+                      Enter the hub cluster namespace where the policy is created and stored.
                     </div>
                   }
                   data-testid="mockTooltip"
@@ -143,7 +143,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                       id="pf-select-toggle-id-0-select-typeahead"
                       onChange={[Function]}
                       onClick={[Function]}
-                      placeholder="The namespace to create and store the policy on the hub cluster."
+                      placeholder="Enter the hub cluster namespace where the policy is created and stored."
                       type="text"
                       value="governance"
                     />
@@ -198,7 +198,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 <div
                   content={
                     <div>
-                      The parameter section that describes which set of rules will validate a cluster.
+                      Select a policy to define the parameters for a specific policy. The specifications are automatically updated after you select a policy.
                     </div>
                   }
                   data-testid="mockTooltip"
@@ -391,7 +391,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 <div
                   content={
                     <div>
-                      Fill the required parameter field to select the cluster where your policy is applied. The placement policy and placement binding are required, and added into the YAML file.
+                      Search for a label to apply to the policy.
                     </div>
                   }
                   data-testid="mockTooltip"
@@ -584,7 +584,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 <div
                   content={
                     <div>
-                      The name or names of security standards your policy should validate. You can only create a new label by adding it directly into the YAML file.
+                      Enter the name or names of the specific rules or conditions that are required for this policy.
                     </div>
                   }
                   data-testid="mockTooltip"
@@ -777,7 +777,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 <div
                   content={
                     <div>
-                      A security control category represent specific requirements for one or more standards. You can only create a new label by adding it directly into the YAML file.
+                      Enter the name of the requirements for the standard that you entered.
                     </div>
                   }
                   data-testid="mockTooltip"
@@ -970,7 +970,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 <div
                   content={
                     <div>
-                      The control contains the instructions for ensuring that a policy meets the security requirements for one or more standards. You can only create a new label by adding it directly into the YAML file.
+                      Enter the name of the protection measure that is related to the controls for this policy.
                     </div>
                   }
                   data-testid="mockTooltip"
@@ -1168,7 +1168,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
                 <div
                   content={
                     <div>
-                      Represents how violations are handled as defined in the resource.
+                      Select a supported remediation mechanism to resolve policies that are at-risk.
                     </div>
                   }
                   data-testid="mockTooltip"
@@ -1266,7 +1266,7 @@ exports[`TemplateEditor component renders as expected 1`] = `
               <div
                 content={
                   <div>
-                    Select to disable the policy from being propagated to the managed cluster. If selected, the policy can be re-enabled from the dropdown menu in the policies table.
+                    Select Disable to pause propagation to your managed clusters.
                   </div>
                 }
                 data-testid="mockTooltip"

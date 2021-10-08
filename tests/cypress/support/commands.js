@@ -56,21 +56,21 @@ Cypress.Commands.add('login', (OPTIONS_HUB_USER='', OPTIONS_HUB_PASSWORD='', OC_
   cy.get('body').then(() => {
     // if not yet logged in, do the regular login through Web UI
     if (Cypress.$('body').find('.pf-c-page__header').length === 0) {
-      cy.get('div.pf-c-login').should('be.visible').then(() => {
+      cy.get('div.pf-c-login').scrollIntoView().should('be.visible').then(() => {
         // Check if identity providers are configured
         if (idp_configured) {
-          cy.waitUntil(() =>cy.contains(idp).should('be.visible'))
-          cy.contains(idp).should('be.visible').click()
+          cy.waitUntil(() =>cy.contains(idp).scrollIntoView().should('be.visible'))
+          cy.contains(idp).scrollIntoView().should('be.visible').click()
         }
       })
       .then(() => {
-        cy.waitUntil(() => cy.get('#inputUsername').should('be.visible'))
-        cy.get('#inputUsername').should('be.visible').click().focused().type(user)
-        cy.waitUntil(() => cy.get('#inputPassword').should('be.visible'))
-        cy.get('#inputPassword').should('be.visible').click().focused().type(password, { 'log': false })
-        cy.waitUntil(() => cy.get('button[type="submit"]').should('be.visible'))
-        cy.get('button[type="submit"]').should('be.visible').click()
-        cy.get('.pf-c-page__header').should('be.visible')
+        cy.waitUntil(() => cy.get('#inputUsername').scrollIntoView().should('be.visible'))
+        cy.get('#inputUsername').scrollIntoView().should('be.visible').click().focused().type(user)
+        cy.waitUntil(() => cy.get('#inputPassword').scrollIntoView().should('be.visible'))
+        cy.get('#inputPassword').scrollIntoView().should('be.visible').click().focused().type(password, { 'log': false })
+        cy.waitUntil(() => cy.get('button[type="submit"]').scrollIntoView().should('be.visible'))
+        cy.get('button[type="submit"]').scrollIntoView().should('be.visible').click()
+        cy.get('.pf-c-page__header').scrollIntoView().should('be.visible')
       })
     }
   })
@@ -156,14 +156,14 @@ Cypress.Commands.add('logout', () => {
   cy.log('Attempt to logout existing user')
   cy.get('.pf-c-app-launcher.pf-m-align-right.co-app-launcher.co-user-menu').then($btn => {
     //logout when test starts since we need to use the app idp user
-    cy.waitUntil(() => cy.log('Logging out existing user').get($btn).should('be.visible'))
-    cy.log('Logging out existing user').get($btn).should('be.visible').click()
+    cy.waitUntil(() => cy.log('Logging out existing user').get($btn).scrollIntoView().should('be.visible'))
+    cy.log('Logging out existing user').get($btn).scrollIntoView().should('be.visible').click()
     if (Cypress.config().baseUrl.includes('localhost')) {
-      cy.waitUntil(() => cy.contains('Logout').should('be.visible'))
-      cy.contains('Logout').should('be.visible').click().clearCookies()
+      cy.waitUntil(() => cy.contains('Logout').scrollIntoView().should('be.visible'))
+      cy.contains('Logout').scrollIntoView().should('be.visible').click().clearCookies()
     } else {
-      cy.waitUntil(() => cy.contains('Logout').should('be.visible'))
-      cy.contains('Logout').should('be.visible').click()
+      cy.waitUntil(() => cy.contains('Logout').scrollIntoView().should('be.visible'))
+      cy.contains('Logout').scrollIntoView().should('be.visible').click()
       cy.location('pathname').should('match', new RegExp('/oauth/authorize(\\?.*)?$'))
     }
   })
@@ -187,8 +187,8 @@ Cypress.Commands.add('toggleYAMLeditor', (state = undefined) => {
         (e.textContent.includes('Off') && state === 'On') ||
         (e.textContent.includes('On') && state === 'Off'))
     {
-      cy.waitUntil(() => cy.get('#edit-yaml').next('label').should('be.visible'))
-      cy.get('#edit-yaml').next('label').should('be.visible').click()
+      cy.waitUntil(() => cy.get('#edit-yaml').next('label').scrollIntoView().should('be.visible'))
+      cy.get('#edit-yaml').next('label').scrollIntoView().should('be.visible').click()
     }
     return cy
   })
@@ -259,11 +259,11 @@ Cypress.Commands.add('CheckGrcMainPage', () => {
   window.localStorage.setItem('acm-grc-refresh-interval', 5000)
   pageLoader.shouldNotExist()
   cy.get('.pf-c-page__main-section .pf-c-title').contains('Governance')
-  cy.get('.page-content-container > div').should('be.visible')
+  cy.get('.page-content-container > div').scrollIntoView().should('be.visible')
 })
 
 Cypress.Commands.add('FromGRCToCreatePolicyPage', () => {
-  cy.get('#create-policy').should('be.visible')
+  cy.get('#create-policy').scrollIntoView().should('be.visible')
   cy.waitUntil(() => cy.get('#create-policy').should('have.attr', 'aria-disabled', 'false').and('be.visible'))
   cy.get('#create-policy').should('have.attr', 'aria-disabled', 'false').and('be.visible').click()
   cy.location('pathname').should('eq', '/multicloud/policies/create')
@@ -277,10 +277,14 @@ Cypress.Commands.add('goToPolicyDetailsPage', (policyName, namespace='default', 
     // This action remains on multicloud/policies/all
     cy.waitUntil(() => cy.get('input[aria-label="Search input"]').should('be.visible'))
       .clear().type(policyName)
+    // Wait for search debounce
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500)
+
     if(open)
     {
-      cy.waitUntil(() => cy.get('a').contains(policyName).should('be.visible'))
-      cy.get('a').contains(policyName).should('be.visible').click()
+      cy.waitUntil(() => cy.get('a').contains(policyName).scrollIntoView().should('be.visible'))
+      cy.get('a').contains(policyName).scrollIntoView().should('be.visible').click()
       cy.location('pathname').should('eq', '/multicloud/policies/all/'+namespace+'/'+policyName)
       pageLoader.shouldNotExist()
       cy.get('.pf-c-page__main-section .pf-c-title').contains(policyName)
@@ -366,11 +370,11 @@ Cypress.Commands.add('verifyCardsOnPolicyListingPage', (cardName, cardValuesDict
   const numCards = Object.keys(cardValuesDict).length
   cy.url().should('match', /\/multicloud\/policies\/all[?]?/)
   // switch to the required card
-  cy.waitUntil(() => cy.get('#grc-cards-toggle').should('be.visible'))
-  cy.get('#grc-cards-toggle').should('be.visible').click()
+  cy.waitUntil(() => cy.get('#grc-cards-toggle').scrollIntoView().should('be.visible'))
+  cy.get('#grc-cards-toggle').scrollIntoView().should('be.visible').click()
   cy.get('div.module-grc-cards').within(() => {
-    cy.waitUntil(() => cy.get('li').contains(cardName).should('be.visible'))
-    cy.get('li').contains(cardName).should('be.visible').click()
+    cy.waitUntil(() => cy.get('li').contains(cardName).scrollIntoView().should('be.visible'))
+    cy.get('li').contains(cardName).scrollIntoView().should('be.visible').click()
   })
   // check the summary header and counter
   cy.get('#summary-toggle').within(() => {
@@ -405,8 +409,8 @@ Cypress.Commands.add('toggleVisibilityButton', (buttonSelector, contentSelector,
     if ((state == '') ||  // either we want to do the switch
         (state == 'off' && $content.is(':visible')) ||  // or it is visible and we want to hide it
         (state == 'on' && !$content.is(':visible'))) {  // or it is hidden and we want to show it
-      cy.waitUntil(() => cy.get(buttonSelector).should('be.visible'))
-      cy.get(buttonSelector).should('be.visible').click()
+      cy.waitUntil(() => cy.get(buttonSelector).scrollIntoView().should('be.visible'))
+      cy.get(buttonSelector).scrollIntoView().should('be.visible').click()
     }
   })
 })
@@ -459,7 +463,7 @@ Cypress.Commands.add('checkPolicyNoResourcesIconMessage', (present=true, message
   else
   {
     cy.get('.no-resource-title').should('contain', message)
-    cy.get('img[alt="No resource"]').should('be.visible')
+    cy.get('img[alt="No resource"]').scrollIntoView().should('be.visible')
   }
 })
 
@@ -490,8 +494,8 @@ Cypress.Commands.add('checkPolicyListingPageUserPermissions', (policyNames = [],
 Cypress.Commands.add('fromGRCToPolicyDetailsPage', (policyName) => {
   cy.doTableSearch(policyName)
     .get('.grc-view-by-policies-table').within(() => {
-      cy.waitUntil(() => cy.get('a').contains(new RegExp(`^${policyName}$`)).should('be.visible'))
-      cy.get('a').contains(new RegExp(`^${policyName}$`)).should('be.visible').click()
+      cy.waitUntil(() => cy.get('a').contains(new RegExp(`^${policyName}$`)).scrollIntoView().should('be.visible'))
+      cy.get('a').contains(new RegExp(`^${policyName}$`)).scrollIntoView().should('be.visible').click()
     })
 })
 

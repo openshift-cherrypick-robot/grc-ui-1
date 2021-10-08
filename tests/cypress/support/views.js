@@ -11,7 +11,7 @@ const selectItemQuery = 'input[type="checkbox"]'
 const timestampRegexp = /^((a?|an?|one?|[0-9]+) (day?|hour?|minute?|second?|days?|hours?|minutes?|few seconds) ago|in (a?|an?|one?|[0-9]+) (day?|hour?|minute?|second?|days?|hours?|minutes?|few seconds))$/
 
 export const pageLoader = {
-  shouldExist: () => cy.get('.patternfly-spinner').should('be.visible')  ,
+  shouldExist: () => cy.get('.patternfly-spinner').scrollIntoView().should('be.visible')  ,
   shouldNotExist: () => cy.get('.patternfly-spinner').should('not.exist')
 }
 
@@ -20,8 +20,8 @@ export const uncheckAllItems = (listQuery, itemQuery=selectItemQuery, useClearAl
   return new Cypress.Promise((resolve) => {
     cy.then(() => {
       if (!useClearAllBtn) { // uncheck items one by one
-      cy.waitUntil(() => cy.get(listQuery).should('be.visible'))
-      cy.get(listQuery).should('be.visible').click()
+      cy.waitUntil(() => cy.get(listQuery).scrollIntoView().should('be.visible'))
+      cy.get(listQuery).scrollIntoView().should('be.visible').click()
         .then(() => {
           // get the number of checked items
           const n = Cypress.$(listQuery).find(itemQuery+'[checked]').length
@@ -30,14 +30,14 @@ export const uncheckAllItems = (listQuery, itemQuery=selectItemQuery, useClearAl
             cy.get(listQuery)
               .then(() => {
                 if (!Cypress.$(listQuery).find(itemQuery).length) { // drow-down is collapsed, need to expand it manually
-                  cy.waitUntil(() => cy.get(listQuery).should('be.visible'))
-                  cy.get(listQuery).should('be.visible').click()
+                  cy.waitUntil(() => cy.get(listQuery).scrollIntoView().should('be.visible'))
+                  cy.get(listQuery).scrollIntoView().should('be.visible').click()
                 }
               })
               // better to query the element over an over again as it is being modified with uncheck()
               .get(listQuery).within( () => {
-                cy.waitUntil(() => cy.get(itemQuery).first().next('label').should('be.visible'))
-                cy.get(itemQuery).first().next('label').should('be.visible').click()
+                cy.waitUntil(() => cy.get(itemQuery).first().next('label').scrollIntoView().should('be.visible'))
+                cy.get(itemQuery).first().next('label').scrollIntoView().should('be.visible').click()
               })
           }
         })
@@ -46,7 +46,7 @@ export const uncheckAllItems = (listQuery, itemQuery=selectItemQuery, useClearAl
         cy.then( () => {
           const arr = Cypress.$(listQuery).find(clearAllBtnQuery)
           if (arr.length) {
-            cy.wrap(arr[0])
+            cy.wrap(arr[0]).scrollIntoView().should('be.visible')
               .click()
             }
           })
@@ -55,7 +55,7 @@ export const uncheckAllItems = (listQuery, itemQuery=selectItemQuery, useClearAl
     .then(() => {
       const e = Cypress.$(listQuery).find(closeMenuQuery)
       if (e.length) { // drow-down is not collapsed, need to collapse it manually
-        cy.wrap(e)
+        cy.wrap(e).scrollIntoView().should('be.visible')
           .click()
       }
     })
@@ -71,8 +71,8 @@ export const checkItems = (labels, listQuery, itemQuery=selectItemQuery, clear=t
     // clear existing selection first
     cy.get(listQuery).parent().within((parent) => {
       if(clear && Cypress.$(parent).find('.pf-c-select__toggle-clear').length > 0){
-        cy.waitUntil(() => cy.get('.pf-c-select__toggle-clear').should('be.visible'))
-        cy.get('.pf-c-select__toggle-clear').should('be.visible').click()
+        cy.waitUntil(() => cy.get('.pf-c-select__toggle-clear').scrollIntoView().should('be.visible'))
+        cy.get('.pf-c-select__toggle-clear').scrollIntoView().should('be.visible').click()
       }
     })
     // now check all the required values
@@ -80,8 +80,8 @@ export const checkItems = (labels, listQuery, itemQuery=selectItemQuery, clear=t
     cy.get(listQuery)
       .then(() => {
       for (const label of labels) {
-        cy.waitUntil(() => cy.get(listQuery).should('be.visible'))
-        cy.get(listQuery).should('be.visible').click()
+        cy.waitUntil(() => cy.get(listQuery).scrollIntoView().should('be.visible'))
+        cy.get(listQuery).scrollIntoView().should('be.visible').click()
           .get(listQuery).parent().within(() => {
             cy.get('input.pf-c-select__toggle-typeahead')
               .first()
@@ -96,15 +96,15 @@ export const checkItems = (labels, listQuery, itemQuery=selectItemQuery, clear=t
                   // already selected, do nothing
                   selected = true
                 } else {
-                  cy.waitUntil(() => cy.get(button).should('be.visible'))
-                  cy.get(button).should('be.visible').click()
+                  cy.waitUntil(() => cy.get(button).scrollIntoView().should('be.visible'))
+                  cy.get(button).scrollIntoView().should('be.visible').click()
                 }
               })
           }).then(()=>{
             if (selected) {
               // close dropdown
-              cy.waitUntil(() => cy.get(listQuery).should('be.visible'))
-              cy.get(listQuery).should('be.visible').click()
+              cy.waitUntil(() => cy.get(listQuery).scrollIntoView().should('be.visible'))
+              cy.get(listQuery).scrollIntoView().should('be.visible').click()
             }
           })
         }
@@ -183,8 +183,8 @@ export const action_createPolicyFromYAML = (policyYAML, create=true) => {
     // create
     .then(() => {
       if (create) {
-        cy.waitUntil(() => cy.get('#create').should('be.visible'))
-        cy.get('#create').should('be.visible').click()
+        cy.waitUntil(() => cy.get('#create').scrollIntoView().should('be.visible'))
+        cy.get('#create').scrollIntoView().should('be.visible').click()
         cy.CheckGrcMainPage()
       }
     })
@@ -198,12 +198,12 @@ export const action_createPolicyFromSelection = (uPolicyName, create=true, polic
     .type(uPolicyName)
   // namespace
   if (policyConfig['namespace']) {
-    cy.waitUntil(() => cy.get('.pf-c-select__toggle-button[aria-label="namespace"]').should('be.visible'))
-    cy.waitUntil(() => cy.get('.pf-c-select__toggle-button[aria-label="namespace"]').should('be.visible')
+    cy.waitUntil(() => cy.get('.pf-c-select__toggle-button[aria-label="namespace"]').scrollIntoView().should('be.visible'))
+    cy.waitUntil(() => cy.get('.pf-c-select__toggle-button[aria-label="namespace"]').scrollIntoView().should('be.visible')
       .click()
       .parent().next()
       .contains(policyConfig['namespace'])
-      .should('be.visible'))
+      .scrollIntoView().should('be.visible'))
       .click()
   }
   //specs
@@ -245,8 +245,8 @@ export const action_createPolicyFromSelection = (uPolicyName, create=true, polic
   if (policyConfig['remediation']) {
     cy.then(() => {
       if (policyConfig['remediation']) {
-        cy.waitUntil(() => cy.get('input[name="remediation-enforce"][type="radio"]').should('be.visible'))
-        cy.get('input[name="remediation-enforce"][type="radio"]').should('be.visible').click()
+        cy.waitUntil(() => cy.get('input[name="remediation-enforce"][type="radio"]').scrollIntoView().should('be.visible'))
+        cy.get('input[name="remediation-enforce"][type="radio"]').scrollIntoView().should('be.visible').click()
       }
     })
   }
@@ -254,16 +254,16 @@ export const action_createPolicyFromSelection = (uPolicyName, create=true, polic
   if (policyConfig['disable']) {
     cy.then(() => {
       if (policyConfig['disable']) {
-        cy.waitUntil(() => cy.get('input[aria-label="disabled"][type="checkbox"]').should('be.visible'))
-        cy.get('input[aria-label="disabled"][type="checkbox"]').should('be.visible').click()
+        cy.waitUntil(() => cy.get('input[aria-label="disabled"][type="checkbox"]').scrollIntoView().should('be.visible'))
+        cy.get('input[aria-label="disabled"][type="checkbox"]').scrollIntoView().should('be.visible').click()
       }
     })
   }
   // create
   cy.then(() => {
     if (create) {
-      cy.waitUntil(() => cy.get('#create').should('be.visible'))
-      cy.get('#create').should('be.visible').click()
+      cy.waitUntil(() => cy.get('#create').scrollIntoView().should('be.visible'))
+      cy.get('#create').scrollIntoView().should('be.visible').click()
       // after creation, always return to grc main page
       cy.CheckGrcMainPage()
     }
@@ -408,19 +408,19 @@ export const action_verifyPolicyInListing = (
       }
       // check categories
       if (policyConfig['categories']) {
-        cy.wrap(toggle).click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
         for (const cat of policyConfig['categories']) {
           cy.get('td[data-label="Categories"]').contains(cat.trim())
         }
-        cy.wrap(toggle).click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
       }
       // check controls
       if (policyConfig['standards']) {
-        cy.wrap(toggle).click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
         for (const std of policyConfig['standards']) {
           cy.get('td[data-label="Standards"]').contains(std.trim())
         }
-        cy.wrap(toggle).click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
       }
     })
   })
@@ -447,8 +447,8 @@ export const action_actionPolicyActionInListing = (uName, action, cancel=false) 
       .parents('td')
       .siblings('td')
       .last().within(() => {
-        cy.waitUntil(() => cy.get('button').should('be.visible'))
-        cy.get('button').should('be.visible').click({ force: true })
+        cy.waitUntil(() => cy.get('button').scrollIntoView().should('be.visible'))
+        cy.get('button').scrollIntoView().should('be.visible').click({ force: true })
       })
   })
   .then(() => {
@@ -484,8 +484,8 @@ export const action_editPolicyActionInListing = (uName, action='edit') => {
       .parents('td')
       .siblings('td')
       .last().within(() => {
-        cy.waitUntil(() => cy.get('button').should('be.visible'))
-        cy.get('button').should('be.visible').click()
+        cy.waitUntil(() => cy.get('button').scrollIntoView().should('be.visible'))
+        cy.get('button').scrollIntoView().should('be.visible').click()
       })
   })
   .then(() => {
@@ -500,8 +500,8 @@ export const action_verifyPolicyEditForm = (uName, policyConfig) => {
   cy.get('.pf-c-page__main-section .pf-c-title').contains('Edit policy')
   cy.get('input[aria-label="name"]').should('be.disabled')
   cy.get('button[aria-label="namespace"]').should('be.disabled')
-  cy.waitUntil(() => cy.get('#cancel').should('be.visible'))
-  cy.get('#cancel').should('be.visible').click()
+  cy.waitUntil(() => cy.get('#cancel').scrollIntoView().should('be.visible'))
+  cy.get('#cancel').scrollIntoView().should('be.visible').click()
   cy.location('pathname').should('eq', '/multicloud/policies/all')
 }
 
@@ -719,8 +719,8 @@ const getStatusIconFillColor = (targetStatus) => {
 
 // will add more check to enhance it later
 export const verifyPolicyInPolicyStatus = (uName) => {
-  cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible'))
-  cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').should('be.visible').click()
+  cy.waitUntil(() => cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible'))
+  cy.get('.pf-c-page__main-nav .pf-c-nav__link').contains('Templates').scrollIntoView().should('be.visible').click()
   .then(() => {
     cy.get('.policy-status-by-templates-table .pf-c-title').contains(uName)
     verifyPolicyInPolicyHistory(uName)
@@ -729,38 +729,12 @@ export const verifyPolicyInPolicyStatus = (uName) => {
 
 // will add more check to enhance it later
 export const verifyPolicyInPolicyHistory = (uName) => {
-  cy.waitUntil(() => cy.get('tbody tr td a').contains('View history', { matchCase: false }).first().should('be.visible'))
-  cy.get('tbody tr td a').contains('View history', { matchCase: false }).first().should('be.visible').click()
+  cy.waitUntil(() => cy.get('tbody tr td a').contains('View history', { matchCase: false }).first().scrollIntoView().should('be.visible'))
+  cy.get('tbody tr td a').contains('View history', { matchCase: false }).first().scrollIntoView().should('be.visible').click()
   .then(() => {
     cy.get('div h4').contains(uName, { matchCase: false })
   })
 }
-
-// export const verifyPolicyByYAML = (uName, originalYAML, ingoreClusterSelector=true) => {
-//   cy.CheckGrcMainPage()
-//   cy.get('.grc-view-by-policies-table').within(() => {
-//     cy.get('a')
-//       .contains(uName)
-//       .parents('td')
-//       .siblings('td')
-//       .last()
-//       .click()
-//   })
-//   .then(() => {
-//     cy.get('button').contains('Edit', { matchCase: false }).click()
-//   })
-//   .then(() => {
-//     cy.get('.pf-c-modal-box').within(() => {
-//       cy.log(ingoreClusterSelector)
-//       // // eslint-disable-next-line cypress/no-assigning-return-values
-//       // const acutalYAML = cy.YAMLeditor().first().invoke('getValue')
-//       // cy.log(acutalYAML)
-//     })
-//   })
-
-//   // after mainpage table action, always return to grc main page
-//   cy.CheckGrcMainPage()
-// }
 
 export const getPolicyTemplatesNameAndKind = (policyName, policyConfig) => {
   const templates = new Set()
@@ -947,12 +921,12 @@ export const action_verifyViolationsInPolicyStatusClusters = (policyName, policy
       // first we need to sort rows per Cluster name and later Template name to make sure they won't reorder in case some cluster state is updated - if this
       // happens, field values won't match expectations
       cy.get('th[data-label="Cluster"]').within(() => {
-        cy.waitUntil(() => cy.get('button').should('be.visible'))
-        cy.get('button').should('be.visible').click()
+        cy.waitUntil(() => cy.get('button').scrollIntoView().should('be.visible'))
+        cy.get('button').scrollIntoView().should('be.visible').click()
       })
       cy.get('th[data-label="Template"]').within(() => {
-        cy.waitUntil(() => cy.get('button').should('be.visible'))
-        cy.get('button').should('be.visible').click()
+        cy.waitUntil(() => cy.get('button').scrollIntoView().should('be.visible'))
+        cy.get('button').scrollIntoView().should('be.visible').click()
       })
       cy.get('tbody').within(() => {
         // now find the appropriate row with the cluster name
@@ -1142,7 +1116,7 @@ export const action_verifyClusterListInPolicyDetails = (policyConfig, clusterVio
                 if (!clusterStatusExp.startsWith('(')) {
                   // check status icon only if we absolutely know the status
                   const fillColor = getStatusIconFillColor(clusterStatusExp.toLowerCase())
-                  cy.wrap(icon).find('svg[fill="'+fillColor+'"]').should('be.visible')
+                  cy.wrap(icon).find('svg[fill="'+fillColor+'"]').scrollIntoView().should('be.visible')
                 }
               })
             })
@@ -1229,8 +1203,8 @@ export const action_checkNotificationMessage = (kind, title, notification, close
     cy.get('.pf-c-alert__description').invoke('text').should('contain', notification)
     if (close) {
       // close the message
-      cy.waitUntil(() => cy.get('.pf-c-alert__action > button').should('be.visible'))
-      cy.get('.pf-c-alert__action > button').should('be.visible').click()
+      cy.waitUntil(() => cy.get('.pf-c-alert__action > button').scrollIntoView().should('be.visible'))
+      cy.get('.pf-c-alert__action > button').scrollIntoView().should('be.visible').click()
     }
   })
 }
@@ -1377,8 +1351,8 @@ export const action_checkPolicyListingPageUserPermissions = (policyNames = [], c
    cy.doTableSearch(policyNames[0])
    // all users should be able to click the Action button
    cy.get('.grc-view-by-policies-table').within(() => {  // click the Action button
-      cy.waitUntil(() => cy.get('button[aria-label="Actions"]').first().should('be.visible'))
-      cy.get('button[aria-label="Actions"]').first().should('be.visible').click()
+      cy.waitUntil(() => cy.get('button[aria-label="Actions"]').first().scrollIntoView().should('be.visible'))
+      cy.get('button[aria-label="Actions"]').first().scrollIntoView().should('be.visible').click()
         .then(() => {
           for (const action of ['Edit', 'Disable', 'Enforce']) {
             if (permissions.patch) {
@@ -1394,8 +1368,8 @@ export const action_checkPolicyListingPageUserPermissions = (policyNames = [], c
           }
         })
         // close the menu again
-        cy.waitUntil(() => cy.get('button[aria-label="Actions"]').first().should('be.visible'))
-        cy.get('button[aria-label="Actions"]').first().should('be.visible').click()
+        cy.waitUntil(() => cy.get('button[aria-label="Actions"]').first().scrollIntoView().should('be.visible'))
+        cy.get('button[aria-label="Actions"]').first().scrollIntoView().should('be.visible').click()
       })
 
   } else if (searchFilter) {
@@ -1429,8 +1403,8 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
   // Check for open Automation modal and close it if it's open
   if (Cypress.$('#automation-resource-panel').length === 1) {
     cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-      cy.get('button[aria-label="Close"]').should('be.visible').click()
+      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
   }
   //search for policy and click to configure
@@ -1443,22 +1417,22 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
         .siblings('td[data-label="Automation"]')
         .find('a').as('automationButton')
     })
-  cy.waitUntil(() => cy.get('@automationButton').should('be.visible'))
-  cy.get('@automationButton').should('be.visible').click()
+  cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
+  cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
     .then(() => {
     cy.get('.ansible-configure-table').within(() => {
       if (credentialName === '') {
         cy.get('p').should('contain', 'Ansible credential is required to create an Ansible job. Create your credential by clicking the following link:')
       } else {
-        cy.waitUntil(() => cy.get('.pf-c-select').should('be.visible').click())
-        cy.contains(credentialName).should('be.visible')
+        cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible').click())
+        cy.contains(credentialName).scrollIntoView().should('be.visible')
       }
     })
   })
   .then(() => {
     cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-      cy.get('button[aria-label="Close"]').should('be.visible').click()
+      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
   })
   // wait for the dialog to be closed
@@ -1485,8 +1459,8 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
   // Check for open Automation modal and close it if it's open
   if (Cypress.$('#automation-resource-panel').length === 1) {
     cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-      cy.get('button[aria-label="Close"]').should('be.visible').click()
+      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
   }
   //search for policy and click to configure
@@ -1499,19 +1473,19 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
         .siblings('td[data-label="Automation"]')
         .find('a').as('automationButton')
     })
-  cy.waitUntil(() => cy.get('@automationButton').should('be.visible'))
-  cy.get('@automationButton').should('be.visible').click()
+  cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
+  cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
   pageLoader.shouldNotExist()
   cy.get('.pf-c-modal-box__header').within(() => {
     if (opInstalled) {
       cy.get('#installAnsibleOperatorLink').should('not.exist')
     } else {
-      cy.get('#installAnsibleOperatorLink').should('be.visible')
+      cy.get('#installAnsibleOperatorLink').scrollIntoView().should('be.visible')
     }
   })
   cy.get('#automation-resource-panel').within(() => {
-    cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-    cy.get('button[aria-label="Close"]').should('be.visible').click()
+    cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+    cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
   })
   // wait for the dialog to be closed
   cy.get('#automation-resource-panel').should('not.exist')
@@ -1544,8 +1518,8 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
   // Check for open Automation modal and close it if it's open
   if (Cypress.$('#automation-resource-panel').length === 1) {
     cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-      cy.get('button[aria-label="Close"]').should('be.visible').click()
+      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
   }
 
@@ -1558,21 +1532,21 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
         .siblings('td[data-label="Automation"]')
         .find('a').as('automationButton')
     })
-  cy.waitUntil(() => cy.get('@automationButton').should('be.visible'))
-  cy.get('@automationButton').should('be.visible').click()
+  cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
+  cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
   cy.get('.createCredential').within(() => {
-    cy.waitUntil(() => cy.get('.pf-c-select').should('be.visible'))
-    cy.get('.pf-c-select').should('be.visible').click()
-    cy.waitUntil(() => cy.contains(credentialName).should('be.visible'))
-    cy.contains(credentialName).should('be.visible').click()
+    cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible'))
+    cy.get('.pf-c-select').scrollIntoView().should('be.visible').click()
+    cy.waitUntil(() => cy.contains(credentialName).scrollIntoView().should('be.visible'))
+    cy.contains(credentialName).scrollIntoView().should('be.visible').click()
     cy.get('.pf-c-select__menu').should('not.exist')
   })
   cy.get('.createJobTemplate').within(() => {
-    cy.waitUntil(() => cy.get('.pf-c-select').should('be.visible'))
-    cy.get('.pf-c-select').should('be.visible').click()
+    cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible'))
+    cy.get('.pf-c-select').scrollIntoView().should('be.visible').click()
     cy.get('.pf-c-select.pf-m-expanded').within(() => {
-      cy.waitUntil(() => cy.contains(demoTemplateName).should('be.visible'))
-      cy.contains(demoTemplateName).should('be.visible').click()
+      cy.waitUntil(() => cy.contains(demoTemplateName).scrollIntoView().should('be.visible'))
+      cy.contains(demoTemplateName).scrollIntoView().should('be.visible').click()
     })
   })
   //select automation mode based on parameter
@@ -1612,12 +1586,12 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
         .siblings('td[data-label="Automation"]')
         .find('a').as('automationButton')
     })
-  cy.waitUntil(() => cy.get('@automationButton').should('be.visible'))
-  cy.get('@automationButton').should('be.visible').click()
-  cy.get('#automation-resource-panel').should('be.visible')
+  cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
+  cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
+  cy.get('#automation-resource-panel').scrollIntoView().should('be.visible')
   verifyHistoryPage(mode, failures)
-  cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-  cy.get('button[aria-label="Close"]').should('be.visible').click()
+  cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+  cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
   cy.get('#automation-resource-panel').should('not.exist')
 }
 
@@ -1625,8 +1599,8 @@ export const action_verifyHistoryPageWithMock = (uName) => {
   // Check for open Automation modal and close it if it's open
   if (Cypress.$('#automation-resource-panel').length === 1) {
     cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-      cy.get('button[aria-label="Close"]').should('be.visible').click()
+      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
   }
   //open modal
@@ -1639,8 +1613,8 @@ export const action_verifyHistoryPageWithMock = (uName) => {
         .siblings('td[data-label="Automation"]')
         .find('a').as('automationButton')
     })
-  cy.waitUntil(() => cy.get('@automationButton').should('be.visible'))
-  cy.get('@automationButton').should('be.visible').click()
+  cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
+  cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
   //use mock data to check successes in history tab
   cy.intercept('POST', Cypress.config().baseUrl + '/multicloud/policies/graphql', (req) => {
     if (req.body.operationName === 'ansibleAutomationHistories') {
@@ -1662,16 +1636,16 @@ export const action_verifyHistoryPageWithMock = (uName) => {
   }).as('historyQuery')
 
   cy.get('#automation-resource-panel').within(() => {
-    cy.waitUntil(() => cy.get('.pf-c-tabs__item-text').contains('History').should('be.visible'))
-    cy.get('.pf-c-tabs__item-text').contains('History').should('be.visible').click()
+    cy.waitUntil(() => cy.get('.pf-c-tabs__item-text').contains('History').scrollIntoView().should('be.visible'))
+    cy.get('.pf-c-tabs__item-text').contains('History').scrollIntoView().should('be.visible').click()
   })
 
   cy.get('.ansible-history-table').within(() => {
-    cy.get('div').contains('Successful').should('be.visible')
+    cy.get('div').contains('Successful').scrollIntoView().should('be.visible')
   })
 
-  cy.waitUntil(() => cy.get('button[aria-label="Close"]').should('be.visible'))
-  cy.get('button[aria-label="Close"]').should('be.visible').click()
+  cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+  cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
   cy.get('#automation-resource-panel').should('not.exist')
 }
 
@@ -1682,14 +1656,14 @@ const verifyHistoryPage = (mode, failuresExpected) => {
     checkWithPolicy('automation/verify_run_once.yaml')
   }
 
-  cy.waitUntil(() => cy.get('.pf-c-tabs__item-text').contains('History').should('be.visible'))
-  cy.get('.pf-c-tabs__item-text').contains('History').should('be.visible').click()
+  cy.waitUntil(() => cy.get('.pf-c-tabs__item-text').contains('History').scrollIntoView().should('be.visible'))
+  cy.get('.pf-c-tabs__item-text').contains('History').scrollIntoView().should('be.visible').click()
   if (failuresExpected === 0) {
     cy.get('.ansible-history-table').within(() => {
       if (Cypress.$(`svg[fill="${getStatusIconFillColor('no status')}"]`).length > 0) {
         cy.get(`svg[fill="${getStatusIconFillColor('no status')}"]`).should('have.length', 1)
       } else {
-        cy.get('.pf-c-empty-state').should('be.visible')
+        cy.get('.pf-c-empty-state').scrollIntoView().should('be.visible')
       }
     })
   } else {
@@ -1733,7 +1707,7 @@ const verifyCompliant = (policyName) => {
         .contains(policyName)
         .parents('td')
         .siblings('td[data-label="Cluster violations"]').within(() => {
-          cy.get('svg[fill="#3e8635"]').should('be.visible')
+          cy.get('svg[fill="#3e8635"]').scrollIntoView().should('be.visible')
         })
     })
 }

@@ -24,7 +24,7 @@ describeT('RHACM4K-2349 - GRC UI: [P1][Sev1][policy-grc] Create policy page: Che
   it('Check that invalid policy name pattern issues an error', () => {
     cy.FromGRCToCreatePolicyPage()
     for (const [name, namespace, message] of namePatterns) {
-      cy.waitUntil(() => cy.createPolicyFromSelection(name, false, {'namespace': namespace}).get('#create').should('be.visible'))
+      cy.waitUntil(() => cy.createPolicyFromSelection(name, false, {'namespace': namespace}).get('#create').scrollIntoView().should('be.visible'))
         .click()
         .checkNotificationMessage('Danger Alert', 'Create error:', message)
     }

@@ -102,7 +102,7 @@ exports[`CreationView module renders as expected with discovered data 1`] = `
                           autocomplete="off"
                           class="pf-c-form-control pf-c-select__toggle-typeahead"
                           id="pf-select-toggle-id-0-select-typeahead"
-                          placeholder="The namespace to create and store the policy on the hub cluster."
+                          placeholder="Enter the hub cluster namespace where the policy is created and stored."
                           type="text"
                           value=""
                         />
@@ -794,7 +794,7 @@ exports[`CreationView module renders as expected with empty discovered data 1`] 
                           autocomplete="off"
                           class="pf-c-form-control pf-c-select__toggle-typeahead"
                           id="pf-select-toggle-id-6-select-typeahead"
-                          placeholder="The namespace to create and store the policy on the hub cluster."
+                          placeholder="Enter the hub cluster namespace where the policy is created and stored."
                           type="text"
                           value=""
                         />
@@ -1486,7 +1486,7 @@ exports[`CreationView module renders as expected without discovered data 1`] = `
                           autocomplete="off"
                           class="pf-c-form-control pf-c-select__toggle-typeahead"
                           id="pf-select-toggle-id-12-select-typeahead"
-                          placeholder="The namespace to create and store the policy on the hub cluster."
+                          placeholder="Enter the hub cluster namespace where the policy is created and stored."
                           type="text"
                           value=""
                         />
