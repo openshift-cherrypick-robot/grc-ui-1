@@ -137,7 +137,6 @@ class GrcToggleModule extends React.Component {
               setSearch={this.handleSearch}
               sort={sortValues[grcTabToggleIndex]}
               setSort={this.setSort(grcTabToggleIndex)}
-              gridBreakPoint=''
               extraToolbarControls={extraToolbarControls}
               searchPlaceholder={msgs.get('tabs.grc.toggle.allPolicies.placeHolderText', locale)}
               fuseThreshold={0}

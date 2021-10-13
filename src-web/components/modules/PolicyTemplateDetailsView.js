@@ -125,7 +125,6 @@ class PolicyTemplateDetailsView extends React.Component {
               items={tableData.rows}
               columns={tableData.columns}
               keyFn={(item) => item.uid.toString()}
-              gridBreakPoint=''
               initialSort={tableData.sortBy}
               plural={'related resources'}
             />

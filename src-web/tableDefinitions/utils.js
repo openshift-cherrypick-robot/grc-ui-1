@@ -88,7 +88,6 @@ export const transform = (items, def, locale) => {
                   items={subRows}
                   columns={columns.colChild}
                   keyFn={keyFn}
-                  gridBreakPoint=''
                   showToolbar={false}
                   autoHidePagination
                   noBorders
