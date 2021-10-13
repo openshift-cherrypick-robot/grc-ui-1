@@ -1570,7 +1570,7 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
     })
   }
   //submit automation and check history page
-  cy.get('.pf-c-modal-box__footer').within(() => {
+  cy.get('.pf-c-modal-box__footer').scrollIntoView().within(() => {
       cy.waitUntil(() => cy.get('button').eq(0).scrollIntoView().should('be.visible'))
       cy.get('button').eq(0).scrollIntoView().should('be.visible').click()
     })
