@@ -54,8 +54,6 @@ replacements: # if user select this choice, the template variable names and valu
                   audit:
                     logLevel: INFO
                     replicas: 1
-                  image:
-                    image: 'registry.redhat.io/rhacm2/gatekeeper-rhel8:v3.3.0'
                   validatingWebhook: Enabled
                   mutatingWebhook: Disabled
                   webhook:
