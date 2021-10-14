@@ -16,7 +16,7 @@ const controlsList = ['PR.DS-1 Data-at-rest', 'PR.DS-2 Data-in-transit']
 const selectControlsQuery = '.pf-c-select__toggle-button[aria-label="controls"]'
 const itemQuery = '.pf-c-select__menu-item'
 
-describeT('RHACM4K-1671 - GRC UI: [P2][Sev2][policy-grc] Test create policy multi-select acts correctly', () => {
+describeT('RHACM4K-1671 - GRC UI: [P2][Sev2][console] Test create policy multi-select acts correctly', () => {
 
   it('Access the Create policy page', () => {
     cy.FromGRCToCreatePolicyPage()

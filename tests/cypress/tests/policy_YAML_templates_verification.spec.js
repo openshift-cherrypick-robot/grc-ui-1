@@ -4,7 +4,7 @@
 import { describeT } from '../support/tagging'
 import { getConfigObject } from '../config'
 
-describeT('RHACM4K-2357 - GRC UI: [P1][Sev1][policy-grc] Create policy page: Verify templates', () => {
+describeT('RHACM4K-2357 - GRC UI: [P1][Sev1][console] Create policy page: Verify templates', () => {
 
 const policyConf = getConfigObject('policy_YAML_templates_verification/policy-config.yaml')
 

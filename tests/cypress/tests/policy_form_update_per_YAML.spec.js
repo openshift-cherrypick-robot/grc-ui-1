@@ -4,7 +4,7 @@
 import { describeT } from '../support/tagging'
 import { getConfigObject } from '../config'
 
-describeT('RHACM4K-2351 - GRC UI: [P1][Sev1][policy-grc] Create policy page: Updating YAML in editor', () => {
+describeT('RHACM4K-2351 - GRC UI: [P1][Sev1][console] Create policy page: Updating YAML in editor', () => {
 
 const policyConf = getConfigObject('policy_form_update_per_YAML/policy-config.yaml')
 const rawPolicyYAML = getConfigObject('policy_form_update_per_YAML/policy-raw.yaml', 'raw')

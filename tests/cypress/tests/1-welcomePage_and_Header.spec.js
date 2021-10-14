@@ -10,7 +10,7 @@ import { welcomePage, leftNav, userMenu } from '../support/welcome_and_header'
 
 const squad = 'policy-grc'
 
-describeT('GRC UI: [P1][Sev1][policy-grc] Welcome page', () => {
+describeT('GRC UI: [P1][Sev1][console] Welcome page', () => {
     before(() => {
         cy.login()
     })

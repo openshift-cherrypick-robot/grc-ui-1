@@ -8,7 +8,7 @@ import { getDefaultSubstitutionRules } from '../support/views'
 const invalidYamlErrorMessages = getConfigObject('InvalidYamlTests/invalidYamlErrors.yaml', 'yaml')
 
 
-describeT('RHACM4K-247 - GRC UI: [P1][Sev1][policy-grc] Create policy with invalid yaml', () => {
+describeT('RHACM4K-247 - GRC UI: [P1][Sev1][console] Create policy with invalid yaml', () => {
   it('Create policy should fail with invalid policy name in yaml', () => {
     const confFilePolicy = 'InvalidYamlTests/InvalidPolicyName.yaml'
     const rawPolicyYAML = getConfigObject(confFilePolicy, 'raw', getDefaultSubstitutionRules())
