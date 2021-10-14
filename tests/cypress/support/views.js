@@ -408,19 +408,19 @@ export const action_verifyPolicyInListing = (
       }
       // check categories
       if (policyConfig['categories']) {
-        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click({ force: true })
         for (const cat of policyConfig['categories']) {
           cy.get('td[data-label="Categories"]').contains(cat.trim())
         }
-        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click({ force: true })
       }
       // check controls
       if (policyConfig['standards']) {
-        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click({ force: true })
         for (const std of policyConfig['standards']) {
           cy.get('td[data-label="Standards"]').contains(std.trim())
         }
-        cy.wrap(toggle).scrollIntoView().should('be.visible').click()
+        cy.wrap(toggle).scrollIntoView().should('be.visible').click({ force: true })
       }
     })
   })
