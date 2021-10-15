@@ -275,15 +275,12 @@ Cypress.Commands.add('FromGRCToCreatePolicyPage', () => {
 Cypress.Commands.add('goToPolicyDetailsPage', (policyName, namespace='default', open=true) => {
   cy.get('.resource-table').within(()=>
   {
-    cy.clock()
     // This action remains on multicloud/policies/all
     cy.waitUntil(() => cy.get('input[aria-label="Search input"]').should('be.visible'))
       .clear().type(policyName)
-    // Fast-forward clock for search debounce
-    cy.tick(500)
-    cy.clock().then((clock) => {
-      clock.restore()
-    })
+    // Wait for search debounce
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500)
 
     if(open)
     {

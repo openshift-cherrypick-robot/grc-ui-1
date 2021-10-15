@@ -881,16 +881,13 @@ export const action_doTableSearch = (text, inputSelector = null, parentSelector 
   }
   cy.get('div.page-content-container')  // make sure the page is loaded enough
     .then(() => {
-      cy.clock()
       // do the search only if there are resources on the page
       // if (!Cypress.$('#page').find('div.no-resource').length) {
         // FIXME - do this search without a force
       cy.get(inputSelector, {withinSubject: parentSelector}).clear({force: true}).type(text, {force: true})
-      // Fast-forward clock for search debounce
-      cy.tick(500)
-      cy.clock().then((clock) => {
-        clock.restore()
-      })
+      // Wait for search debounce
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500)
       // }
     })
 }
