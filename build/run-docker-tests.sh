@@ -37,7 +37,7 @@ acm_installed_namespace=`oc get subscriptions.operators.coreos.com --all-namespa
 export CYPRESS_BASE_URL=https://`oc get route multicloud-console -n $acm_installed_namespace -o=jsonpath='{.spec.host}'`
 
 # run test
-export PAUSE=${PAUSE:-60}
+export PAUSE=${PAUSE:-90}
 echo sleep $PAUSE seconds cypress ...
 sleep $PAUSE
 export CI=true # force cypress to output color
