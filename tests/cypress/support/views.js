@@ -1404,12 +1404,7 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
     }).as('credsQuery')
   }
   // Check for open Automation modal and close it if it's open
-  if (Cypress.$('#automation-resource-panel').length === 1) {
-    cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
-      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-    })
-  }
+  cy.checkAndClosePolicyAutomationPanel(uName)
   //search for policy and click to configure
   cy.CheckGrcMainPage()
     .doTableSearch(uName)
@@ -1423,7 +1418,7 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
   cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
   cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
     .then(() => {
-    cy.get('.ansible-configure-table').within(() => {
+    cy.get('.ansible-configure-table').scrollIntoView().within(() => {
       if (credentialName === '') {
         cy.get('p').should('contain', 'Ansible credential is required to create an Ansible job. Create your credential by clicking the following link:')
       } else {
@@ -1438,12 +1433,9 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
       cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
   })
-  // wait for the dialog to be closed
   .then(() => {
-    cy.get('#automation-resource-panel').should('not.exist')
+    cy.checkAndClosePolicyAutomationPanel(uName)
   })
-  // after mainpage table action, always return to grc main page
-  cy.CheckGrcMainPage()
 }
 
 export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
@@ -1460,12 +1452,7 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
     }
   }).as('ansibleOpInstallQuery')
   // Check for open Automation modal and close it if it's open
-  if (Cypress.$('#automation-resource-panel').length === 1) {
-    cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
-      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-    })
-  }
+  cy.checkAndClosePolicyAutomationPanel(uName)
   //search for policy and click to configure
   cy.CheckGrcMainPage()
     .doTableSearch(uName)
@@ -1490,13 +1477,13 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
     cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
     cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
   })
-  // wait for the dialog to be closed
-  cy.get('#automation-resource-panel').should('not.exist')
-  // after mainpage table action, always return to grc main page
-  cy.CheckGrcMainPage()
+  .then(() => {
+    cy.checkAndClosePolicyAutomationPanel(uName)
+  })
 }
 
-export const action_scheduleAutomation = (uName, credentialName, mode) => {
+export const action_scheduleAutomation = (uName, credentialName, mode, action='Save') => {
+  cy.log(`uName = ${uName} credentialName = ${credentialName} mode = ${mode} action = ${action} in action_scheduleAutomation`)
   const demoTemplateName = 'Demo Job Template'
 
   //mock call to graphQL to get job templates to avoid needing to use a real tower
@@ -1519,12 +1506,7 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
   let failures = 0
 
   // Check for open Automation modal and close it if it's open
-  if (Cypress.$('#automation-resource-panel').length === 1) {
-    cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
-      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-    })
-  }
+  cy.checkAndClosePolicyAutomationPanel(uName)
 
   cy.CheckGrcMainPage()
     .doTableSearch(uName)
@@ -1535,77 +1517,100 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
         .siblings('td[data-label="Automation"]')
         .find('a').as('automationButton')
     })
+
   cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
   cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
-  cy.get('.createCredential').within(() => {
-    cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible'))
-    cy.get('.pf-c-select').scrollIntoView().should('be.visible').click()
-    cy.waitUntil(() => cy.contains(credentialName).scrollIntoView().should('be.visible'))
-    cy.contains(credentialName).scrollIntoView().should('be.visible').click()
-    cy.get('.pf-c-select__menu').should('not.exist')
-  })
-  cy.get('.createJobTemplate').within(() => {
-    cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible'))
-    cy.get('.pf-c-select').scrollIntoView().should('be.visible').click()
-    cy.get('.pf-c-select.pf-m-expanded').within(() => {
-      cy.waitUntil(() => cy.contains(demoTemplateName).scrollIntoView().should('be.visible'))
-      cy.contains(demoTemplateName).scrollIntoView().should('be.visible').click()
+
+  if (action === 'Save') {
+    // create action
+    cy.get('.createCredential').within(() => {
+      cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible'))
+      cy.get('.pf-c-select').scrollIntoView().should('be.visible').click()
+      cy.waitUntil(() => cy.contains(credentialName).scrollIntoView().should('be.visible'))
+      cy.contains(credentialName).scrollIntoView().should('be.visible').click()
+      cy.get('.pf-c-select__menu').should('not.exist')
     })
-  })
-  //select automation mode based on parameter
-  if (mode === 'manual') {
-    cy.get('.ansible-configure-table').within(() => {
-      cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(0).scrollIntoView().should('be.visible'))
-      cy.get('.pf-c-radio__label').eq(0).scrollIntoView().should('be.visible').click()
-      failures = 2
+
+    cy.get('.createJobTemplate').within(() => {
+      cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible'))
+      cy.get('.pf-c-select').scrollIntoView().should('be.visible').click()
+      cy.get('.pf-c-select.pf-m-expanded').within(() => {
+        cy.waitUntil(() => cy.contains(demoTemplateName).scrollIntoView().should('be.visible'))
+        cy.contains(demoTemplateName).scrollIntoView().should('be.visible').click()
+      })
     })
-  } else if (mode === 'once') {
-    cy.get('.ansible-configure-table').within(() => {
-      cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(1).scrollIntoView().should('be.visible'))
-      cy.get('.pf-c-radio__label').eq(1).scrollIntoView().should('be.visible').click()
-      failures = 1
+
+    //select automation mode based on parameter
+    if (mode === 'manual') {
+      cy.get('.ansible-configure-table').within(() => {
+        cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(0).scrollIntoView().should('be.visible'))
+        cy.get('.pf-c-radio__label').eq(0).scrollIntoView().should('be.visible').click()
+        failures = 2
+      })
+    } else if (mode === 'once') {
+      cy.get('.ansible-configure-table').within(() => {
+        cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(1).scrollIntoView().should('be.visible'))
+        cy.get('.pf-c-radio__label').eq(1).scrollIntoView().should('be.visible').click()
+        failures = 1
+      })
+    } else {
+      cy.get('.ansible-configure-table').within(() => {
+        cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(2).scrollIntoView().should('be.visible'))
+        cy.get('.pf-c-radio__label').eq(2).scrollIntoView().should('be.visible').click()
+        failures = 0
+      })
+    }
+
+    //submit automation and check history page
+    cy.get('.pf-c-modal-box__footer').scrollIntoView().should('be.visible').within(() => {
+        cy.waitUntil(() => cy.get('button').eq(0).scrollIntoView().should('be.visible'))
+        cy.get('button').eq(0).scrollIntoView().should('be.visible').click()
+      })
+      .get('#automation-resource-panel').should('not.exist')
+
+    // after successfully creating automation
+    // panel will automatically closed and need to reopen it
+    cy.CheckGrcMainPage()
+      .doTableSearch(uName)
+      .get('.grc-view-by-policies-table').within(() => {
+        cy.get('a')
+          .contains(uName)
+          .parents('td')
+          .siblings('td[data-label="Automation"]')
+          .find('a').as('automationButton')
+      })
+
+    cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
+    cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
+    cy.get('#automation-resource-panel').scrollIntoView().should('be.visible')
+    verifyHistoryPage(mode, failures)
+    cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+    cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
+    .then(() => {
+      cy.checkAndClosePolicyAutomationPanel(uName)
     })
-  } else {
-    cy.get('.ansible-configure-table').within(() => {
-      cy.waitUntil(() => cy.get('.pf-c-radio__label').eq(2).scrollIntoView().should('be.visible'))
-      cy.get('.pf-c-radio__label').eq(2).scrollIntoView().should('be.visible').click()
-      failures = 0
+  } else if (action === 'Delete') {
+    // delete action
+    cy.get('.pf-c-modal-box__footer').scrollIntoView().should('be.visible').within(() => {
+    cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible'))
+    cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible').click()
+    })
+
+    cy.waitUntil(() => cy.get('#remove-ansible-modal').scrollIntoView().should('be.visible'))
+    cy.get('#remove-ansible-modal').scrollIntoView().should('be.visible').within(() => {
+      cy.get('.pf-c-modal-box__footer').within(() => {
+        cy.get('button').contains('Delete automation', { matchCase: false }).scrollIntoView().should('be.visible').click()
+      })
+    })
+    .then(() => {
+      cy.checkAndClosePolicyAutomationPanel(uName)
     })
   }
-  //submit automation and check history page
-  cy.get('.pf-c-modal-box__footer').scrollIntoView().within(() => {
-      cy.waitUntil(() => cy.get('button').eq(0).scrollIntoView().should('be.visible'))
-      cy.get('button').eq(0).scrollIntoView().should('be.visible').click()
-    })
-    .get('#automation-resource-panel').should('not.exist')
-  // after successfully creating automation
-  // panel will automatically closed and need to reopen it
-  cy.CheckGrcMainPage()
-    .doTableSearch(uName)
-    .get('.grc-view-by-policies-table').within(() => {
-      cy.get('a')
-        .contains(uName)
-        .parents('td')
-        .siblings('td[data-label="Automation"]')
-        .find('a').as('automationButton')
-    })
-  cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
-  cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
-  cy.get('#automation-resource-panel').scrollIntoView().should('be.visible')
-  verifyHistoryPage(mode, failures)
-  cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
-  cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-  cy.get('#automation-resource-panel').should('not.exist')
 }
 
 export const action_verifyHistoryPageWithMock = (uName) => {
   // Check for open Automation modal and close it if it's open
-  if (Cypress.$('#automation-resource-panel').length === 1) {
-    cy.get('#automation-resource-panel').within(() => {
-      cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
-      cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-    })
-  }
+  cy.checkAndClosePolicyAutomationPanel(uName)
   //open modal
   cy.CheckGrcMainPage()
     .doTableSearch(uName)
@@ -1649,7 +1654,9 @@ export const action_verifyHistoryPageWithMock = (uName) => {
 
   cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
   cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-  cy.get('#automation-resource-panel').should('not.exist')
+  .then(() => {
+    cy.checkAndClosePolicyAutomationPanel(uName)
+  })
 }
 
 const verifyHistoryPage = (mode, failuresExpected) => {
@@ -1713,4 +1720,77 @@ const verifyCompliant = (policyName) => {
           cy.get('svg[fill="#3e8635"]').scrollIntoView().should('be.visible')
         })
     })
+}
+
+export const action_verifyPolicyWithAutomation = (uPolicyName) => {
+  // Check for open Automation modal and close it if it's open
+  cy.checkAndClosePolicyAutomationPanel(uPolicyName)
+
+  //search for policy and click to configure
+  cy.CheckGrcMainPage()
+  .doTableSearch(uPolicyName)
+  .get('.grc-view-by-policies-table').within(() => {
+    cy.get('a')
+      .contains(uPolicyName)
+      .parents('td')
+      .siblings('td[data-label="Automation"]')
+      // here just mathching last five chars of 'policy-automation' due to text truncate
+      .find('a').contains('ation', { matchCase: false })
+  })
+}
+
+export const action_verifyPolicyWithoutAutomation = (uPolicyName) => {
+  // Check for open Automation modal and close it if it's open
+  cy.checkAndClosePolicyAutomationPanel(uPolicyName)
+
+  //search for policy and click to configure
+  cy.CheckGrcMainPage()
+  .doTableSearch(uPolicyName)
+  .get('.grc-view-by-policies-table').within(() => {
+    cy.get('a')
+      .contains(uPolicyName)
+      .parents('td')
+      .siblings('td[data-label="Automation"]')
+      .find('a').contains('Configure', { matchCase: false })
+  })
+}
+
+// check if policy automation panel is successfully closed
+// if not log the error msg and force close
+export const action_checkAndClosePolicyAutomationPanel = (uName) => {
+  // wait 2s after policy automation panel automatically closing
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.get('body').wait(2000)
+  .then(($body) => {
+    // // If policy automation panel is still opened
+    if ($body.find('#automation-resource-panel').length === 1) {
+      cy.log(`Poliy auotmation panel is open for policy ${uName}`)
+      // check if there is an error msg on the panel and log it
+      cy.get('#automation-resource-panel').then(($panel) => {
+        if ($panel.find('div[aria-label="Danger Alert"]').length) {
+          cy.get('div[aria-label="Danger Alert"]').within(() => {
+            cy.get('h4.pf-c-alert__title').then(($el) => {
+              const policyAutomationErrorMsg = $el.text()
+              if (policyAutomationErrorMsg) {
+                cy.log(`Find an error message on policy ${uName}'s auotmation panel: ${policyAutomationErrorMsg}`)
+              }
+            })
+          })
+        }
+      })
+
+      // no matter if there is an error msg on the panel, alway force close the panel
+      cy.get('#automation-resource-panel').within(() => {
+        cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+        cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
+      })
+      cy.log(`Now force close auotmation panel for policy ${uName}`)
+    } else {
+      cy.get('#automation-resource-panel').should('not.exist')
+      cy.log(`Poliy auotmation panel is already closed for policy ${uName}`)
+    }
+  })
+
+  // after policyAutomationPanel action, return to grc main page
+  cy.CheckGrcMainPage()
 }

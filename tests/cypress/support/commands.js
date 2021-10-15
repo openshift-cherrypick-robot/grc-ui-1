@@ -12,7 +12,8 @@ import { pageLoader, isPolicyStatusAvailable, isClusterTemplateStatusAvailable,
          action_verifyPolicyViolationDetailsInCluster, action_verifyPolicyViolationDetailsInHistory,
          action_verifyCreatePolicySelection, isClusterViolationsStatusAvailable, action_verifyClusterViolationsInListing,
          action_checkNotificationMessage, action_checkPolicyListingPageUserPermissions, action_verifyCredentialsInSidebar,
-         action_verifyAnsibleInstallPrompt, action_scheduleAutomation, action_verifyHistoryPageWithMock
+         action_verifyAnsibleInstallPrompt, action_scheduleAutomation, action_verifyHistoryPageWithMock,
+         action_verifyPolicyWithAutomation, action_verifyPolicyWithoutAutomation, action_checkAndClosePolicyAutomationPanel
 } from '../support/views'
 
 Cypress.Commands.add('login', (OPTIONS_HUB_USER='', OPTIONS_HUB_PASSWORD='', OC_IDP='', OC_IDP_CONFIGURED=false, force=false) => {
@@ -294,15 +295,6 @@ Cypress.Commands.add('goToPolicyDetailsPage', (policyName, namespace='default', 
     }
   })
 })
-// must be run on policy details page
-// Cypress.Commands.add('goToPolicyClusterPage', (policyName, policyConfig, clusterName) => {
-//   var namespace = policyConfig['namespace']
-//   cy.get('.one-cluster-status').children('a').contains(clusterName)
-//     .should('exist')
-//     .click({force: true})
-//   pageLoader.shouldNotExist()
-//   cy.location('pathname').should('eq', '/multicloud/policies/policy/'+clusterName+'/'+namespace+'.'+policyName)
-// })
 
 Cypress.Commands.add('createPolicyFromSelection', (uPolicyName, create=true, policyConfig) => {
   cy.then(() => action_createPolicyFromSelection(uPolicyName, create, policyConfig))
@@ -553,10 +545,22 @@ Cypress.Commands.add('verifyAnsibleInstallPrompt', (uPolicyName, opInstalled) =>
   cy.then(() => action_verifyAnsibleInstallPrompt(uPolicyName, opInstalled))
 })
 
-Cypress.Commands.add('scheduleAutomation', (uName, credentialName, mode) => {
-  cy.then(() => action_scheduleAutomation(uName, credentialName, mode))
+Cypress.Commands.add('scheduleAutomation', (uName, credentialName, mode, action) => {
+  cy.then(() => action_scheduleAutomation(uName, credentialName, mode, action))
 })
 
 Cypress.Commands.add('verifyHistoryPageWithMock', (uName) => {
   cy.then(() => action_verifyHistoryPageWithMock(uName))
+})
+
+Cypress.Commands.add('verifyPolicyWithAutomation', (uPolicyName) => {
+  cy.then(() => action_verifyPolicyWithAutomation(uPolicyName))
+})
+
+Cypress.Commands.add('verifyPolicyWithoutAutomation', (uPolicyName) => {
+  cy.then(() => action_verifyPolicyWithoutAutomation(uPolicyName))
+})
+
+Cypress.Commands.add('checkAndClosePolicyAutomationPanel', (uName) => {
+  cy.then(() => action_checkAndClosePolicyAutomationPanel(uName))
 })

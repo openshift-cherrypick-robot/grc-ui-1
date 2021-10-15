@@ -103,12 +103,25 @@ describeT('@bvt RHACM4K-3471 - GRC UI: [P1][Sev1][console] All policies page: Ve
     cy.actionPolicyActionInListing(credPolicyName, 'Delete')
   })
 
-  //verify contents of modal
+  //Verify contents of modal
   it('Successfully can schedule a disabled automation', {
     defaultCommandTimeout: 180000
   }, () => {
     cy.scheduleAutomation(policyName, 'grcui-e2e-credential', 'disabled')
   })
+
+  it(`Check policy ${policyName} has automation button on the main page`, () => {
+    cy.verifyPolicyWithAutomation(policyName)
+  })
+
+  it(`Delete the automation from policy ${policyName} automation modal`, () => {
+    cy.scheduleAutomation(policyName, 'grcui-e2e-credential', 'disabled', 'Delete')
+  })
+
+  it(`Check policy ${policyName} has configure button on the main page`, () => {
+    cy.verifyPolicyWithoutAutomation(policyName)
+  })
+
   it('Successfully can schedule a "run once" automation', {
     defaultCommandTimeout: 180000
   }, () => {
@@ -138,8 +151,35 @@ describeT('@bvt RHACM4K-3471 - GRC UI: [P1][Sev1][console] All policies page: Ve
     cy.verifyAnsibleInstallPrompt(policyName, true)
   })
 
-  //clean up
+  //clean up stage:
+  it(`Check policy ${policyName} still has automation button on the main page`, () => {
+    cy.verifyPolicyWithAutomation(policyName)
+  })
+
+  // Defaultly policy deletion will also delete the related policy automation
   it(`Delete policy ${policyName}`, () => {
+    cy.actionPolicyActionInListing(policyName, 'Delete')
+  })
+  // Recreate the same policy to check if the policy automation is also deleted
+  it(`Recreate the same policy ${policyName} to check if the related policy automation has been deleted`, () => {
+    cy.visit('/multicloud/policies/create')
+    cy.log(rawPolicyYAML)
+      .createPolicyFromYAML(rawPolicyYAML, true)
+  })
+
+  it(`Check that policy ${policyName} is present in the policy listing`, () => {
+    cy.verifyPolicyInListing(policyName, {})
+  })
+
+  it(`Wait for ${policyName} status to become available`, () => {
+    cy.waitForPolicyStatus(policyName, '1/1')
+  })
+
+  it(`Check policy ${policyName} has configure button on the main page without policy automation`, () => {
+    cy.verifyPolicyWithoutAutomation(policyName)
+  })
+
+  it(`Verified policy ${policyName} have no related policy automation, delete policy again`, () => {
     cy.actionPolicyActionInListing(policyName, 'Delete')
   })
 
