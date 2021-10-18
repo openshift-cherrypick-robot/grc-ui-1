@@ -153,19 +153,19 @@ export const selectItems = async (labels, listQuery, itemQuery='.pf-c-select__me
 
 
 export const getDefaultSubstitutionRules = (rules = {}) => {
-  if (rules['label'] == undefined) {
+  if (rules['label'] === undefined) {
     if (Cypress.env('MANAGED_CLUSTER_NAME') !== undefined) {
       rules['label'] = `- {key: name, operator: In, values: ["${Cypress.env('MANAGED_CLUSTER_NAME')}"]}`
     } else {
       rules['label'] = '[]'
     }
   }
-  if (rules['id'] == undefined) {
+  if (rules['id'] === undefined) {
     if (Cypress.env('RESOURCE_ID')) {
       rules['id'] = Cypress.env('RESOURCE_ID')
     }
   }
-  if (rules['namespace'] == undefined) {
+  if (rules['namespace'] === undefined) {
     rules['namespace'] = 'default'
   }
   const substitutions = []
@@ -356,11 +356,11 @@ export const action_verifyPolicyInListing = (
   uName, policyConfig, enabled='enabled',
   violationsCounter='', targetStatus = null
   ) => {
-  if (targetStatus == null) {
+  if (targetStatus === null) {
     if (violationsCounter && violationsCounter[0] != '[') {
       targetStatus = violationsCounter.startsWith('0/') ? 1 : 2
     }
-    else if (enabled == 'disabled') {
+    else if (enabled === 'disabled') {
       targetStatus = 3
     } else {
       targetStatus = 0
@@ -380,9 +380,9 @@ export const action_verifyPolicyInListing = (
       // check status (enabled/disabled)
       cy.wrap(status).contains(enabled, { matchCase: false })
       // check enforce/inform
-      if (policyConfig['remediation'] == true) {
+      if (policyConfig['remediation'] === true) {
         cy.wrap(remediation).contains('enforce', { matchCase: false })
-      } else if (policyConfig['remediation'] == false) {
+      } else if (policyConfig['remediation'] === false) {
         cy.wrap(remediation).contains('inform', { matchCase: false })
       }
       // check the violation status
@@ -452,7 +452,8 @@ export const action_actionPolicyActionInListing = (uName, action, cancel=false) 
       })
   })
   .then(() => {
-    cy.get('.pf-c-modal-box').within(() => {
+    cy.waitUntil(() => cy.get('.pf-c-modal-box').scrollIntoView().should('be.visible'))
+      .within(() => {
       if (cancel) {
         cy.waitUntil(() => cy.get('button').contains('Cancel', { matchCase: false }).scrollIntoView().should('be.visible'))
         cy.get('button').contains('Cancel', { matchCase: false }).scrollIntoView().should('be.visible').click()
@@ -534,51 +535,50 @@ export const isClusterViolationsStatusAvailable = (name, violationsCounter) => {
   })
 }
 
-
-
 // needs to be run either at /multicloud/policies/all or /multicloud/policies/all/{namespace}/{policy} page
 // here statusPending = true to check consist pending status for disable policy
 export const isPolicyStatusAvailable = (uName, violationsCounter) => {
   let statusAvailable = false
-return cy.url().then((pageURL) => {
-  if (pageURL.endsWith('/multicloud/policies/all')) {
-    cy.get('[aria-label="Simple Table"]').within(() => {
-    cy.get('a').contains(uName).parents('td').siblings('td').spread((toggle, rowCheckbox, namespace, status, remediation, violations) => {
-      if (Cypress.$('[aria-label="Simple Table"]').find('.disabledStatus').length === 0) {
+
+  return cy.url().then((pageURL) => {
+    if (pageURL.endsWith('/multicloud/policies/all')) {
+      cy.get('[aria-label="Simple Table"]').within(() => {
+      cy.get('a').contains(uName).parents('td').siblings('td').spread((toggle, rowCheckbox, namespace, status, remediation, violations) => {
+        if (Cypress.$('[aria-label="Simple Table"]').find('.disabledStatus').length === 0) {
+          // check the violation status
+          cy.wrap(violations).find('path').then((elems) => {
+            if (elems.length === 1) {
+              const d = elems[0].getAttribute('d')
+              // M569 seem to be unique to an icon telling that policy status is not available for some cluster
+              statusAvailable = !d.startsWith('M569')
+              if (statusAvailable && violationsCounter) { // also check if violations counter matches
+                if (!violations.textContent.match('\\b'+violationsCounter+'\\b')) { // not found
+                  statusAvailable = false
+                }
+              }
+            }
+          })
+        } else {
+          // disabled and no icon
+          cy.wrap(violations).contains('--')
+        }
+      })
+    })
+    .then(() => statusAvailable)
+    } else { // other pages
+      cy.get('.violationCell').spread((violations) => {
         // check the violation status
         cy.wrap(violations).find('path').then((elems) => {
           if (elems.length === 1) {
             const d = elems[0].getAttribute('d')
             // M569 seem to be unique to an icon telling that policy status is not available for some cluster
             statusAvailable = !d.startsWith('M569')
-            if (statusAvailable && violationsCounter) { // also check if violations counter matches
-              if (!violations.textContent.match('\\b'+violationsCounter+'\\b')) { // not found
-                statusAvailable = false
-              }
-            }
           }
         })
-      } else {
-        // disabled and no icon
-        cy.wrap(violations).contains('--')
-      }
-    })
-  })
-  .then(() => statusAvailable)
-  } else { // other pages
-    cy.get('.violationCell').spread((violations) => {
-      // check the violation status
-      cy.wrap(violations).find('path').then((elems) => {
-        if (elems.length == 1) {
-          const d = elems[0].getAttribute('d')
-          // M569 seem to be unique to an icon telling that policy status is not available for some cluster
-          statusAvailable = !d.startsWith('M569')
-        }
       })
-    })
-    .then(() => statusAvailable)
-  }
-})
+      .then(() => statusAvailable)
+    }
+  })
 }
 
 // needs to be run only on /multicloud/policies/all/default/${policyName}/clusters
@@ -598,7 +598,7 @@ export const isClusterTemplateStatusAvailable = (clusterViolations = {}) => {
             for (const patternId of clusterViolations[clusterName]) {
               const name = patternId.replace(/-[^-]*$/, '')
               const id = patternId.replace(/^.*-/, '')
-              if (templateName == name) {
+              if (templateName === name) {
                 violationID = id
                 break
               }
@@ -632,11 +632,11 @@ export const action_verifyPolicyInPolicyDetails = (
   uName, policyConfig, enabled='enabled',
   violationsCounter='', targetStatus = null
   ) => {
-  if (targetStatus == null) {
+  if (targetStatus === null) {
     if (violationsCounter && violationsCounter[0] != '[') {
       targetStatus = violationsCounter.startsWith('0/') ? 1 : 2
     }
-    else if (enabled == 'disabled') {
+    else if (enabled === 'disabled') {
       targetStatus = 3
     } else {
       targetStatus = 0
@@ -655,9 +655,9 @@ export const action_verifyPolicyInPolicyDetails = (
         cy.wrap(namespace).contains(policyConfig['namespace'])
       }
       // check enforce/inform
-      if (policyConfig['remediation'] == true) {
+      if (policyConfig['remediation'] === true) {
         cy.wrap(remediation).contains('enforce', { matchCase: false })
-      } else if (policyConfig['remediation'] == false) {
+      } else if (policyConfig['remediation'] === false) {
         cy.wrap(remediation).contains('inform', { matchCase: false })
       }
       // check status
@@ -793,7 +793,7 @@ export const getPolicyTemplatesNameAndKind = (policyName, policyConfig) => {
 export const getViolationsPerPolicy = (policyName, policyConfig, clusterViolations, clusters = undefined) => {
   const violations = {}
   const templates = getPolicyTemplatesNameAndKind(policyName, policyConfig)
-  if (clusters == undefined) {  // clusters were not defined, get a list of all cluster names from the clusterViolations dictionary
+  if (clusters === undefined) {  // clusters were not defined, get a list of all cluster names from the clusterViolations dictionary
     clusters = Object.keys(clusterViolations).filter((value) => { return value != '*' }) // get all keys except the default/wildcard '*' when present
   }
   for (const cluster of clusters) {
@@ -827,14 +827,14 @@ export const getClusterPolicyStatus = (clusterViolations, format='long') => {
   let result = 'Compliant'
   for (const violation of clusterViolations) {
     const id = violation.replace(/^.*-/, '')
-    if (id == '?') {  // if the status is unknown
+    if (id === '?') {  // if the status is unknown
       result = '(Compliant|Not compliant)'
     } else if (id[0] != '0') {  // if there is an actual violation (non-zero ID)
       result = 'Not compliant'
       break
     }
   }
-  if (format == 'short') {
+  if (format === 'short') {
     switch (result) {
       case 'Not Compliant':
         return 'NonCompliant'
@@ -848,7 +848,6 @@ export const getClusterPolicyStatus = (clusterViolations, format='long') => {
   }
 }
 
-
 export const getViolationsCounter = (clusterViolations) => {
   let violations = 0
   const clusters = Object.keys(clusterViolations).length
@@ -857,7 +856,7 @@ export const getViolationsCounter = (clusterViolations) => {
     // also, if the policy has multiple specifications there could be even multiple compliances
     for (const violation of clusterViolations[cluster]) {
       const id = violation.replace(/^.*-/, '')
-      if (id == '?') { // unspecific violation
+      if (id === '?') { // unspecific violation
         return '[0-9]+/'+clusters
       }
       if (id[0] != '0') {  // if there is an actual violation (non-zero ID)
@@ -880,7 +879,7 @@ export const action_doTableSearch = (text, inputSelector = null, parentSelector 
       // do the search only if there are resources on the page
       // if (!Cypress.$('#page').find('div.no-resource').length) {
         // FIXME - do this search without a force
-      cy.get(inputSelector, {withinSubject: parentSelector}).clear({force: true}).type(text, {force: true})
+      cy.get(inputSelector, {withinSubject: parentSelector}).clear({ force: true }).type(text, { force: true })
       // Wait for search debounce
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(500)
@@ -897,14 +896,14 @@ export const action_clearTableSearch = (inputSelector = null, parentSelector = n
       // clear the search only if there are resources on the page
       if (!Cypress.$('#page').find('div.no-resource').length) {
         // FIXME - do this without a force
-        cy.get(inputSelector, {withinSubject: parentSelector}).clear({force: true})
+        cy.get(inputSelector, {withinSubject: parentSelector}).clear({ force: true })
       }
     })
 }
 
 
 export const action_verifyViolationsInPolicyStatusClusters = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
-  if (clusters == undefined) {
+  if (clusters === undefined) {
     clusters = Object.keys(clusterViolations)
   }
   for (const cluster of clusters) {
@@ -940,9 +939,9 @@ export const action_verifyViolationsInPolicyStatusClusters = (policyName, policy
           cy.wrap(template).contains(templateName)
           // check message
           // FIXME: here we should have a function that split the content per ';' and tests each part agains Compliant/NonCompliant and expected messages
-          if (id == '?') {
+          if (id === '?') {
             cy.wrap(message).contains(new RegExp('(NonCompliant|Compliant); '+violationPatterns[templateName][id]))
-          } else if (id[0] == '0') {
+          } else if (id[0] === '0') {
             cy.wrap(message).contains(new RegExp('Compliant; '+violationPatterns[templateName][id]))
           } else {
             cy.wrap(message).contains(new RegExp('NonCompliant; '+violationPatterns[templateName][id]))
@@ -963,7 +962,7 @@ export const action_verifyViolationsInPolicyStatusClusters = (policyName, policy
 }
 
 export const getPolicyStatusForViolationId = (id, format='long') => {
-  if (format == 'long') {
+  if (format === 'long') {
     switch(id[0]) {  // take just the first digit
       case '?':
         return '(Not compliant|Compliant)'
@@ -973,7 +972,7 @@ export const getPolicyStatusForViolationId = (id, format='long') => {
         return 'Not compliant'
     }
   }
-  if (format == 'short') {
+  if (format === 'short') {
     switch(id[0]) {
       case '?':
         return '(NonCompliant|Compliant)'
@@ -986,7 +985,7 @@ export const getPolicyStatusForViolationId = (id, format='long') => {
 }
 
 export const action_verifyViolationsInPolicyStatusTemplates = (policyName, policyConfig, clusterViolations, violationPatterns, clusters = undefined) => {
-  if (clusters == undefined) {
+  if (clusters === undefined) {
     clusters = Object.keys(clusterViolations)
   }
   for (const cluster of clusters) {
@@ -1012,9 +1011,9 @@ export const action_verifyViolationsInPolicyStatusTemplates = (policyName, polic
             }
             // check message
             // FIXME: here we should have a function that split the content per ';' and tests each part agains Compliant/NonCompliant and expected messages
-            if (id == '?') {
+            if (id === '?') {
               cy.wrap(message).contains(new RegExp('(NonCompliant|Compliant); '+violationPatterns[templateName][id]))
-            } else if (id[0] == '0') {
+            } else if (id[0] === '0') {
               cy.wrap(message).contains(new RegExp('Compliant; '+violationPatterns[templateName][id]))
             } else {
               cy.wrap(message).contains(new RegExp('NonCompliant; '+violationPatterns[templateName][id]))
@@ -1059,7 +1058,7 @@ export const action_verifyPolicyDetailsInCluster =  (policyName, policyConfig, c
         const id = violation.replace(/^.*-/, '')
         const clusterStatus2 = getPolicyStatusForViolationId(id, 'short')
         const pattern = violationPatterns[templateName][id]
-        if (clusterStatus2 == 'NonCompliant') {
+        if (clusterStatus2 === 'NonCompliant') {
           cy.wrap(message).contains(new RegExp(templateName+': '+clusterStatus2+'; '+pattern))
         } else {
           cy.wrap(message).contains(new RegExp(templateName+': '+clusterStatus2))
@@ -1234,7 +1233,7 @@ export const verifyPolicyTemplateViolationDetailsForCluster = (policyName, polic
 }
 
 export const action_verifyClusterViolationsInListing = (clusterName, violationsCounter = '', violatedPolicies = [], targetStatus = null) => {
-  if (targetStatus == null) {
+  if (targetStatus === null) {
     if (violationsCounter && violationsCounter[0] != '[') {
       targetStatus = violationsCounter.startsWith('0/') ? 1 : 2
     } else {
@@ -1293,7 +1292,7 @@ export const getClusterViolationsCounterAndPolicyList = (clusterName, clusterLis
     // also, if the policy has multiple specifications there could be even multiple compliances
     for (const violation of clusterViolations[clusterName]) {
       const id = violation.replace(/^.*-/, '')
-      if (id == '?') { // unspecific violation, we won't ever know exact value of violationCounter
+      if (id === '?') { // unspecific violation, we won't ever know exact value of violationCounter
         counter = '?'
       } else if (counter != '?' && id[0] != '0') {  // if there is an actual violation (non-zero ID)
         counter = counter + 1
@@ -1303,7 +1302,7 @@ export const getClusterViolationsCounterAndPolicyList = (clusterName, clusterLis
     }
   }
   // now build a regexp for violationCounter based on counter and violatedPolicies
-  if (counter == '?') {
+  if (counter === '?') {
     violationCounter = '[0-9]+/' + Object.keys(confPolicies).length.toString()
   } else {
     violationCounter = counter.toString() + '/' + Object.keys(confPolicies).length.toString()
@@ -1384,6 +1383,8 @@ export const action_checkPolicyListingPageUserPermissions = (policyNames = [], c
 }
 
 export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
   //mock call if checking for empty state to ensure no conflicts occur
   if (credentialName === '') {
     cy.intercept('POST', Cypress.config().baseUrl + '/multicloud/policies/graphql', (req) => {
@@ -1431,8 +1432,8 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
   })
 }
 
-export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
-  // mock call to check behavior
+//  mock ansible install query on Cypress.config().baseUrl/multicloud/policies/graphql
+export const action_mockAnsibleInstallQuery = (opInstalled) => {
   cy.intercept('POST', Cypress.config().baseUrl + '/multicloud/policies/graphql', (req) => {
     if (req.body.operationName === 'ansibleOperatorInstalled') {
       req.reply({
@@ -1444,6 +1445,11 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
       })
     }
   }).as('ansibleOpInstallQuery')
+}
+
+export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(opInstalled)
   // Check for open Automation modal and close it if it's open
   cy.checkAndClosePolicyAutomationPanel(uName)
   //search for policy and click to configure
@@ -1476,7 +1482,10 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
 }
 
 export const action_scheduleAutomation = (uName, credentialName, mode, action='Save') => {
-  cy.log(`uName = ${uName} credentialName = ${credentialName} mode = ${mode} action = ${action} in action_scheduleAutomation`)
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
+
+  cy.log(`uName=${uName} credentialName=${credentialName} mode=${mode} action=${action} in action_scheduleAutomation`)
   const demoTemplateName = 'Demo Job Template'
 
   //mock call to graphQL to get job templates to avoid needing to use a real tower
@@ -1591,7 +1600,7 @@ export const action_scheduleAutomation = (uName, credentialName, mode, action='S
 
     cy.waitUntil(() => cy.get('#remove-ansible-modal').scrollIntoView().should('be.visible'))
     cy.get('#remove-ansible-modal').scrollIntoView().should('be.visible').within(() => {
-      cy.get('.pf-c-modal-box__footer').within(() => {
+      cy.get('.pf-c-modal-box__footer').scrollIntoView().should('be.visible').within(() => {
         cy.get('button').contains('Delete automation', { matchCase: false }).scrollIntoView().should('be.visible').click()
       })
     })
@@ -1602,6 +1611,8 @@ export const action_scheduleAutomation = (uName, credentialName, mode, action='S
 }
 
 export const action_verifyHistoryPageWithMock = (uName) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
   // Check for open Automation modal and close it if it's open
   cy.checkAndClosePolicyAutomationPanel(uName)
   //open modal
@@ -1716,6 +1727,8 @@ const verifyCompliant = (policyName) => {
 }
 
 export const action_verifyPolicyWithAutomation = (uPolicyName) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
   // Check for open Automation modal and close it if it's open
   cy.checkAndClosePolicyAutomationPanel(uPolicyName)
 
@@ -1733,6 +1746,8 @@ export const action_verifyPolicyWithAutomation = (uPolicyName) => {
 }
 
 export const action_verifyPolicyWithoutAutomation = (uPolicyName) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
   // Check for open Automation modal and close it if it's open
   cy.checkAndClosePolicyAutomationPanel(uPolicyName)
 
@@ -1751,9 +1766,10 @@ export const action_verifyPolicyWithoutAutomation = (uPolicyName) => {
 // check if policy automation panel is successfully closed
 // if not log the error msg and force close
 export const action_checkAndClosePolicyAutomationPanel = (uName) => {
-  // wait 2s after policy automation panel automatically closing
+  // wait 1s after policy automation panel automatically closing
+  // 0.2s closing withdraw effect and 0.8s buffer, 0.5s isn't enough here
   // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.get('body').wait(2000)
+  cy.get('body').wait(1000)
   .then(($body) => {
     // // If policy automation panel is still opened
     if ($body.find('#automation-resource-panel').length === 1) {

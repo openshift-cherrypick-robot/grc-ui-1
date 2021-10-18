@@ -12,41 +12,10 @@ import { getConfigObject } from '../config'
 import { getDefaultSubstitutionRules } from '../support/views'
 
 describeT('@bvt RHACM4K-3471 - GRC UI: [P1][Sev1][console] All policies page: Verify automation modal', () => {
-  const subscriptionPolicy = 'automation/create_subscription.yaml'
   const confFilePolicy = 'automation/policy_toBeAutomated.yaml'
   const credentialPolicy = 'automation/create_credential.yaml'
   const cleanUpPolicy = 'automation/clean_up.yaml'
-
-  //create subscription to install ansible automation operator
   const substitutionRules = getDefaultSubstitutionRules()
-  const rawSubPolicyYAML = getConfigObject(subscriptionPolicy, 'raw', substitutionRules)
-  const subPolicyName = rawSubPolicyYAML.replace(/\r?\n|\r/g, ' ').replace(/^.*?name:\s*/m, '').replace(/\s.*/m,'')
-
-  it('Create a subscription to install the Ansible operator', () => {
-    cy.visit('/multicloud/policies/create')
-    cy.log(rawSubPolicyYAML)
-      .createPolicyFromYAML(rawSubPolicyYAML, true)
-  })
-
-  it(`Check that policy ${subPolicyName} is present in the policy listing`, () => {
-    cy.verifyPolicyInListing(subPolicyName, {})
-  })
-
-  it(`Wait for ${subPolicyName} status to become NonCompliant`, () => {
-    cy.waitForPolicyStatus(subPolicyName, '[^0]/')
-  })
-
-  it(`Enforce ${subPolicyName}`, () => {
-    cy.actionPolicyActionInListing(subPolicyName, 'Enforce')
-  })
-
-  it(`Wait for ${subPolicyName} status to be Compliant`, () => {
-    cy.waitForPolicyStatus(subPolicyName, '0/')
-  })
-
-  it(`Delete policy ${subPolicyName}`, () => {
-    cy.actionPolicyActionInListing(subPolicyName, 'Delete')
-  })
 
   //create policy to automate
   const rawPolicyYAML = getConfigObject(confFilePolicy, 'raw', substitutionRules)
@@ -209,9 +178,6 @@ describeT('@bvt RHACM4K-3471 - GRC UI: [P1][Sev1][console] All policies page: Ve
   })
   it(`Verify that policy ${credPolicyName} is not present in the policy listing`, () => {
     cy.verifyPolicyNotInListing(credPolicyName)
-  })
-  it(`Verify that policy ${subPolicyName} is not present in the policy listing`, () => {
-    cy.verifyPolicyNotInListing(subPolicyName)
   })
   it(`Verify that policy ${cleanUppolicyName} is not present in the policy listing`, () => {
     cy.verifyPolicyNotInListing(cleanUppolicyName)
