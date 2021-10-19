@@ -447,13 +447,9 @@ export const action_actionPolicyActionInListing = (uName, action, cancel=false) 
       .parents('td')
       .siblings('td')
       .last().within(() => {
-        cy.waitUntil(() => cy.get('button').scrollIntoView().should('be.visible'))
-        cy.get('button').scrollIntoView().should('be.visible').click({ force: true })
+        cy.get('button').scrollIntoView().should('be.visible').click()
+         .get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible').click()
       })
-  })
-  .then(() => {
-    cy.waitUntil(() => cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible'))
-    cy.get('button').contains(action, { matchCase: false }).scrollIntoView().should('be.visible').click({ force: true })
   })
   .then(() => {
     cy.get('.pf-c-modal-box').within(() => {
