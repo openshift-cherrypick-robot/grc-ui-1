@@ -13,7 +13,8 @@ import { pageLoader, isPolicyStatusAvailable, isClusterTemplateStatusAvailable,
          action_verifyCreatePolicySelection, isClusterViolationsStatusAvailable, action_verifyClusterViolationsInListing,
          action_checkNotificationMessage, action_checkPolicyListingPageUserPermissions, action_verifyCredentialsInSidebar,
          action_verifyAnsibleInstallPrompt, action_scheduleAutomation, action_verifyHistoryPageWithMock,
-         action_verifyPolicyWithAutomation, action_verifyPolicyWithoutAutomation, action_checkAndClosePolicyAutomationPanel
+         action_verifyPolicyWithAutomation, action_verifyPolicyWithoutAutomation, action_checkAndClosePolicyAutomationPanel,
+         action_mockAnsibleInstallQuery
 } from '../support/views'
 
 Cypress.Commands.add('login', (OPTIONS_HUB_USER='', OPTIONS_HUB_PASSWORD='', OC_IDP='', OC_IDP_CONFIGURED=false, force=false) => {
@@ -398,9 +399,9 @@ Cypress.Commands.add('verifyCardsOnPolicyListingPage', (cardName, cardValuesDict
 // click on the button to set content visibility on or off
 Cypress.Commands.add('toggleVisibilityButton', (buttonSelector, contentSelector, state='') => {
   cy.get(contentSelector).then($content => {
-    if ((state == '') ||  // either we want to do the switch
-        (state == 'off' && $content.is(':visible')) ||  // or it is visible and we want to hide it
-        (state == 'on' && !$content.is(':visible'))) {  // or it is hidden and we want to show it
+    if ((state === '') ||  // either we want to do the switch
+        (state === 'off' && $content.is(':visible')) ||  // or it is visible and we want to hide it
+        (state === 'on' && !$content.is(':visible'))) {  // or it is hidden and we want to show it
       cy.waitUntil(() => cy.get(buttonSelector).scrollIntoView().should('be.visible'))
       cy.get(buttonSelector).scrollIntoView().should('be.visible').click()
     }
@@ -561,3 +562,8 @@ Cypress.Commands.add('verifyPolicyWithoutAutomation', (uPolicyName) => {
 Cypress.Commands.add('checkAndClosePolicyAutomationPanel', (uName) => {
   cy.then(() => action_checkAndClosePolicyAutomationPanel(uName))
 })
+
+Cypress.Commands.add('mockAnsibleInstallQuery', (opInstalled) => {
+  cy.then(() => action_mockAnsibleInstallQuery(opInstalled))
+})
+
