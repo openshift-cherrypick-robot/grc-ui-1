@@ -17,7 +17,7 @@ if (Cypress.env('MANAGED_CLUSTER_NAME') !== undefined) {
 }
 
 
-describeT('@extended Setup - create a certificate expiring soon', () => {
+describeT('@extended Setup - GRC UI: [P1][Sev1][console] - create a certificate expiring soon', () => {
   const substitutionRules = getDefaultSubstitutionRules({
     clusterselector:`- {key: name, operator: In, values: ["${clusterList[0]}"]}`,
     compliancetype: 'musthave'
@@ -35,7 +35,7 @@ describeT('@extended Setup - create a certificate expiring soon', () => {
 })
 
 
-describeT('@extended RHACM4K-2294 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy governance', () => {
+describeT('@extended RHACM4K-2294 - GRC UI: [P1][Sev1][console] - CertificatePolicy governance', () => {
   const certificatePolicyName = 'policy-certificatepolicy'
   const uCertificatePolicyName = getUniqueResourceName(certificatePolicyName)
   const substitutionRules = getDefaultSubstitutionRules({policyname:uCertificatePolicyName, clusterselector:`- {key: name, operator: In, values: ["${clusterList[0]}"]}`})
@@ -119,7 +119,7 @@ describeT('@extended RHACM4K-2294 - GRC UI: [P1][Sev1][policy-grc] - Certificate
 })
 
 
-describeT('@extended RHACM4K_1205 - GRC UI: [P1][Sev1][policy-grc] - CertificatePolicy governance', () => {
+describeT('@extended RHACM4K_1205 - GRC UI: [P1][Sev1][console] - CertificatePolicy governance', () => {
   const certificatePolicyName = 'policy-certificatepolicy-rhacm4k-1205'
   const uCertificatePolicyName = getUniqueResourceName(certificatePolicyName)
   const substitutionRules = getDefaultSubstitutionRules({policyname:uCertificatePolicyName, clusterselector:`- {key: name, operator: In, values: ["${clusterList[0]}"]}`})
@@ -203,7 +203,7 @@ describeT('@extended RHACM4K_1205 - GRC UI: [P1][Sev1][policy-grc] - Certificate
 })
 
 
-describeT('@extended Cleanup - delete a certificate and an issuer', () => {
+describeT('@extended GRC UI: [P1][Sev1][console] Cleanup - delete a certificate and an issuer', () => {
   const substitutionRulesCleanup = getDefaultSubstitutionRules({
     clusterselector:`- {key: name, operator: In, values: ["${clusterList[0]}"]}`,
     compliancetype: 'mustnothave'

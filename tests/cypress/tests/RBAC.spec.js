@@ -9,7 +9,7 @@ import { test_userPermissionsPageContentCheck } from '../support/tests'
 import { getDefaultSubstitutionRules } from '../support/views'
 
 
-describeT('@rbac RHACM4K-2584 - GRC UI: [P1][Sev1][policy-grc] Role Based Access Control tests', () => {
+describeT('@rbac RHACM4K-2584 - GRC UI: [P1][Sev1][console] Role Based Access Control tests', () => {
 
   // we expect the user password to be exported in CYPRESS_RBAC_PASS variable
   const RBACpass = Cypress.env('RBAC_PASS')
