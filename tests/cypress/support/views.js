@@ -1427,9 +1427,7 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
       cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
   })
-  .then(() => {
-    cy.checkAndClosePolicyAutomationPanel(uName)
-  })
+  .checkAndClosePolicyAutomationPanel(uName, 2000)
 }
 
 //  mock ansible install query on Cypress.config().baseUrl/multicloud/policies/graphql
@@ -1476,9 +1474,7 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
     cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
     cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
   })
-  .then(() => {
-    cy.checkAndClosePolicyAutomationPanel(uName)
-  })
+  .checkAndClosePolicyAutomationPanel(uName, 2000)
 }
 
 export const action_scheduleAutomation = (uName, credentialName, mode, action='Save') => {
@@ -1588,9 +1584,7 @@ export const action_scheduleAutomation = (uName, credentialName, mode, action='S
     verifyHistoryPage(mode, failures)
     cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
     cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-    .then(() => {
-      cy.checkAndClosePolicyAutomationPanel(uName)
-    })
+    .checkAndClosePolicyAutomationPanel(uName, 2000)
   } else if (action === 'Delete') {
     // delete action
     cy.get('.pf-c-modal-box__footer').scrollIntoView().should('be.visible').within(() => {
@@ -1604,9 +1598,7 @@ export const action_scheduleAutomation = (uName, credentialName, mode, action='S
         cy.get('button').contains('Delete automation', { matchCase: false }).scrollIntoView().should('be.visible').click()
       })
     })
-    .then(() => {
-      cy.checkAndClosePolicyAutomationPanel(uName)
-    })
+    .checkAndClosePolicyAutomationPanel(uName, 2000)
   }
 }
 
@@ -1658,9 +1650,7 @@ export const action_verifyHistoryPageWithMock = (uName) => {
 
   cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
   cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
-  .then(() => {
-    cy.checkAndClosePolicyAutomationPanel(uName)
-  })
+  .checkAndClosePolicyAutomationPanel(uName, 2000)
 }
 
 const verifyHistoryPage = (mode, failuresExpected) => {
@@ -1765,11 +1755,10 @@ export const action_verifyPolicyWithoutAutomation = (uPolicyName) => {
 
 // check if policy automation panel is successfully closed
 // if not log the error msg and force close
-export const action_checkAndClosePolicyAutomationPanel = (uName) => {
-  // wait 1s after policy automation panel automatically closing
-  // 0.2s closing withdraw effect and 0.8s buffer, 0.5s isn't enough here
+export const action_checkAndClosePolicyAutomationPanel = (uName, waitTime=50) => {
+  // waitTime after policy automation panel automatically closing
   // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.get('body').wait(1000)
+  cy.get('body').wait(waitTime)
   .then(($body) => {
     // // If policy automation panel is still opened
     if ($body.find('#automation-resource-panel').length === 1) {

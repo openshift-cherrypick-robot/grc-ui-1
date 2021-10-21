@@ -559,8 +559,8 @@ Cypress.Commands.add('verifyPolicyWithoutAutomation', (uPolicyName) => {
   cy.then(() => action_verifyPolicyWithoutAutomation(uPolicyName))
 })
 
-Cypress.Commands.add('checkAndClosePolicyAutomationPanel', (uName) => {
-  cy.then(() => action_checkAndClosePolicyAutomationPanel(uName))
+Cypress.Commands.add('checkAndClosePolicyAutomationPanel', (uName, waitTime) => {
+  cy.then(() => action_checkAndClosePolicyAutomationPanel(uName, waitTime))
 })
 
 Cypress.Commands.add('mockAnsibleInstallQuery', (opInstalled) => {
