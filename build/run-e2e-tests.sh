@@ -80,7 +80,7 @@ fi
 echo "* Export envs to run E2E"
 # Setting coverage to "false" until Sonar is restored for E2E
 export CYPRESS_coverage=${CYPRESS_coverage:-"false"}
-export CYPRESS_TAGS_EXCLUDE=${CYPRESS_TAGS_EXCLUDE:-"@extended"}
+# export CYPRESS_TAGS_EXCLUDE=${CYPRESS_TAGS_EXCLUDE:-"@extended"}
 if [[ "${FAIL_FAST}" != "false" ]]; then
   export  CYPRESS_FAIL_FAST_PLUGIN="true"
 fi
