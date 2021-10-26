@@ -29,7 +29,8 @@ exports[`PolicyActionModal component Modal returns notification on error 1`] = `
     <AcmAlert
       isInline={true}
       noClose={true}
-      title="There was an error."
+      subtitle="There was an error."
+      title="An unexpected error occurred. Try again."
       variant="warning"
     />
     <p
