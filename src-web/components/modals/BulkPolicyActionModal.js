@@ -156,8 +156,8 @@ export class BulkPolicyActionModal extends React.Component {
             <AcmAlert
                 isInline={true}
                 noClose={true}
-                variant="warning"
-                title={msgs.get('error.default.description', locale)}
+                variant="danger"
+                title={msgs.get('error.processing.request', locale)}
                 subtitle={reqErrorMsg}
             />
         )}
