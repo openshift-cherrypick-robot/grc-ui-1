@@ -30,8 +30,8 @@ exports[`PolicyActionModal component Modal returns notification on error 1`] = `
       isInline={true}
       noClose={true}
       subtitle="There was an error."
-      title="An unexpected error occurred. Try again."
-      variant="warning"
+      title="There were errors processing the requests"
+      variant="danger"
     />
     <p
       style={

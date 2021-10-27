@@ -78,6 +78,7 @@
   "edit.yaml.off": "YAML: Off",
   "error": "Error",
   "error.default.description": "An unexpected error occurred. Try again.",
+  "error.processing.request": "There were errors processing the requests",
   "error.parse": "Parsing error",
   "error.request": "Request error",
   "error.no.searchtext": "Specify a search text first",
