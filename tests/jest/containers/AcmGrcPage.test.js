@@ -78,7 +78,7 @@ describe('AcmGrcPage container', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0))
     component.update()
-    expect(toJson(component)).toMatchSnapshot()
+    expect(toJson(component, { noKey: true })).toMatchSnapshot()
   })
 
   it('should render ALL_POLICIES page with all policy automation ', async () => {
@@ -104,7 +104,7 @@ describe('AcmGrcPage container', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0))
     component.update()
-    expect(toJson(component)).toMatchSnapshot()
+    expect(toJson(component, { noKey: true })).toMatchSnapshot()
   })
 
   it('should render POLICY_CLUSTERS page ', async () => {
@@ -197,7 +197,7 @@ describe('AcmGrcPage container', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0))
     component.update()
-    expect(toJson(component)).toMatchSnapshot()
+    expect(toJson(component, { noKey: true })).toMatchSnapshot()
   })
 
   it('should render POLICY_TEMPLATE_DETAILS page with mustnothave', async () => {
@@ -238,7 +238,7 @@ describe('AcmGrcPage container', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0))
     component.update()
-    expect(toJson(component)).toMatchSnapshot()
+    expect(toJson(component, { noKey: true })).toMatchSnapshot()
   })
 
   it('should render POLICY_STATUS_HISTORY page ', async () => {
@@ -272,6 +272,6 @@ describe('AcmGrcPage container', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0))
     component.update()
-    expect(toJson(component)).toMatchSnapshot()
+    expect(toJson(component, { noKey: true })).toMatchSnapshot()
   })
 })
