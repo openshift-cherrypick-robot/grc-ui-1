@@ -79,15 +79,6 @@ Pod:
   remediation: False
   disable: False
 
-PodSecurityPolicy:
-  namespace: 'default'
-  cluster_binding:
-   - 'local-cluster: "true"'
-  specifications:
-    - 'PodSecurityPolicy'
-  remediation: False
-  disable: False
-
 Role:
   namespace: 'default'
   cluster_binding:

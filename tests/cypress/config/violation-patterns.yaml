@@ -81,11 +81,6 @@ gatekeeper-operator-subscription:
  0: "notification - pods \\[nginx-pod\\] in namespace [NAMESPACE] (was missing, and was created successfully|found as specified, therefore this Object template is compliant)"
  1: "violation - pods not found: \\[nginx-pod\\] in namespace [NAMESPACE] missing"
  2: "violation - namespaced object has no namespace specified"
-# PodSecurityPolicy specification
-[POLICYNAME]-restricted-psp:
- ?: "(notification|violation)"
- 0: "notification - podsecuritypolicies \\[restricted-psp\\] (was missing, and was created successfully|found as specified, therefore this Object template is compliant)"
- 1: "violation - podsecuritypolicies not found: \\[restricted-psp\\] missing"
 # Role specification
 [POLICYNAME]-deployments-role:
  ?: "(notification|violation)"
