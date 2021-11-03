@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-delete-subscription-[ID]
+  name: policy-delete-cred-[ID]
   namespace: default
   annotations:
     policy.open-cluster-management.io/standards: NIST-CSF
@@ -11,50 +11,6 @@ spec:
   remediationAction: inform
   disabled: false
   policy-templates:
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: policy-delete-sub-[ID]
-        namespaceSelector:
-          exclude:
-            - kube-*
-          include:
-            - default
-        spec:
-          object-templates:
-            - complianceType: mustnothave
-              objectDefinition:
-                apiVersion: operators.coreos.com/v1alpha1
-                kind: Subscription
-                metadata:
-                  name: awx-resource-operator
-                  namespace: default
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: policy-delete-operator-[ID]
-        namespaceSelector:
-          exclude:
-            - kube-*
-          include:
-            - default
-        spec:
-          object-templates:
-            - complianceType: mustnothave
-              objectDefinition:
-                apiVersion: operators.coreos.com/v1
-                kind: OperatorGroup
-                metadata:
-                  name: awx-resource-operator-operatorgroup
-                  namespace: default
-            - complianceType: mustnothave
-              objectDefinition:
-                apiVersion: operators.coreos.com/v1
-                kind: Operator
-                metadata:
-                  name: awx-resource-operator.default
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
@@ -113,21 +69,21 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-policy-delete-subscription-[ID]
+  name: binding-policy-delete-cred-[ID]
   namespace: default
 placementRef:
-  name: placement-policy-delete-subscription-[ID]
+  name: placement-policy-delete-cred-[ID]
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: policy-delete-subscription-[ID]
+- name: policy-delete-cred-[ID]
   kind: Policy
   apiGroup: policy.open-cluster-management.io
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-policy-delete-subscription-[ID]
+  name: placement-policy-delete-cred-[ID]
   namespace: default
 spec:
   clusterConditions:

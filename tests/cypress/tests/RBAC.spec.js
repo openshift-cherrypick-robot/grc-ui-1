@@ -50,70 +50,6 @@ describeT('@rbac RHACM4K-2584 - GRC UI: [P1][Sev1][console] Role Based Access Co
 
   })
 
-  /*****************
-   * Ansible Setup *
-   *****************/
-  const subscriptionPolicy = 'automation/create_subscription.yaml'
-  const credentialPolicy = 'automation/create_credential.yaml'
-  const cleanUpPolicy = 'automation/clean_up.yaml'
-
-  //create subscription to install ansible automation operator
-  const substitutionRules = getDefaultSubstitutionRules()
-  const rawSubPolicyYAML = getConfigObject(subscriptionPolicy, 'raw', substitutionRules)
-  const subPolicyName = rawSubPolicyYAML.replace(/\r?\n|\r/g, ' ').replace(/^.*?name:\s*/m, '').replace(/\s.*/m,'')
-
-  it('Ansible setup: Create a subscription to install the Ansible operator', () => {
-    cy.visit('/multicloud/policies/create')
-    cy.log(rawSubPolicyYAML)
-      .createPolicyFromYAML(rawSubPolicyYAML, true)
-  })
-  it(`Ansible setup: Check that policy ${subPolicyName} is present in the policy listing`, () => {
-    cy.verifyPolicyInListing(subPolicyName, {})
-  })
-  it(`Ansible setup: Wait for ${subPolicyName} status to become NonCompliant`, () => {
-    cy.waitForPolicyStatus(subPolicyName, '[^0]/')
-  })
-  it(`Ansible setup: Enforce ${subPolicyName}`, () => {
-    cy.actionPolicyActionInListing(subPolicyName, 'Enforce')
-  })
-  it(`Ansible setup: Wait for ${subPolicyName} status to be Compliant`, () => {
-    cy.waitForPolicyStatus(subPolicyName, '0/')
-  })
-  it(`Ansible setup: Delete policy ${subPolicyName}`, () => {
-    cy.actionPolicyActionInListing(subPolicyName, 'Delete')
-  })
-
-  //create Ansible credential
-  const rawCredPolicyYAML = getConfigObject(credentialPolicy, 'raw', substitutionRules)
-  const credPolicyName = rawCredPolicyYAML.replace(/\r?\n|\r/g, ' ').replace(/^.*?name:\s*/m, '').replace(/\s.*/m,'')
-
-  it('Ansible setup: Create the credential policy using the YAML', () => {
-    cy.visit('/multicloud/policies/create')
-    cy.log(rawCredPolicyYAML)
-      .createPolicyFromYAML(rawCredPolicyYAML, true)
-  })
-  it(`Ansible setup: Check that policy ${credPolicyName} is present in the policy listing`, () => {
-    cy.verifyPolicyInListing(credPolicyName, {})
-  })
-  it(`Ansible setup: Wait for ${credPolicyName} status to become NonCompliant`, () => {
-    cy.waitForPolicyStatus(credPolicyName, '[^0]/')
-  })
-  it(`Ansible setup: Enforce ${credPolicyName}`, () => {
-    cy.actionPolicyActionInListing(credPolicyName, 'Enforce')
-  })
-  it(`Ansible setup: Wait for ${credPolicyName} status to be Compliant`, () => {
-    cy.waitForPolicyStatus(credPolicyName, '0/')
-  })
-  //check modal post credential creation
-  it('Ansible setup: verifies sidebar credentials after creation', () => {
-    //reload page to ensure credential is there
-    cy.visit('/multicloud/policies/all')
-    cy.verifyCredentialsInSidebar(policyNamesNS1[0], 'grcui-e2e-credential')
-  })
-  it(`Ansible setup: Delete policy ${credPolicyName}`, () => {
-    cy.actionPolicyActionInListing(credPolicyName, 'Delete')
-  })
-
   it('Logout', () => {
     cy.logout()
   })
@@ -155,28 +91,5 @@ describeT('@rbac RHACM4K-2584 - GRC UI: [P1][Sev1][console] Role Based Access Co
       cy.actionPolicyActionInListing(policyName, 'Delete')
         .verifyPolicyNotInListing(policyName)
     }
-  })
-
-  const cleanUprawPolicyYAML = getConfigObject(cleanUpPolicy, 'raw', substitutionRules)
-  const cleanUppolicyName = cleanUprawPolicyYAML.replace(/\r?\n|\r/g, ' ').replace(/^.*?name:\s*/m, '').replace(/\s.*/m,'')
-  it('Ansible cleanup: Create the clean up policy using the YAML', () => {
-    cy.visit('/multicloud/policies/create')
-    cy.log(cleanUprawPolicyYAML)
-      .createPolicyFromYAML(cleanUprawPolicyYAML, true)
-  })
-  it(`Ansible cleanup: Wait for ${cleanUppolicyName} status to become NonCompliant`, () => {
-    cy.waitForPolicyStatus(cleanUppolicyName, '[^0]/')
-  })
-  it(`Ansible cleanup: Enforce ${cleanUppolicyName}`, () => {
-    cy.actionPolicyActionInListing(cleanUppolicyName, 'Enforce')
-  })
-  it(`Ansible cleanup: Wait for ${cleanUppolicyName} status to be Compliant`, () => {
-    cy.waitForPolicyStatus(cleanUppolicyName, '0/')
-  })
-  it(`Ansible cleanup: Delete policy ${cleanUppolicyName}`, () => {
-    cy.actionPolicyActionInListing(cleanUppolicyName, 'Delete')
-  })
-  it(`Ansible cleanup: Verify that policy ${cleanUppolicyName} is not present in the policy listing`, () => {
-    cy.verifyPolicyNotInListing(cleanUppolicyName)
   })
 })

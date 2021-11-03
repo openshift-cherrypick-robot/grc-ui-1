@@ -12,7 +12,8 @@ import { pageLoader, isPolicyStatusAvailable, isClusterTemplateStatusAvailable,
          action_verifyPolicyViolationDetailsInCluster, action_verifyPolicyViolationDetailsInHistory,
          action_verifyCreatePolicySelection, isClusterViolationsStatusAvailable, action_verifyClusterViolationsInListing,
          action_checkNotificationMessage, action_checkPolicyListingPageUserPermissions, action_verifyCredentialsInSidebar,
-         action_verifyAnsibleInstallPrompt, action_scheduleAutomation, action_verifyHistoryPageWithMock
+         action_verifyAnsibleInstallPrompt, action_scheduleAutomation, action_verifyHistoryPageWithMock,
+         action_checkAndClosePolicyAutomationPanel, action_mockAnsibleInstallQuery
 } from '../support/views'
 
 Cypress.Commands.add('login', (OPTIONS_HUB_USER='', OPTIONS_HUB_PASSWORD='', OC_IDP='', force=false) => {
@@ -526,6 +527,14 @@ Cypress.Commands.add('scheduleAutomation', (uName, credentialName, mode) => {
   cy.then(() => action_scheduleAutomation(uName, credentialName, mode))
 })
 
-Cypress.Commands.add('verifyHistoryPageWithMock', (uName) => {
-  cy.then(() => action_verifyHistoryPageWithMock(uName))
+Cypress.Commands.add('verifyHistoryPageWithMock', (uName, successful) => {
+  cy.then(() => action_verifyHistoryPageWithMock(uName, successful))
+})
+
+Cypress.Commands.add('checkAndClosePolicyAutomationPanel', (uName) => {
+  cy.then(() => action_checkAndClosePolicyAutomationPanel(uName))
+})
+
+Cypress.Commands.add('mockAnsibleInstallQuery', (opInstalled) => {
+  cy.then(() => action_mockAnsibleInstallQuery(opInstalled))
 })

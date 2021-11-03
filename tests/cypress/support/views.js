@@ -1409,6 +1409,8 @@ export const action_checkPolicyListingPageUserPermissions = (policyNames = [], c
 }
 
 export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
   //mock call if checking for empty state to ensure no conflicts occur
   if (credentialName === '') {
     cy.intercept('POST', Cypress.config().baseUrl + '/multicloud/policies/graphql', (req) => {
@@ -1455,8 +1457,8 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
   cy.CheckGrcMainPage()
 }
 
-export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
-  // mock call to check behavior
+//  mock ansible install query on Cypress.config().baseUrl/multicloud/policies/graphql
+export const action_mockAnsibleInstallQuery = (opInstalled) => {
   cy.intercept('POST', Cypress.config().baseUrl + '/multicloud/policies/graphql', (req) => {
     if (req.body.operationName === 'ansibleOperatorInstalled') {
       req.reply({
@@ -1468,43 +1470,48 @@ export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
       })
     }
   }).as('ansibleOpInstallQuery')
+}
 
+export const action_verifyAnsibleInstallPrompt = (uName, opInstalled) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(opInstalled)
+  // Check for open Automation modal and close it if it's open
+  cy.checkAndClosePolicyAutomationPanel(uName)
   //search for policy and click to configure
   cy.CheckGrcMainPage()
     .doTableSearch(uName)
     .get('.grc-view-by-policies-table').within(() => {
-    cy.get('a')
-      .contains(uName)
-      .parents('td')
-      .siblings('td[data-label="Automation"]').within(() => {
-        cy.get('a').click()
-      })
-  })
-  .then(() => {
-    cy.get('.pf-c-modal-box__header').within(() => {
-      if (opInstalled) {
-        cy.get('#installAnsibleOperatorLink').should('not.exist')
-      } else {
-        cy.get('#installAnsibleOperatorLink').should('exist')
-      }
+      cy.get('a')
+        .contains(uName)
+        .parents('td')
+        .siblings('td[data-label="Automation"]')
+        .find('a').as('automationButton')
     })
+  cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
+  cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
+  pageLoader.shouldNotExist()
+  cy.get('.pf-c-modal-box__header').within(() => {
+    if (opInstalled) {
+      cy.get('#installAnsibleOperatorLink').should('not.exist')
+    } else {
+      cy.get('#installAnsibleOperatorLink').scrollIntoView().should('be.visible')
+    }
+  })
+  cy.get('#automation-resource-panel').within(() => {
+    cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+    cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
   })
   .then(() => {
-    cy.get('#automation-resource-panel').within(() => {
-      cy.get('button[aria-label="Close"]').click()
-    })
+    cy.checkAndClosePolicyAutomationPanel(uName)
   })
-  // wait for the dialog to be closed
-  .then(() => {
-    cy.get('#automation-resource-panel').should('not.exist')
-  })
-  // after mainpage table action, always return to grc main page
-  cy.CheckGrcMainPage()
 }
 
 export const action_scheduleAutomation = (uName, credentialName, mode) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
   const demoTemplateName = 'Demo Job Template'
 
+  cy.log(`uName=${uName} credentialName=${credentialName} mode=${mode} in action_scheduleAutomation`)
   //mock call to graphQL to get job templates to avoid needing to use a real tower
   cy.intercept('POST', Cypress.config().baseUrl + '/multicloud/policies/graphql', (req) => {
     if (req.body.operationName === 'getAnsibleJobTemplates') {
@@ -1525,11 +1532,7 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
   let failures = 0
 
   // Check for open Automation modal and close it if it's open
-  if (Cypress.$('#automation-resource-panel').length === 1) {
-    cy.get('#automation-resource-panel').within(() => {
-      cy.get('button[aria-label="Close"]').click()
-    })
-  }
+  cy.checkAndClosePolicyAutomationPanel(uName)
 
   cy.CheckGrcMainPage()
     .doTableSearch(uName)
@@ -1608,13 +1611,11 @@ export const action_scheduleAutomation = (uName, credentialName, mode) => {
   })
 }
 
-export const action_verifyHistoryPageWithMock = (uName) => {
+export const action_verifyHistoryPageWithMock = (uName, successful) => {
+  // mock ansible operator
+  cy.mockAnsibleInstallQuery(true)
   // Check for open Automation modal and close it if it's open
-  if (Cypress.$('#automation-resource-panel').length === 1) {
-    cy.get('#automation-resource-panel').within(() => {
-      cy.get('button[aria-label="Close"]').click()
-    })
-  }
+  cy.checkAndClosePolicyAutomationPanel(uName)
   //open modal
   cy.CheckGrcMainPage()
     .doTableSearch(uName)
@@ -1638,7 +1639,7 @@ export const action_verifyHistoryPageWithMock = (uName) => {
                 message: 'Awaiting next reconciliation',
                 name: 'policy-pod-1111-policy-automation-once-hd5xz',
                 started: '2021-06-03T14:45:53.237671Z',
-                status: 'successful',
+                status: successful ? 'successful' : 'error',
               }
             ]
           }
@@ -1651,7 +1652,11 @@ export const action_verifyHistoryPageWithMock = (uName) => {
   })
 
   cy.get('.ansible-history-table').within(() => {
-    cy.get('div').contains('Successful').should('exist')
+      if (successful) {
+        cy.get('div').contains('Successful').should('exist')
+      } else {
+        cy.get('svg[fill="#c9190b"]').should('have.length', 1)
+      }
   })
 
   cy.get('button[aria-label="Close"]').click()
@@ -1670,11 +1675,13 @@ const verifyHistoryPage = (mode, failuresExpected) => {
     cy.get('.ansible-history-table').within(() => {
       cy.get('.pf-c-empty-state').should('exist')
     })
-  } else {
-    cy.get('.ansible-history-table').within(() => {
-      cy.get('svg[fill="#c9190b"]').should('have.length', failuresExpected)
-    })
   }
+  // failed jobs not available when Ansible is mocked
+  // else {
+  //   cy.get('.ansible-history-table').within(() => {
+  //     cy.get('svg[fill="#c9190b"]').should('have.length', failuresExpected)
+  //   })
+  // }
 }
 
 const checkWithPolicy = (policyYaml) => {
@@ -1714,4 +1721,45 @@ const verifyCompliant = (policyName) => {
           cy.get('svg[fill="#3e8635"]').should('exist')
         })
     })
+}
+
+// check if policy automation panel is successfully closed
+// if not log the error msg and force close
+export const action_checkAndClosePolicyAutomationPanel = (uName) => {
+  // wait 1s after policy automation panel automatically closing
+  // 0.2s closing withdraw effect and 0.8s buffer, 0.5s isn't enough here
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.get('body').wait(1000)
+  .then(($body) => {
+    // // If policy automation panel is still opened
+    if ($body.find('#automation-resource-panel').length === 1) {
+      cy.log(`Poliy auotmation panel is open for policy ${uName}`)
+      // check if there is an error msg on the panel and log it
+      cy.get('#automation-resource-panel').then(($panel) => {
+        if ($panel.find('div[aria-label="Danger Alert"]').length) {
+          cy.get('div[aria-label="Danger Alert"]').within(() => {
+            cy.get('h4.pf-c-alert__title').then(($el) => {
+              const policyAutomationErrorMsg = $el.text()
+              if (policyAutomationErrorMsg) {
+                cy.log(`Find an error message on policy ${uName}'s auotmation panel: ${policyAutomationErrorMsg}`)
+              }
+            })
+          })
+        }
+      })
+
+      // no matter if there is an error msg on the panel, alway force close the panel
+      cy.get('#automation-resource-panel').within(() => {
+        cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
+        cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
+      })
+      cy.log(`Now force close auotmation panel for policy ${uName}`)
+    } else {
+      cy.get('#automation-resource-panel').should('not.exist')
+      cy.log(`Poliy automation panel is already closed for policy ${uName}`)
+    }
+  })
+
+  // after policyAutomationPanel action, return to grc main page
+  cy.CheckGrcMainPage()
 }
