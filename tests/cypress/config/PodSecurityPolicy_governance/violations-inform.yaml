@@ -1,0 +1,3 @@
+"*":  # this is a default mapping
+ - "[POLICYNAME]-restricted-psp-1"
+

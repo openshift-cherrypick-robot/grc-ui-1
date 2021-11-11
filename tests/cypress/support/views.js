@@ -772,6 +772,9 @@ export const getPolicyTemplatesNameAndKind = (policyName, policyConfig) => {
     case 'Pod':
       templates.add(policyName+'-nginx-pod'+'/'+'ConfigurationPolicy')
       break
+    case 'PodSecurityPolicy':
+      templates.add(policyName+'-restricted-psp'+'/'+'ConfigurationPolicy')
+      break
     case 'Role':
       templates.add(policyName+'-deployments-role'+'/'+'ConfigurationPolicy')
       break

@@ -74,6 +74,7 @@ const controlData = [
       'LimitRange - limit memory usage',
       'Namespace - must have namespace \'prod\'',
       'Pod - nginx pod must exist',
+      'PodSecurityPolicy - no privileged pods',
       'Role - role must follow defined permissions',
       'RoleBinding - role binding must exist',
       'SecurityContextConstraints - restricted scc'

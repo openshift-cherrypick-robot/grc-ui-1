@@ -20,6 +20,7 @@ import specGatekeeper from './spec-gatekeeper.yaml'
 import specImagemanifestvuln from './spec-imagemanifestvuln.yaml'
 import specNamespace from './spec-namespace.yaml'
 import specPodExists from './spec-pod-exists.yaml'
+import specPodSecurity from './spec-pod-security.yaml'
 import specRolebinding from './spec-rolebinding.yaml'
 import specRoles from './spec-roles.yaml'
 import specScc from './spec-scc.yaml'
@@ -34,6 +35,7 @@ const Choices = {
   specImagemanifestvuln,
   specNamespace,
   specPodExists,
+  specPodSecurity,
   specRolebinding,
   specRoles,
   specScc,
