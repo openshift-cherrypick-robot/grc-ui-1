@@ -32,7 +32,7 @@ exports[`createDocLink view renders does not show create link as expected 1`] = 
     <Button
       aria-describedby="launchWindow"
       component="a"
-      href="https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/undefined/html/security/security#manage-security-policies"
+      href="https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/undefined/html/governance/governance#manage-security-policies"
       id="doc-link"
       isInline={true}
       target="doc"
@@ -76,7 +76,7 @@ exports[`createDocLink view renders show create link as expected 1`] = `
     <Button
       aria-describedby="launchWindow"
       component="a"
-      href="https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/undefined/html/security/security#manage-security-policies"
+      href="https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/undefined/html/governance/governance#manage-security-policies"
       id="doc-link"
       isInline={true}
       target="doc"

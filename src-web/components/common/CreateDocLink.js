@@ -22,7 +22,7 @@ export const createDocLink = (locale, handleCreateResource, submitBtnTextKey, cr
   const vNumber = config['ACM_VERSION']
   const rhPath = 'https://access.redhat.com/'
   const acmPath = 'documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/'
-  const grcPath = `${vNumber}/html/security/security#manage-security-policies`
+  const grcPath = `${vNumber}/html/governance/governance#manage-security-policies`
   const docURL = `${rhPath}${acmPath}${grcPath}`
   const disableFlag = (createFlag !== 1)
   const createButton = (<Button
