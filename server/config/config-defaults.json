@@ -1,5 +1,5 @@
 {
-    "ACM_VERSION": "2.3",
+    "ACM_VERSION": "2.5",
     "API_SERVER_URL": "https://kubernetes.default.svc",
     "contextPath": "/multicloud/policies",
     "clusterContextPath": "/multicloud/clusters",
