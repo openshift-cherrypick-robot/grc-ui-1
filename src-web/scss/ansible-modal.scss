@@ -1,7 +1,8 @@
 /* Copyright (c) 2021 Red Hat, Inc. */
 /* Copyright Contributors to the Open Cluster Management project */
 .pf-c-backdrop {
-  --pf-c-backdrop--BackgroundColor: var(--pf-chart-voronoi--data--Fill)
+  --pf-c-backdrop--BackgroundColor: var(--pf-chart-voronoi--data--Fill);
+  --pf-c-backdrop--ZIndex: 100;
 }
 
 .automation-resource-panel {
@@ -13,7 +14,11 @@
 
 .automation-resource-panel.slide-in {
   right: 0rem;
-  transition: right 0.4s
+  transition: right 0.4s;
+  height: calc(100% - 76px); // here acm-header has fixed height 76px
+  top: auto;
+  bottom: 0;
+  overflow-y: scroll;
 }
 
 #automation-resource-panel {

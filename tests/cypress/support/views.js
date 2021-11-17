@@ -1412,9 +1412,9 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
   cy.waitUntil(() => cy.get('@automationButton').scrollIntoView().should('be.visible'))
   cy.get('@automationButton').scrollIntoView().should('be.visible').click({ force: true })
     .then(() => {
-    cy.get('.ansible-configure-table').scrollIntoView().within(() => {
+    cy.get('.ansible-configure-table').scrollIntoView().should('be.visible').within(() => {
       if (credentialName === '') {
-        cy.get('p').should('contain', 'Ansible credential is required to create an Ansible job. Create your credential by clicking the following link:')
+        cy.get('p').scrollIntoView().should('contain', 'Ansible credential is required to create an Ansible job. Create your credential by clicking the following link:')
       } else {
         cy.waitUntil(() => cy.get('.pf-c-select').scrollIntoView().should('be.visible').click())
         cy.contains(credentialName).scrollIntoView().should('be.visible')
@@ -1422,7 +1422,7 @@ export const action_verifyCredentialsInSidebar = (uName, credentialName) => {
     })
   })
   .then(() => {
-    cy.get('#automation-resource-panel').within(() => {
+    cy.get('#automation-resource-panel').scrollIntoView().should('be.visible').within(() => {
       cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
       cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
     })
