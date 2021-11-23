@@ -32,6 +32,7 @@ The UI Platform is developed as an isomorphic React application. View the list o
    ```
 - Build the project
 
+
    ```bash
       npm run build
    or npm run build:watch
