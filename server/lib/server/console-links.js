@@ -42,7 +42,8 @@ module.exports.getConsoleLinks = (cb) => {
     for (let i = 0; i < consoleLinks.length; i++) {
       const link = consoleLinks[i]
       if (link.spec.location === 'ApplicationMenu' && link.spec.text !== 'Red Hat Advanced Cluster Management for Kubernetes') {
-        const section = link.spec.applicationMenu.section
+        // applicationMenu may be missing entirely; default to section with empty string title
+        const section = _.get(link, 'spec.applicationMenu.section', '')
         if (formattedLinks[section]) {
           formattedLinks[section].push({
             url: link.spec.href,
