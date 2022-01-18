@@ -7,7 +7,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Title } from '@patternfly/react-core'
-import { AcmTable, AcmTablePaginationContextProvider } from '@open-cluster-management/ui-components'
+import { AcmTable, AcmTablePaginationContextProvider } from '@stolostron/ui-components'
 import { LocaleContext } from '../common/LocaleContext'
 import statusByTemplatesDef from '../../tableDefinitions/statusByTemplatesDef'
 import statusByClustersDef from '../../tableDefinitions/statusByClustersDef'
@@ -40,7 +40,7 @@ class PolicyStatusView extends React.Component {
     }
     // Check for "create" permissions in order to determine whether to enable
     // the "View Details" link, which requires creating a managedClusterView
-    // (See https://github.com/open-cluster-management/backlog/issues/6135)
+    // (See https://github.com/stolostron/backlog/issues/6135)
     const showDetailsLink = checkCreatePermission(userAccess)
     const statusAccess = items.map(item => ({...item, showDetailsLink: showDetailsLink}))
     const tableDataByTemplate = groupByTemplate(statusAccess, locale)

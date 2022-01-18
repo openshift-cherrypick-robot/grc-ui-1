@@ -14,7 +14,7 @@ import {
   AcmDescriptionList,
   AcmExpandableCard,
   AcmTablePaginationContextProvider
-} from '@open-cluster-management/ui-components'
+} from '@stolostron/ui-components'
 import { LocaleContext } from '../common/LocaleContext'
 import relatedObjectsDef from '../../tableDefinitions/relatedObjectsDef'
 import { transform } from '../../tableDefinitions/utils'

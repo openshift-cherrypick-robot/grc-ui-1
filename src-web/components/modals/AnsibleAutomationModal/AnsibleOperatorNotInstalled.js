@@ -4,7 +4,7 @@
 'use strict'
 
 import React from 'react'
-import { AcmLaunchLink } from '@open-cluster-management/ui-components'
+import { AcmLaunchLink } from '@stolostron/ui-components'
 import { Alert } from '@patternfly/react-core'
 import msgs from '../../../nls/platform.properties'
 import { getAnsibleOperatorLink } from '../../../../server/lib/server/ansibleOperatorLink'

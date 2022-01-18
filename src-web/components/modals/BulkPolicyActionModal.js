@@ -11,7 +11,7 @@ import {
     AcmButton,
     AcmModal,
     AcmTable,
-} from '@open-cluster-management/ui-components'
+} from '@stolostron/ui-components'
 import { Spinner, ButtonVariant } from '@patternfly/react-core'
 import msgs from '../../nls/platform.properties'
 import { withRouter } from 'react-router-dom'

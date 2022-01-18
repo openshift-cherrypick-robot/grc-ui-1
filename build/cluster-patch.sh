@@ -12,7 +12,7 @@ while UNFINISHED="$(oc -n ${acm_installed_namespace} get pods | grep -v -e "Comp
 done
 
 VERSION_TAG=${VERSION_TAG:-"latest"}
-DOCKER_URI="quay.io/open-cluster-management"
+DOCKER_URI="quay.io/stolostron"
 COMPONENT="grc-ui-api"
 if [[ "${RUN_LOCAL}" == "true" ]]; then
   docker pull ${DOCKER_URI}/${COMPONENT}:${VERSION_TAG}

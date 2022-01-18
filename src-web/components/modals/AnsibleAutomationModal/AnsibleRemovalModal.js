@@ -6,7 +6,7 @@
 import React from 'react'
 import {
   AcmModal, AcmButton
-} from '@open-cluster-management/ui-components'
+} from '@stolostron/ui-components'
 import { ButtonVariant } from '@patternfly/react-core'
 import msgs from '../../../nls/platform.properties'
 

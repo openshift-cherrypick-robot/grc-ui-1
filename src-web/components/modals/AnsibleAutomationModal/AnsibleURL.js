@@ -4,7 +4,7 @@
 'use strict'
 
 import React from 'react'
-import { AcmLaunchLink } from '@open-cluster-management/ui-components'
+import { AcmLaunchLink } from '@stolostron/ui-components'
 import TruncateText from '../../common/TruncateText'
 
 import '../../../scss/ansible-modal.scss'

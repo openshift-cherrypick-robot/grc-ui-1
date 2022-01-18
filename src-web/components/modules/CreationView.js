@@ -13,7 +13,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { AcmAlert } from '@open-cluster-management/ui-components'
+import { AcmAlert } from '@stolostron/ui-components'
 import { ExternalLinkAltIcon } from '@patternfly/react-icons'
 import { TemplateEditor } from '../common/TemplateEditor'
 import policyTemplate from '../common/templates/policy-template.hbs'

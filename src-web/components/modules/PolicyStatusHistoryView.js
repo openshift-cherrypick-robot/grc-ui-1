@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import {
   Title,
 } from '@patternfly/react-core'
-import { AcmTable, AcmTablePaginationContextProvider } from '@open-cluster-management/ui-components'
+import { AcmTable, AcmTablePaginationContextProvider } from '@stolostron/ui-components'
 import { LocaleContext } from '../common/LocaleContext'
 import statusHistoryDef from '../../tableDefinitions/statusHistoryDef'
 import { transform } from '../../tableDefinitions/utils'
