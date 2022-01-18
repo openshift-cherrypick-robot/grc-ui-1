@@ -12,7 +12,7 @@ import { updateModal } from '../../actions/common'
 import { checkCreateRole, checkEditRole } from '../../utils/CheckUserPermission'
 import {
     AcmLaunchLink
-} from '@open-cluster-management/ui-components'
+} from '@stolostron/ui-components'
 import { Button } from '@patternfly/react-core'
 import _ from 'lodash'
 

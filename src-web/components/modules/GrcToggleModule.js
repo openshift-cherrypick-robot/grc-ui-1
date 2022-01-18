@@ -14,7 +14,7 @@ import {
 import {
   AcmTable,
   AcmTablePaginationContextProvider
-} from '@open-cluster-management/ui-components'
+} from '@stolostron/ui-components'
 import { LocaleContext } from '../common/LocaleContext'
 import grcPoliciesViewDef from '../../tableDefinitions/grcPoliciesViewDef'
 import grcClustersViewDef from '../../tableDefinitions/grcClustersViewDef'

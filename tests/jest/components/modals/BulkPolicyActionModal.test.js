@@ -7,7 +7,7 @@ import React from 'react'
 import { BulkPolicyActionModal } from '../../../../src-web/components/modals/BulkPolicyActionModal'
 import { shallow, mount } from 'enzyme'
 import toJson from 'enzyme-to-json'
-import { AcmAlert } from '@open-cluster-management/ui-components'
+import { AcmAlert } from '@stolostron/ui-components'
 import { REQUEST_STATUS } from '../../../../src-web/actions/index'
 
 describe('PolicyActionModal component', () => {
@@ -32,7 +32,7 @@ describe('PolicyActionModal component', () => {
                                 gitPath: 'stable',
                                 gitBranch: 'main',
                                 type: 'GitHub',
-                                pathname: 'https://github.com/open-cluster-management/policy-collection.git'
+                                pathname: 'https://github.com/stolostron/policy-collection.git'
                             },
                             text: 'Git',
                         },
@@ -98,7 +98,7 @@ describe('PolicyActionModal component', () => {
                                 gitPath: 'stable',
                                 gitBranch: 'main',
                                 type: 'GitHub',
-                                pathname: 'https://github.com/open-cluster-management/policy-collection.git'
+                                pathname: 'https://github.com/stolostron/policy-collection.git'
                             },
                             text: 'Git',
                         },
@@ -164,7 +164,7 @@ describe('PolicyActionModal component', () => {
                                 gitPath: 'stable',
                                 gitBranch: 'main',
                                 type: 'GitHub',
-                                pathname: 'https://github.com/open-cluster-management/policy-collection.git'
+                                pathname: 'https://github.com/stolostron/policy-collection.git'
                             },
                             text: 'Git',
                         },
@@ -230,7 +230,7 @@ describe('PolicyActionModal component', () => {
                                 gitPath: 'stable',
                                 gitBranch: 'main',
                                 type: 'GitHub',
-                                pathname: 'https://github.com/open-cluster-management/policy-collection.git'
+                                pathname: 'https://github.com/stolostron/policy-collection.git'
                             },
                             text: 'Git',
                         },
@@ -294,7 +294,7 @@ describe('PolicyActionModal component', () => {
                                 gitPath: 'stable',
                                 gitBranch: 'main',
                                 type: 'GitHub',
-                                pathname: 'https://github.com/open-cluster-management/policy-collection.git'
+                                pathname: 'https://github.com/stolostron/policy-collection.git'
                             },
                             text: 'Git',
                         },

@@ -14,7 +14,7 @@
 const express = require('express'),
       router = express.Router(),
       app = require('./app'),
-      inspect = require('@open-cluster-management/security-middleware')
+      inspect = require('@stolostron/security-middleware')
 
 router.all(['/', '/*'], inspect.ui(), app)
 

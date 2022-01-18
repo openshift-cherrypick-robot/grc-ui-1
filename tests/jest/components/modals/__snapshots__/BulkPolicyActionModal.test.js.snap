@@ -86,7 +86,7 @@ exports[`PolicyActionModal component Modal returns notification on error 1`] = `
               "rawData": Object {
                 "gitBranch": "main",
                 "gitPath": "stable",
-                "pathname": "https://github.com/open-cluster-management/policy-collection.git",
+                "pathname": "https://github.com/stolostron/policy-collection.git",
                 "type": "GitHub",
               },
               "text": "Git",

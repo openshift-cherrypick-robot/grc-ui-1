@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
   AcmModal, AcmExpandableCard,
-} from '@open-cluster-management/ui-components'
+} from '@stolostron/ui-components'
 import {
   Text, Spinner, Select, Title,
   SelectOption, SelectVariant, Radio, Alert,

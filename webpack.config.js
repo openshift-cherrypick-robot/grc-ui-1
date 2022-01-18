@@ -105,7 +105,7 @@ module.exports = {
         test: /\.css$/,
         include: [
           path.resolve(__dirname, './node_modules/monaco-editor'),
-          path.resolve(__dirname, './node_modules/@open-cluster-management/ui-components'),
+          path.resolve(__dirname, './node_modules/@stolostron/ui-components'),
         ],
         use: ['style-loader', 'css-loader'],
       },

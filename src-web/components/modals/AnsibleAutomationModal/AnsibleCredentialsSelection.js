@@ -9,7 +9,7 @@ import msgs from '../../../nls/platform.properties'
 import TitleWithTooltip from '../../common/TitleWithTooltip'
 import { renderAnsibleURL } from './AnsibleURL'
 import _uniqueId from 'lodash/uniqueId'
-import { AcmIcon, AcmIconVariant } from '@open-cluster-management/ui-components'
+import { AcmIcon, AcmIconVariant } from '@stolostron/ui-components'
 
 import '../../../scss/ansible-modal.scss'
 

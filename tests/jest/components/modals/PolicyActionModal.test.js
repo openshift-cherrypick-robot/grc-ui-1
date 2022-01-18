@@ -10,7 +10,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
-import { AcmAlert } from '@open-cluster-management/ui-components'
+import { AcmAlert } from '@stolostron/ui-components'
 import { Spinner } from '@patternfly/react-core'
 
 import {
