@@ -6,7 +6,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { AcmModal, AcmButton, AcmAlert } from '@open-cluster-management/ui-components'
+import { AcmModal, AcmButton, AcmAlert } from '@stolostron/ui-components'
 import { Spinner, ButtonVariant } from '@patternfly/react-core'
 import msgs from '../../nls/platform.properties'
 import { withRouter } from 'react-router-dom'

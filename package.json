@@ -1,5 +1,5 @@
 {
-  "name": "@open-cluster-management/grc-ui",
+  "name": "@stolostron/grc-ui",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:open-cluster-management/grc-ui.git"
+    "url": "git@github.com:stolostron/grc-ui.git"
   },
   "author": "",
   "license": "SEE LICENSE IN LICENSE",
@@ -51,13 +51,13 @@
     "@babel/preset-react": "^7.14.5",
     "@babel/register": "^7.14.5",
     "@loadable/component": "^5.15.0",
-    "@open-cluster-management/security-middleware": "^1.0.5",
-    "@open-cluster-management/ui-components": "^0.179.0",
     "@patternfly/patternfly": "^4.115.2",
     "@patternfly/react-core": "^4.135.0",
     "@patternfly/react-icons": "^4.11.0",
     "@patternfly/react-table": "^4.29.0",
     "@patternfly/react-tokens": "^4.12.0",
+    "@stolostron/security-middleware": "^1.0.5",
+    "@stolostron/ui-components": "^0.179.1",
     "async": "^3.2.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-dynamic-import-node": "^2.3.3",

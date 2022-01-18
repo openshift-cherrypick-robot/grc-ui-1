@@ -4,7 +4,7 @@
 'use strict'
 
 import React from 'react'
-import { AcmButton } from '@open-cluster-management/ui-components'
+import { AcmButton } from '@stolostron/ui-components'
 import { ButtonVariant } from '@patternfly/react-core'
 import { createDisableTooltip } from '../../common/DisableTooltip'
 import msgs from '../../../nls/platform.properties'

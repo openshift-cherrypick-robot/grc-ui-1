@@ -4,7 +4,7 @@
 'use strict'
 
 import React from 'react'
-import { AcmTable } from '@open-cluster-management/ui-components'
+import { AcmTable } from '@stolostron/ui-components'
 import ansibleJobHistoryDef from '../../../tableDefinitions/ansibleJobHistoryDef'
 import { transform } from '../../../tableDefinitions/utils'
 import _ from 'lodash'

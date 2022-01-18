@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { AcmPageContent, AcmPageHeader, AcmAutoRefreshSelect, AcmRefreshTime, AcmSecondaryNav, AcmAlert, AcmPage } from '@open-cluster-management/ui-components'
+import { AcmPageContent, AcmPageHeader, AcmAutoRefreshSelect, AcmRefreshTime, AcmSecondaryNav, AcmAlert, AcmPage } from '@stolostron/ui-components'
 import { Spinner, PageSection } from '@patternfly/react-core'
 import { useHistory, useParams } from 'react-router-dom'
 

@@ -54,7 +54,7 @@ export OC_CLUSTER_URL=${OC_CLUSTER_URL:-"$(jq -r '.api_url' ${SHARED_DIR}/${HUB_
 acm_installed_namespace=`oc get subscriptions.operators.coreos.com --all-namespaces | grep advanced-cluster-management | awk '{print $1}'`
 
 VERSION_TAG=${VERSION_TAG:-"latest"}
-DOCKER_URI=quay.io/open-cluster-management/grc-ui-api:${VERSION_TAG}
+DOCKER_URI=quay.io/stolostron/grc-ui-api:${VERSION_TAG}
 if [[ "${RUN_LOCAL}" == "true" ]]; then
   docker pull ${DOCKER_URI}
   docker run -d -t -i -p 4000:4000 --name grcuiapi -e NODE_ENV=development -e SERVICEACCT_TOKEN=$SERVICEACCT_TOKEN -e API_SERVER_URL=$API_SERVER_URL $DOCKER_URI

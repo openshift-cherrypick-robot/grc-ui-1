@@ -9,7 +9,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Alert, AlertActionCloseButton, Checkbox, ButtonVariant, Spinner, Select,
   SelectVariant, SelectOption, TextInput, ValidatedOptions, Radio } from '@patternfly/react-core'
-import { AcmModal, AcmButton, AcmAlert } from '@open-cluster-management/ui-components'
+import { AcmModal, AcmButton, AcmAlert } from '@stolostron/ui-components'
 import { initializeControlData, cacheUserData, updateControls, parseYAML,
   dumpYAMLFromPolicyDiscovered, dumpYAMLFromTemplateObject } from './utils/update-controls'
 import { GrayOutlinedQuestionCircleIcon } from '../Icons'

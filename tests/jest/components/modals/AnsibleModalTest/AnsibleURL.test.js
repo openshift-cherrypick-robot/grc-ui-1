@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { renderAnsibleURL } from '../../../../../src-web/components/modals/AnsibleAutomationModal/AnsibleURL'
-import { AcmIcon, AcmIconVariant } from '@open-cluster-management/ui-components'
+import { AcmIcon, AcmIconVariant } from '@stolostron/ui-components'
 
 describe('render AnsibleURL component', () => {
   it('AnsibleURL link renders as empty text', () => {

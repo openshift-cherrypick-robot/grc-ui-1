@@ -3,7 +3,7 @@
     "API_SERVER_URL": "https://kubernetes.default.svc",
     "contextPath": "/multicloud/policies",
     "clusterContextPath": "/multicloud/clusters",
-    "docUrl": "https://github.com/open-cluster-management/rhacm-docs",
+    "docUrl": "https://github.com/stolostron/rhacm-docs",
     "feature_search-api": true,
     "grcUiApiUrl": "",
     "httpPort": 3000,

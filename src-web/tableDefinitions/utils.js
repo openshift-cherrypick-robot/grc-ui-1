@@ -10,7 +10,7 @@ import _ from 'lodash'
 import config from '../../server/lib/shared/config'
 import {
   AcmTable,
-} from '@open-cluster-management/ui-components'
+} from '@stolostron/ui-components'
 import {
   Label,
   LabelGroup,

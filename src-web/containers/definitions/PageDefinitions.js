@@ -4,7 +4,7 @@
 
 'use strict'
 import React from 'react'
-import { AcmButton, AcmSecondaryNavItem } from '@open-cluster-management/ui-components'
+import { AcmButton, AcmSecondaryNavItem } from '@stolostron/ui-components'
 
 import { ALL_POLICIES, SINGLE_POLICY, POLICY_STATUS, POLICY_STATUS_HISTORY, POLICY_TEMPLATE_DETAILS } from '../../utils/client/queries'
 import config from '../../../server/lib/shared/config'

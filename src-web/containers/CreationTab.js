@@ -17,7 +17,7 @@ import msgs from '../nls/platform.properties'
 import config from '../../server/lib/shared/config'
 import { checkCreatePermission, checkEditPermission } from '../utils/CheckUserPermission'
 import { LocaleContext } from '../components/common/LocaleContext'
-import { AcmButton, AcmPageContent, AcmPageHeader } from '@open-cluster-management/ui-components'
+import { AcmButton, AcmPageContent, AcmPageHeader } from '@stolostron/ui-components'
 
 export class CreationTab extends React.Component {
 
