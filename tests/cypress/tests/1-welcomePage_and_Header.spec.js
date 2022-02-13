@@ -20,10 +20,10 @@ describeT('GRC UI: [P1][Sev1][console] Welcome page', () => {
         welcomePage.shouldExist()
     })
 
-    it(`[P1][Sev1][${squad}] should redirect from base and /multicloud`, () => {
-        cy.visit('/')
-        welcomePage.shouldExist()
-    })
+    // it(`[P1][Sev1][${squad}] should redirect from base and /multicloud`, () => {
+    //     cy.visit('/')
+    //     welcomePage.shouldExist()
+    // })
 
     it('validate links on Welcome page', () => {
         welcomePage.validateSvcs()
