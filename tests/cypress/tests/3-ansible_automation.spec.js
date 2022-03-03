@@ -11,7 +11,7 @@ import { describeT } from '../support/tagging'
 import { getConfigObject } from '../config'
 import { getDefaultSubstitutionRules } from '../support/views'
 
-describeT('@bvt RHACM4K-3471 - GRC UI: [P1][Sev1][console] All policies page: Verify automation modal', () => {
+describeT('RHACM4K-3471 - GRC UI: [P1][Sev1][console] All policies page: Verify automation modal', () => {
   const confFilePolicy = 'automation/policy_toBeAutomated.yaml'
   const credentialPolicy = 'automation/create_credential.yaml'
   const cleanUpPolicy = 'automation/clean_up.yaml'
