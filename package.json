@@ -103,7 +103,7 @@
     "redux": "^4.1.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "requestretry": "^5.0.0",
+    "requestretry": "^7.0.0",
     "reselect": "^4.0.0",
     "sass-loader": "^12.1.0",
     "source-map-loader": "^3.0.0",
