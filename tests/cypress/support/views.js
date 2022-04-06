@@ -1664,6 +1664,7 @@ export const action_verifyHistoryPageWithMock = (uName) => {
 }
 
 const verifyHistoryPage = (mode, failuresExpected) => {
+  mockAnsibleAutomationHistoriesFailures(failuresExpected)
   if (mode === 'manual') {
     checkWithPolicy('automation/verify_run_manual.yaml')
   } else if (mode === 'once') {
@@ -1682,7 +1683,7 @@ const verifyHistoryPage = (mode, failuresExpected) => {
     })
   } else {
     cy.get('.ansible-history-table').within(() => {
-      cy.get('svg[fill="#c9190b"]').should('have.length', failuresExpected)
+      cy.get(`svg[fill="${getStatusIconFillColor('not compliant')}"]`).should('have.length', failuresExpected)
     })
   }
 }
@@ -1790,8 +1791,7 @@ export const action_checkAndClosePolicyAutomationPanel = (uName) => {
 
       // no matter if there is an error msg on the panel, alway force close the panel
       cy.get('#automation-resource-panel').within(() => {
-        cy.waitUntil(() => cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible'))
-        cy.get('button[aria-label="Close"]').scrollIntoView().should('be.visible').click()
+        cy.get('button[aria-label="Close"]').click({ force: true })
       })
       cy.log(`Now force close auotmation panel for policy ${uName}`)
     } else {
@@ -1802,4 +1802,44 @@ export const action_checkAndClosePolicyAutomationPanel = (uName) => {
 
   // after policyAutomationPanel action, return to grc main page
   cy.CheckGrcMainPage()
+}
+
+const mockAnsibleAutomationHistoriesFailures = (failures) => {
+  //use mock data to check failure numbers on the history tab
+  cy.intercept('POST', Cypress.config().baseUrl + '/multicloud/policies/graphql', (req) => {
+    if (req.body.operationName === 'ansibleAutomationHistories') {
+      const mockItems = []
+      if (failures == 0) {
+        mockItems.push(
+          {
+            finished: '2021-06-03T14:45:59.635136Z',
+            job: 'default/policy-pod-1111-policy-automation-once-hd5xz',
+            message: 'Awaiting next reconciliation',
+            name: 'policy-pod-1111-policy-automation-once-hd5xz',
+            started: '2021-06-03T14:45:53.237671Z',
+            status: 'no status',
+          }
+        )
+      } else if (failures > 0) {
+        for (let i = 0; i < failures; i++) {
+          mockItems.push(
+            {
+              finished: '2021-06-03T14:45:59.635136Z',
+              job: 'default/policy-pod-1111-policy-automation-once-hd5xz',
+              message: 'Awaiting next reconciliation',
+              name: `policy-pod-1111-policy-automation-once-hd5xz-${i}`,
+              started: '2021-06-03T14:45:53.237671Z',
+              status: 'not compliant',
+            }
+          )
+        }
+      }
+
+      req.reply({
+        data: {
+          items: mockItems
+         }
+      })
+    }
+  }).as('historyQuery')
 }
