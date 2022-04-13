@@ -54,7 +54,22 @@ Cypress.Commands.add('login', (OPTIONS_HUB_USER='', OPTIONS_HUB_PASSWORD='', OC_
       })
     }
   })
-  cy.visit('/multicloud/policies')
+  cy.visit('/multicloud/policies', { failOnStatusCode: false })
+  cy.get('body').then(() => {
+    // if not yet logged in, check for provider button
+    if (Cypress.$('body').find('.pf-c-page__header').length === 0) {
+      cy.url().then(url => {
+        if (!url.includes('oauth-openshift')) {
+          // handle provider button
+          cy.log('Clicking \'Log in with OpenShift\' button')
+          cy
+            .get('.panel-login')
+            .get('button')
+            .click()
+        }
+      })
+    }
+  })
   cy.get('body').then(() => {
     // if not yet logged in, do the regular login through Web UI
     if (Cypress.$('body').find('.pf-c-page__header').length === 0) {
