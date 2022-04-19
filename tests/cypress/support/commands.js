@@ -181,7 +181,12 @@ Cypress.Commands.add('logout', () => {
     } else {
       cy.waitUntil(() => cy.contains('Logout').scrollIntoView().should('be.visible'))
       cy.contains('Logout').scrollIntoView().should('be.visible').click()
-      cy.location('pathname').should('match', new RegExp('/oauth/authorize(\\?.*)?$'))
+      cy.location('pathname').then((path) => {
+        // should be redirected to login page or provider button
+        if (!/\/oauth\/authorize(\\?.*)?$/.test(path)) {
+          cy.contains('.panel-login', 'Log in with OpenShift')
+        }
+      })
     }
   })
 })
