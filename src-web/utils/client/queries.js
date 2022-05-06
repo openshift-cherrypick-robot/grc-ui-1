@@ -155,6 +155,7 @@ export const EDIT_POLICY_DISCOVERY = gql`
     policyDiscoveries:compliances(name: $name, namespace: $namespace) {
       policy: raw
       source
+      external
       placementPolicies {
         raw
       }

@@ -363,6 +363,17 @@ CreationTab {
                             "kind": "Field",
                             "name": Object {
                               "kind": "Name",
+                              "value": "external",
+                            },
+                            "selectionSet": undefined,
+                          },
+                          Object {
+                            "alias": undefined,
+                            "arguments": Array [],
+                            "directives": Array [],
+                            "kind": "Field",
+                            "name": Object {
+                              "kind": "Name",
                               "value": "placementPolicies",
                             },
                             "selectionSet": Object {
@@ -463,7 +474,7 @@ CreationTab {
             ],
             "kind": "Document",
             "loc": Object {
-              "end": 455,
+              "end": 470,
               "start": 0,
             },
           }
