@@ -23,7 +23,8 @@ exports.getACMVersion = (req, cb) => {
   } catch (err) {
     logger.error('Error reading service account namespace', err && err.message)
   }
-  const mchPath = `/namespaces/${namespace}/multiclusterhubs/multiclusterhub`
+  // Look up the mch by the array of mch instances (not by specific name) and then return the first one
+  const mchPath = `/namespaces/${namespace}/multiclusterhubs`
   const options = {
     method: 'GET',
     url: `${config.get('API_SERVER_URL')}${acmAPI}${mchPath}`,
@@ -40,7 +41,7 @@ exports.getACMVersion = (req, cb) => {
     if (err) {
       return cb(err, null)
     }
-    return cb(null, res.body)
+    return cb(null, res.body.items && res.body.items[0] ? res.body.items[0] : res.body)
   }, logger)
 
 }
