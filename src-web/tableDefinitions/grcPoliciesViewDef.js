@@ -67,6 +67,7 @@ export default {
       msgKey: 'table.header.remediation',
       information: 'grc.remediation.tooltip',
       resourceKey: 'remediation',
+      sortLabel: 'remediation.rawData',
       searchable: true,
       sortable: true,
       transforms: [wrappable],
