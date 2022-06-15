@@ -3,7 +3,7 @@
 
 import { describeT } from '../support/tagging'
 
-describeT('RHACM4K-2349 - GRC UI: [P1][Sev1][console] Create policy page: Check policy field validations', () => {
+describeT('RHACM4K-2349 - GRC UI: [P1][Sev1][policy-grc] Create policy page: Check policy field validations', () => {
 
   const errorMsg = 'Invalid name due to Kubernetes naming restriction.The name must meet the following requirements:• the combined length of namespace and policy name (namespaceName.policyName) should not exceed 63 characters• contain only lowercase alphanumeric characters, \'-\' or \'.\'• start with an alphanumeric character• end with an alphanumeric character'
   const errorMsg2 = 'Invalid name: should only have lowercase alphanumeric characters, \'-\', or \'.\' and not begin or end with punctuation'

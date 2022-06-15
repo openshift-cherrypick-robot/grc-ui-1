@@ -26,7 +26,7 @@ const certPolicyName = uName('cert-policy')
 let substitutionRules
 
 
-describeT('@extended RHACM4K-1691 - GRC UI: [P2][Sev2][console] Certificate policy controller: with wildcard, added or removed namespaces are not detected', () => {
+describeT('@extended RHACM4K-1691 - GRC UI: [P2][Sev2][policy-grc] Certificate policy controller: with wildcard, added or removed namespaces are not detected', () => {
 
   // create namespace ns1
   substitutionRules = [

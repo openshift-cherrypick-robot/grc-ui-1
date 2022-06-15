@@ -8,7 +8,7 @@ import { getDefaultSubstitutionRules } from '../support/views'
 const substitutionRules = getDefaultSubstitutionRules()
 var policyNames = []
 
-describeT('RHACM4K-2342 - GRC UI: [P1][Sev1][console] Verify create policy with different NS', () => {
+describeT('RHACM4K-2342 - GRC UI: [P1][Sev1][policy-grc] Verify create policy with different NS', () => {
   it('Create Namespace policy to create template ns as duplicatetest', () => {
     const confFilePolicy = 'duplicatePolicyInDiffNS/create_ns_template.yaml'
     const rawPolicyYAML = getConfigObject(confFilePolicy, 'raw', substitutionRules)
