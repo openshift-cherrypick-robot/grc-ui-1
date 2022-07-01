@@ -1895,7 +1895,7 @@ GrcCardsModule {
                       },
                     },
                     Object {
-                      "complianceType": "musthave",
+                      "complianceType": "mustonlyhave",
                       "objectDefinition": Object {
                         "apiVersion": "v1",
                         "kind": "LimitRange",
@@ -2514,7 +2514,7 @@ GrcCardsModule {
                             },
                           },
                           Object {
-                            "complianceType": "musthave",
+                            "complianceType": "mustonlyhave",
                             "objectDefinition": Object {
                               "apiVersion": "v1",
                               "kind": "LimitRange",
@@ -3214,7 +3214,7 @@ GrcCardsModule {
                       },
                     },
                     Object {
-                      "complianceType": "musthave",
+                      "complianceType": "mustonlyhave",
                       "objectDefinition": Object {
                         "apiVersion": "v1",
                         "kind": "LimitRange",
@@ -3833,7 +3833,7 @@ GrcCardsModule {
                             },
                           },
                           Object {
-                            "complianceType": "musthave",
+                            "complianceType": "mustonlyhave",
                             "objectDefinition": Object {
                               "apiVersion": "v1",
                               "kind": "LimitRange",

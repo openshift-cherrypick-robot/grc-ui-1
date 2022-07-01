@@ -310,7 +310,7 @@ export const policiesTestingDataSet1 = [
                   }
                 },
                 {
-                  'complianceType':'musthave',
+                  'complianceType':'mustonlyhave',
                   'objectDefinition':{
                     'apiVersion':'v1',
                     'kind':'LimitRange',

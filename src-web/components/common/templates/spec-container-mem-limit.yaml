@@ -25,7 +25,7 @@ replacements: # if user select this choice, the template variable names and valu
             exclude: ["kube-*"]
             include: ["default"]
           object-templates:
-            - complianceType: musthave
+            - complianceType: mustonlyhave
               objectDefinition:
                 apiVersion: v1
                 kind: LimitRange # limit memory usage

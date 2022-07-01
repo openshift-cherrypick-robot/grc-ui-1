@@ -291,7 +291,7 @@ export default {
                              },
                              'object-templates':[
                                 {
-                                   'complianceType':'musthave',
+                                   'complianceType':'mustonlyhave',
                                    'objectDefinition':{
                                       'apiVersion':'v1',
                                       'kind':'LimitRange',

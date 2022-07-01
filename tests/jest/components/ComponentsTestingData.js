@@ -1259,7 +1259,7 @@ export const reduxStorePolicyCluster = {
             },
             'object-templates': [
               {
-                complianceType: 'musthave',
+                complianceType: 'mustonlyhave',
                 objectDefinition: {
                   apiVersion: 'v1',
                   kind: 'LimitRange',
@@ -5950,7 +5950,7 @@ export const existing =
             }
           },
           {
-            'complianceType':'musthave',
+            'complianceType':'mustonlyhave',
             'objectDefinition':{
               'apiVersion':'v1',
               'kind':'LimitRange',
