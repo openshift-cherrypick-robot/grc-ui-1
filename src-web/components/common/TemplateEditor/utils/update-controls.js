@@ -248,19 +248,20 @@ export const getTemplateSource = (reverse, parsed) => {
 
     // dig out the yaml and the object that points to it
     const yaml = _.get(parsed, `${pathBase}.$yml`)
+    const baseRow = _.get(parsed, `${pathBase}.$synced`, {$r:0}).$r
     const pathReformat = path.length>0 ? pathBase + `.$synced.${pathArray.join('.$v.')}.$v` : pathBase
     const synced = _.get(parsed, pathReformat)
     if (yaml && synced) {
       // capture the source lines
       const lines = yaml.split('\n')
-      // the templates are an array, so we need to iterate over each
-      if (synced.constructor === Array) {
+  // the templates are an array, so we need to iterate over each
+    if (synced.constructor === Array) {
         for (let i = 0; i < synced.length; i++) {
           const syncItem = synced[i]
           if (i+1 < synced.length) {
-            ret = [...ret, ...lines.slice(syncItem.$r, synced[i+1].$r).join('\n')]
-          } else {
-            ret = [...ret, ...lines.slice(syncItem.$r, syncItem.$r+syncItem.$l).join('\n')]
+            ret = [...ret, ...lines.slice(syncItem.$r-baseRow, synced[i+1].$r-baseRow).join('\n')]
+           } else {
+            ret = [...ret, ...lines.slice(syncItem.$r-baseRow, syncItem.$r-baseRow+syncItem.$l).join('\n')]
           }
         }
       // Handle any object that's given and make it an array to try to save it for the user
@@ -268,7 +269,7 @@ export const getTemplateSource = (reverse, parsed) => {
         for (const key in synced) {
           if (Object.prototype.hasOwnProperty.call(synced, key)) {
             const syncItem = synced[key]
-            ret = [...ret, ...`  - ${lines.slice(syncItem.$r, syncItem.$r+syncItem.$l).join('\n').trim()}`]
+            ret = [...ret, ...`  - ${lines.slice(syncItem.$r-baseRow, syncItem.$r-baseRow+syncItem.$l).join('\n').trim()}`]
           }
         }
       // Turn any string provided into an array to try to save it for the user

@@ -134,7 +134,7 @@ const YamlEditor = ({ onYamlChange, setEditor, yaml, width='49.5vw', height='50v
         wordWrap: 'wordWrapColumn',
         wordWrapColumn: 132,
         wordWrapMinified: false,
-        scrollBeyondLastLine: false,
+        scrollBeyondLastLine: true,
         smoothScrolling: true,
         glyphMargin: true,
         tabSize: 2,
