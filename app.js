@@ -49,7 +49,11 @@ const bodyParser = require('body-parser'),
 const app = express()
 
 app.use(helmet({ // in production these headers are set by management-ingress
-  frameguard: false
+  frameguard: false,
+  hsts: {
+    maxAge:            63072000,
+    preload:           true
+  }
 }))
 
 // Remove the X-Powered-By headers.
